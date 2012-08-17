@@ -20,7 +20,8 @@ namespace MobilePatterns.Data
 
         public static List<Model> GetData()
         {
-            var w = new HttpWebRequest(new Uri("http://pttrns.com/"));
+            var url = "http://pttrns.com";
+            var w = new HttpWebRequest(new Uri(url));
             var response = w.GetResponse();
             var models = new List<Model>();
 
@@ -32,7 +33,7 @@ namespace MobilePatterns.Data
                 var nodes = html.DocumentNode.SelectNodes("//div[@id='main']/section/a/img");
                 foreach (var n in nodes)
                 {
-                    models.Add(new Model() { Image = n.Attributes["src"].Value });
+                    models.Add(new Model() { Image = url + n.Attributes["src"].Value });
                 }
             }
 

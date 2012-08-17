@@ -5,6 +5,7 @@ using System.Threading;
 using MonoTouch.Foundation;
 using MobilePatterns.Data;
 using MonoTouch.Dialog.Utilities;
+using System.Drawing;
 
 namespace MobilePatterns.Controllers
 {
@@ -14,6 +15,14 @@ namespace MobilePatterns.Controllers
             : base (UITableViewStyle.Plain, null, false)
         {
             Title = "New Patterns";
+        }
+
+        public override void ViewDidLoad ()
+        {
+            base.ViewDidLoad ();
+
+            this.TableView.PagingEnabled = true;
+            this.TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
         }
 
         public override void ViewDidAppear(bool animated)
@@ -35,14 +44,12 @@ namespace MobilePatterns.Controllers
                 root.Add(section);
                 Root = root;
             });
-
         }
 
 
         private class MyImageElement : OwnerDrawnElement, IImageUpdated
         {
             private PattrnData.Model _model;
-            private UIImage _img;
 
             public MyImageElement(PattrnData.Model model)
                 : base(UITableViewCellStyle.Default, "myimage")
@@ -53,32 +60,19 @@ namespace MobilePatterns.Controllers
 
             public override void Draw(System.Drawing.RectangleF bounds, MonoTouch.CoreGraphics.CGContext context, UIView view)
             {
-                if (_img == null)
-                    return;
-
-
-                _img.Draw(bounds);
             }
 
             public override float Height(System.Drawing.RectangleF bounds)
             {
-                return 200f;
+                return 480f;
             }
 
             public override UITableViewCell GetCell(UITableView tv)
             {
-                var key = CellKey;
-                var cell = tv.DequeueReusableCell(key);
-                if (cell == null)
-                {
-                    cell = new UITableViewCell(Style, key);
-                }
+                var cell = base.GetCell(tv);
 
                 //Request the image
-                if (_img == null)
-                {
-                    _img = ImageLoader.DefaultRequestImage(new Uri(_model.Image), this);
-                }
+                cell.ImageView.Image = ImageLoader.DefaultRequestImage(new Uri(_model.Image), this);
 
                 return cell;
             }
@@ -87,8 +81,6 @@ namespace MobilePatterns.Controllers
             {
                 if (uri == null)
                     return;
-
-                _img = ImageLoader.DefaultRequestImage(uri, this);
                 var root = GetImmediateRootElement ();
                 if (root == null || root.TableView == null)
                     return;

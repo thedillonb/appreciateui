@@ -34,8 +34,13 @@ namespace MobilePatterns
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            UIApplication.SharedApplication.SetStatusBarHidden(true, true); 
+
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
 
+
+
+            /*
             var tabbar = new UITabBarController();
             tabbar.ViewControllerSelected += (sender, e) => {
                 if (e.ViewController.ChildViewControllers[0] is AddPatternViewController)
@@ -53,8 +58,9 @@ namespace MobilePatterns
             tabbar.AddChildViewController(new UINavigationController(new BrowsePatternsViewController()));
             tabbar.AddChildViewController(new UINavigationController(new AddPatternViewController()));
             tabbar.AddChildViewController(new UINavigationController(new ProjectPatternsViewController()));
+            */
 
-            Window.RootViewController = tabbar;
+            Window.RootViewController = new NewPatternsViewController();
             Window.MakeKeyAndVisible();
             return true;
         }

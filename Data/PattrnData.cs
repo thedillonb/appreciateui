@@ -8,22 +8,35 @@ namespace MobilePatterns.Data
 {
     public static class PattrnData
     {
-        public class Model
-        {
-            public string Image { get; set; }
+        public static Uri BaseUrl = new Uri("http://pttrns.com");
 
-            public override string ToString()
+        public static List<WebMenu> GetMenus()
+        {
+            var w = new HttpWebRequest(BaseUrl);
+            var response = w.GetResponse();
+            var models = new List<WebMenu>();
+
+            using (var r = response.GetResponseStream())
             {
-                return this.Image;
+                var html = new HtmlAgilityPack.HtmlDocument();
+                html.Load(response.GetResponseStream());
+
+                var nodes = html.DocumentNode.SelectNodes("//div[@id='container']/nav/ul[2]/li/a");
+                foreach (var n in nodes)
+                {
+                    var uri = new Uri(BaseUrl, n.Attributes["href"].Value);
+                    models.Add(new WebMenu() { Name = n.InnerText, Uri = uri });
+                }
             }
+
+            return models;
         }
 
-        public static List<Model> GetData()
+        public static List<PatternImages> GetPatterns(Uri uri)
         {
-            var url = "http://pttrns.com";
-            var w = new HttpWebRequest(new Uri(url));
+            var w = new HttpWebRequest(uri);
             var response = w.GetResponse();
-            var models = new List<Model>();
+            var models = new List<PatternImages>();
 
             using (var r = response.GetResponseStream())
             {
@@ -33,7 +46,8 @@ namespace MobilePatterns.Data
                 var nodes = html.DocumentNode.SelectNodes("//div[@id='main']/section/a/img");
                 foreach (var n in nodes)
                 {
-                    models.Add(new Model() { Image = url + n.Attributes["src"].Value });
+                    var url = new Uri(BaseUrl, n.Attributes["src"].Value);
+                    models.Add(new PatternImages() { Image = url.ToString() });
                 }
             }
 

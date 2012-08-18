@@ -93,11 +93,12 @@
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\SQLite.cs" />
     <Compile Include="Utils\Camera.cs" />
-    <Compile Include="Controllers\NewPatternsViewController.cs" />
     <Compile Include="Controllers\BrowsePatternsViewController.cs" />
     <Compile Include="Controllers\ProjectPatternsViewController.cs" />
     <Compile Include="Controllers\AddPatternViewController.cs" />
     <Compile Include="Data\PattrnData.cs" />
+    <Compile Include="Controllers\ViewPatternsViewController.cs" />
+    <Compile Include="Data\WebData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -112,6 +113,10 @@
     <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
       <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
       <Name>MonoTouch.Dialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\monotouch.slideoutnavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">
+      <Project>{6D7B9B53-CFEF-46BE-A608-14A4A1381CF6}</Project>
+      <Name>MonoTouch.SlideoutNavigation</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

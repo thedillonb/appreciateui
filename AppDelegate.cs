@@ -5,6 +5,8 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MobilePatterns.Controllers;
+using MonoTouch.SlideoutNavigation;
+using MonoTouch.Dialog;
 
 namespace MobilePatterns
 {
@@ -16,6 +18,10 @@ namespace MobilePatterns
     {
         // class-level declarations
         public override UIWindow Window { get; set; }
+
+        public SlideoutNavigationController SlideController { get; set; }
+
+        public UITabBarController TabBarController { get; set; }
 
         // This is the main entry point of the application.
         static void Main(string[] args)
@@ -37,6 +43,14 @@ namespace MobilePatterns
             UIApplication.SharedApplication.SetStatusBarHidden(true, true); 
 
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
+            //SlideController = new SlideoutNavigationController();
+            TabBarController = new UITabBarController();
+
+            TabBarController.ViewControllers = new UIViewController[] {
+                new UINavigationController(new BrowsePatternsViewController()),
+                new AddPatternViewController(),
+                new UINavigationController(new ProjectPatternsViewController()),
+            };
 
 
 
@@ -60,7 +74,7 @@ namespace MobilePatterns
             tabbar.AddChildViewController(new UINavigationController(new ProjectPatternsViewController()));
             */
 
-            Window.RootViewController = new NewPatternsViewController();
+            Window.RootViewController = TabBarController;
             Window.MakeKeyAndVisible();
             return true;
         }

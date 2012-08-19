@@ -3,6 +3,7 @@ using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using MobilePatterns.Data;
+using System.Threading;
 
 namespace MobilePatterns.Controllers
 {
@@ -18,9 +19,8 @@ namespace MobilePatterns.Controllers
         {
             base.ViewDidLoad();
 
-
             //Do the loading
-            NSTimer.CreateScheduledTimer(0, () => {
+            ThreadPool.QueueUserWorkItem(delegate {
                 var data = PattrnData.GetMenus();
                 var section = new Section();
 
@@ -28,16 +28,17 @@ namespace MobilePatterns.Controllers
                 {
                     var menu = d;
                     var element = new StyledStringElement(d.Name, () => {
-                        NavigationController.PushViewController(new ViewPatternsViewController(menu.Uri)
+                        NavigationController.PushViewController(new WebViewPatternsViewController(menu.Uri)
                                                                 { Title = menu.Name }
                                                                 , true);
-                    });
+                    }) { Accessory = UITableViewCellAccessory.DisclosureIndicator };
                     section.Add(element);
                 }
 
                 var root = new RootElement(Title);
                 root.Add(section);
-                Root = root;
+
+                BeginInvokeOnMainThread(() => { Root = root; });
             });
         }
     }

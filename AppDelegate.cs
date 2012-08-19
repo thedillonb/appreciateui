@@ -5,7 +5,6 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MobilePatterns.Controllers;
-using MonoTouch.SlideoutNavigation;
 using MonoTouch.Dialog;
 
 namespace MobilePatterns
@@ -18,9 +17,6 @@ namespace MobilePatterns
     {
         // class-level declarations
         public override UIWindow Window { get; set; }
-
-        public SlideoutNavigationController SlideController { get; set; }
-
         public UITabBarController TabBarController { get; set; }
 
         // This is the main entry point of the application.

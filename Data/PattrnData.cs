@@ -19,7 +19,7 @@ namespace MobilePatterns.Data
             using (var r = response.GetResponseStream())
             {
                 var html = new HtmlAgilityPack.HtmlDocument();
-                html.Load(response.GetResponseStream());
+                html.Load(r);
 
                 var nodes = html.DocumentNode.SelectNodes("//div[@id='container']/nav/ul[2]/li/a");
                 foreach (var n in nodes)
@@ -41,7 +41,7 @@ namespace MobilePatterns.Data
             using (var r = response.GetResponseStream())
             {
                 var html = new HtmlAgilityPack.HtmlDocument();
-                html.Load(response.GetResponseStream());
+                html.Load(r);
 
                 var nodes = html.DocumentNode.SelectNodes("//div[@id='main']/section/a/img");
                 foreach (var n in nodes)

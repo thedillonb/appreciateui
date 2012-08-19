@@ -99,6 +99,13 @@
     <Compile Include="Data\PattrnData.cs" />
     <Compile Include="Controllers\ViewPatternsViewController.cs" />
     <Compile Include="Data\WebData.cs" />
+    <Compile Include="Models\ProjectImage.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Controllers\ImageCropViewController.cs" />
+    <Compile Include="Controllers\AddToProjectViewController.cs" />
+    <Compile Include="Cells\PatternImageElement.cs" />
+    <Compile Include="Controllers\PatternViewController.cs" />
+    <Compile Include="Controllers\NewProjectViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -108,15 +115,12 @@
     <Folder Include="Utils\" />
     <Folder Include="Controllers\" />
     <Folder Include="Resources\" />
+    <Folder Include="Cells\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
       <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
       <Name>MonoTouch.Dialog</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\monotouch.slideoutnavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">
-      <Project>{6D7B9B53-CFEF-46BE-A608-14A4A1381CF6}</Project>
-      <Name>MonoTouch.SlideoutNavigation</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

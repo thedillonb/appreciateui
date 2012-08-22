@@ -9,6 +9,7 @@ using System.Drawing;
 using MobilePatterns.Cells;
 using System.Collections.Generic;
 using MobilePatterns.Models;
+using MonoTouch.CoreGraphics;
 
 namespace MobilePatterns.Controllers
 {
@@ -53,11 +54,23 @@ namespace MobilePatterns.Controllers
                 new UIBarButtonItem("Add", UIBarButtonItemStyle.Bordered, SaveImage),
             };
 
+            var hud = new RedPlum.MBProgressHUD(View.Frame)
+            { Mode = RedPlum.MBProgressHUDMode.Indeterminate };
+            hud.TitleText = "Requesting Patterns...";
+            hud.TitleFont = UIFont.BoldSystemFontOfSize(14f);
+            this.View.AddSubview(hud);
+            hud.Show(false);
+
             //Do the loading
             ThreadPool.QueueUserWorkItem(delegate {
                 var data = PattrnData.GetPatterns(_uri);
-                var section = new Section();
 
+                BeginInvokeOnMainThread(() => {
+                    hud.Hide(true);
+                    hud.RemoveFromSuperview();
+                });
+
+                var section = new Section();
                 foreach (var d in data)
                 {
                     var element = new WebPatternImageElement(d);

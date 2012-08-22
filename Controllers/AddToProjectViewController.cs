@@ -25,9 +25,10 @@ namespace MobilePatterns.Controllers
 
             //Add a new project
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentModalViewController(new UINavigationController(new NewProjectViewController(() => {
+                PresentModalViewController(new UINavigationController(new NewProjectViewController((r) => {
                     DismissModalViewControllerAnimated(true);
-                    LoadTable();
+                    if (r == true)
+                        LoadTable();
                 })), true);
             });
 

@@ -9,6 +9,7 @@ namespace MobilePatterns.Controllers
             : base()
         {
             Title = "Add Pattern";
+            TabBarItem.Image = Images.Picture;
         }
     }
 }

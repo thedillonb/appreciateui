@@ -106,6 +106,8 @@
     <Compile Include="Cells\PatternImageElement.cs" />
     <Compile Include="Controllers\PatternViewController.cs" />
     <Compile Include="Controllers\NewProjectViewController.cs" />
+    <Compile Include="Images\Images.cs" />
+    <Compile Include="Utils\MbProgressHud.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -122,5 +124,13 @@
       <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
       <Name>MonoTouch.Dialog</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Picture%402x.png" />
+    <Content Include="Images\Picture.png" />
+    <Content Include="Images\Tag.png" />
+    <Content Include="Images\Tag%402x.png" />
+    <Content Include="Images\Polaroid%402x.png" />
+    <Content Include="Images\Polaroid.png" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ using MonoTouch.UIKit;
 using System.Drawing;
 using MonoTouch.Foundation;
 using MobilePatterns.Models;
+using MonoTouch.CoreGraphics;
 
 namespace MobilePatterns.Cells
 {
@@ -20,7 +21,7 @@ namespace MobilePatterns.Cells
 
         public override float Height(System.Drawing.RectangleF bounds)
         {
-            return 480f;
+            return 320f;
         }
 
         public override void Draw(RectangleF bounds, MonoTouch.CoreGraphics.CGContext context, UIView view)
@@ -31,6 +32,7 @@ namespace MobilePatterns.Cells
         {
             var cell = base.GetCell(tv);
             cell.ImageView.Image = UIImage.FromFile(_projectImage.Path);
+            cell.ImageView.Transform = CGAffineTransform.MakeRotation((float)Math.PI * 90f / 180f);
             return cell;
         }
     }
@@ -53,12 +55,13 @@ namespace MobilePatterns.Cells
 
         public override float Height(System.Drawing.RectangleF bounds)
         {
-            return 480f;
+            return 320f;
         }
 
         public override UITableViewCell GetCell(UITableView tv)
         {
             var cell = base.GetCell(tv);
+            cell.ImageView.Transform = CGAffineTransform.MakeRotation((float)Math.PI * 90f / 180f);
 
             //Request the image
             cell.ImageView.Image = ImageLoader.DefaultRequestImage(new Uri(_model.Image), this);
@@ -83,6 +86,7 @@ namespace MobilePatterns.Cells
                     _activity.RemoveFromSuperview();
                     _activity = null;
                 }
+
 
                 //Fade the image in
                 cell.ImageView.Alpha = 0;

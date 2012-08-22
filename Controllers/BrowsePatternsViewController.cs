@@ -13,16 +13,29 @@ namespace MobilePatterns.Controllers
             : base(UITableViewStyle.Plain, null, pushing)
         {
             Title = "Browse";
+            TabBarItem.Image = Images.Polaroid;
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
 
+            var hud = new RedPlum.MBProgressHUD(View.Frame)
+            { Mode = RedPlum.MBProgressHUDMode.Indeterminate };
+            hud.TitleText = "Requesting Categories...";
+            hud.TitleFont = UIFont.BoldSystemFontOfSize(14f);
+            this.ParentViewController.View.AddSubview(hud);
+            hud.Show(false);
+
             //Do the loading
             ThreadPool.QueueUserWorkItem(delegate {
                 var data = PattrnData.GetMenus();
                 var section = new Section();
+
+                BeginInvokeOnMainThread(() => {
+                    hud.Hide(true);
+                    hud.RemoveFromSuperview();
+                });
 
                 foreach (var d in data)
                 {

@@ -11,6 +11,7 @@ namespace MobilePatterns.Controllers
             : base (UITableViewStyle.Plain, null)
         {
             Title = "Projects";
+            TabBarItem.Image = Images.Tag;
         }
 
         public override void ViewDidLoad()
@@ -23,10 +24,13 @@ namespace MobilePatterns.Controllers
             foreach (var p in projects)
             {
                 var project = p;
-                var element = new StyledStringElement(project.Name, () => {
+                var count = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == project.Id).Count();
+                var element = new StyledStringElement(project.Name, count.ToString(), UITableViewCellStyle.Value1);
+                element.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+                element.Tapped += () => {
                     NavigationController.PushViewController(new LocalViewPatternsViewController() 
                                                             { Project = project, Title = project.Name }, true);
-                }) { Accessory = UITableViewCellAccessory.DisclosureIndicator };
+                };
                 section.Add(element);
             }
 

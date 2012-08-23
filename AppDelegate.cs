@@ -6,6 +6,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MobilePatterns.Controllers;
 using MonoTouch.Dialog;
+using MobilePatterns.Utils;
 
 namespace MobilePatterns
 {
@@ -48,27 +49,22 @@ namespace MobilePatterns
                 new UINavigationController(new ProjectPatternsViewController()),
             };
 
-
-
-            /*
-            var tabbar = new UITabBarController();
-            tabbar.ViewControllerSelected += (sender, e) => {
-                if (e.ViewController.ChildViewControllers[0] is AddPatternViewController)
+            UIViewController previousController = TabBarController.ViewControllers[0];
+            TabBarController.ViewControllerSelected += (sender, e) => {
+                if (e.ViewController is AddPatternViewController)
                 {
-                    Utils.Camera.SelectPicture(e.ViewController, (x) => {
-                        Console.WriteLine("Picture selected!");
-                    }, () => {
+                    TabBarController.SelectedViewController = previousController;
+                    Camera.SelectPicture(TabBarController, (dic) => { 
+
+                    }, () => { 
 
                     });
                 }
+                else
+                {
+                    previousController = e.ViewController;
+                }
             };
-
-
-            tabbar.AddChildViewController(new UINavigationController(new NewPatternsViewController()));
-            tabbar.AddChildViewController(new UINavigationController(new BrowsePatternsViewController()));
-            tabbar.AddChildViewController(new UINavigationController(new AddPatternViewController()));
-            tabbar.AddChildViewController(new UINavigationController(new ProjectPatternsViewController()));
-            */
 
             Window.RootViewController = TabBarController;
             Window.MakeKeyAndVisible();

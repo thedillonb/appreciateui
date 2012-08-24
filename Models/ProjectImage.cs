@@ -12,6 +12,12 @@ namespace MobilePatterns.Models
         public int ProjectId { get; set; }
 
         public string Path { get; set; }
+
+        public int Remove()
+        {
+            System.IO.File.Delete(this.Path);
+            return Data.Database.Main.Delete(this);
+        }
     }
 }
 

@@ -54,8 +54,6 @@ namespace MobilePatterns.Utils
                 var cb = _callback;
                 _callback = null;
                 _canceled = null;
-                
-                picker.DismissModalViewControllerAnimated (true);
                 cb (info);
             }
 
@@ -64,8 +62,6 @@ namespace MobilePatterns.Utils
                 var cb = _canceled;
                 _callback = null;
                 _canceled = null;
-
-                picker.DismissModalViewControllerAnimated(true);
                 if (cb != null)
                     cb();
             }
@@ -79,13 +75,13 @@ namespace MobilePatterns.Utils
             parent.PresentModalViewController (picker, true);
         }
 
-        public static void SelectPicture (UIViewController parent, Action<NSDictionary> callback, Action canceled = null)
+        public static UIImagePickerController SelectPicture (UIViewController parent, Action<NSDictionary> callback, Action canceled = null)
         {
             Init ();
             picker.SourceType = UIImagePickerControllerSourceType.PhotoLibrary;
             _callback = callback;
             _canceled = canceled;
-            parent.PresentModalViewController (picker, true);
+            return picker;
         }
 
         public static void SelectOrTakePicture(UIViewController parent, Action<NSDictionary> callback)

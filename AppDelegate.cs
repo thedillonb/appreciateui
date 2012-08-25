@@ -54,11 +54,17 @@ namespace MobilePatterns
                 if (e.ViewController is AddPatternViewController)
                 {
                     TabBarController.SelectedViewController = previousController;
-                    Camera.SelectPicture(TabBarController, (dic) => { 
+                    UIImagePickerController ctrl;
+                    ctrl = Camera.SelectPicture(TabBarController, (dic) => { 
+                        
+                        ctrl.PushViewController(new AddToProjectViewController(null), true);
+
 
                     }, () => { 
-
+                        ctrl.DismissModalViewControllerAnimated(true);
                     });
+
+                    TabBarController.PresentModalViewController(ctrl, true);
                 }
                 else
                 {

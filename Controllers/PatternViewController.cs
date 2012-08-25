@@ -6,30 +6,15 @@ using MonoTouch.Foundation;
 
 namespace MobilePatterns.Controllers
 {
-    public abstract class PatternViewController : UIViewController
+    public abstract class PatternViewController : DialogViewController
     {
         private UITapGestureRecognizer _tapGesture;
-        private MyDialog _dialog = new MyDialog();
-
-        protected UITableView TableView { get { return _dialog.TableView; } }
-        protected RootElement Root
-        { 
-            get { return _dialog.Root; }
-            set { _dialog.Root = value; }
-        }
 
         public PatternViewController()
+            : base(UITableViewStyle.Plain, null)
         {
             Title = "Patterns";
             HidesBottomBarWhenPushed = true;
-
-            _dialog.Dragging = () => {
-                if (!NavigationController.NavigationBarHidden)
-                {
-                    NavigationController.SetNavigationBarHidden(true, true);
-                    NavigationController.SetToolbarHidden(true, true);
-                }
-            };
 
             _tapGesture = new UITapGestureRecognizer();
             _tapGesture.NumberOfTapsRequired = 1;
@@ -46,7 +31,7 @@ namespace MobilePatterns.Controllers
         {
             base.ViewDidLoad ();
 
-            this.TableView.Frame = new System.Drawing.RectangleF(-80, 80, 480, 320);
+            this.TableView.Frame = new System.Drawing.RectangleF(-80, 80, UIScreen.MainScreen.Bounds.Height, UIScreen.MainScreen.Bounds.Width);
             this.View.AddSubview(this.TableView);
             this.TableView.Transform = CGAffineTransform.MakeRotation((float)Math.PI * -90f / 180f);
             this.TableView.ShowsHorizontalScrollIndicator = false;
@@ -54,7 +39,7 @@ namespace MobilePatterns.Controllers
 
             this.WantsFullScreenLayout = true;
             this.TableView.PagingEnabled = true;
-            this.TableView.ContentSize = new System.Drawing.SizeF(320, 480);
+            this.TableView.ContentSize = new System.Drawing.SizeF(UIScreen.MainScreen.Bounds.Width, UIScreen.MainScreen.Bounds.Height);
             this.TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
             this.View.AddGestureRecognizer(_tapGesture);
         }
@@ -82,18 +67,13 @@ namespace MobilePatterns.Controllers
             NavigationController.SetToolbarHidden(true, true);
         }
 
-        private class MyDialog : DialogViewController
+        protected override void DraggingStarted ()
         {
-            public NSAction Dragging;
-            public MyDialog()
-                : base (UITableViewStyle.Plain, null)
+            base.DraggingStarted ();
+            if (!NavigationController.NavigationBarHidden)
             {
-            }
-
-            protected override void DraggingStarted()
-            {
-                base.DraggingStarted();
-                Dragging();
+                NavigationController.SetNavigationBarHidden(true, true);
+                NavigationController.SetToolbarHidden(true, true);
             }
         }
     }

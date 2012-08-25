@@ -18,6 +18,21 @@ namespace MobilePatterns.Controllers
         {
             base.ViewDidLoad();
 
+            NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
+                PresentModalViewController(new UINavigationController(new NewProjectViewController((r) => {
+                    DismissModalViewControllerAnimated(true);
+                })), true);
+            });
+        }
+
+        public override void ViewWillAppear (bool animated)
+        {
+            base.ViewWillAppear (animated);
+            LoadTable();
+        }
+
+        private void LoadTable()
+        {
             var section = new Section();
             var projects = Data.Database.Main.Table<Project>();
             foreach (var p in projects)
@@ -80,26 +95,32 @@ namespace MobilePatterns.Controllers
                 if (item == null)
                     return;
 
-
-                var count = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == item.Project.Id).Count();
-
-                var alert = new UIAlertView();
-                alert.Title = "Confirm?";
-                alert.Message = "Are you sure you want to delete this project and all " + count + " images?";
-                var ok = alert.AddButton("Yes");
-                alert.CancelButtonIndex = alert.AddButton("No");
-
-                alert.Clicked += (sender, e) => {
-                    Console.WriteLine(e.ButtonIndex.ToString());
-
-                    if (e.ButtonIndex == ok)
-                    {
-                        item.Project.Remove();
-                        section.Remove(element);
-                    }
+                //How to delete it
+                Action deleteDelegate = () => {
+                    item.Project.Remove();
+                    section.Remove(element);
                 };
 
-                alert.Show();
+                var count = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == item.Project.Id).Count();
+                if (count > 0)
+                {
+                    var alert = new UIAlertView();
+                    alert.Title = "Confirm?";
+                    alert.Message = "Are you sure you want to delete this project and all " + count + " images?";
+                    var ok = alert.AddButton("Yes");
+                    alert.CancelButtonIndex = alert.AddButton("No");
+
+                    alert.Clicked += (sender, e) => {
+                        if (e.ButtonIndex == ok)
+                            deleteDelegate();
+                    };
+
+                    alert.Show();
+                }
+                else
+                {
+                    deleteDelegate();
+                }
             }
 
             public override bool CanMoveRow(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)

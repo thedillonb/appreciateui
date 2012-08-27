@@ -101,7 +101,6 @@
     <Compile Include="Data\SQLite.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="Controllers\BrowsePatternsViewController.cs" />
-    <Compile Include="Controllers\ProjectPatternsViewController.cs" />
     <Compile Include="Controllers\AddPatternViewController.cs" />
     <Compile Include="Data\PattrnData.cs" />
     <Compile Include="Controllers\ViewPatternsViewController.cs" />
@@ -109,10 +108,8 @@
     <Compile Include="Models\ProjectImage.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Controllers\ImageCropViewController.cs" />
-    <Compile Include="Controllers\AddToProjectViewController.cs" />
     <Compile Include="Cells\PatternImageElement.cs" />
     <Compile Include="Controllers\PatternViewController.cs" />
-    <Compile Include="Controllers\NewProjectViewController.cs" />
     <Compile Include="Images\Images.cs" />
     <Compile Include="Utils\MbProgressHud.cs" />
     <Compile Include="Utils\Util.cs" />
@@ -121,6 +118,9 @@
     <Compile Include="Data\MobilePatterns.cs" />
     <Compile Include="Data\PatternSource.cs" />
     <Compile Include="Data\InspiredUI.cs" />
+    <Compile Include="Controllers\ScrapbookPatternsViewController.cs" />
+    <Compile Include="Controllers\NewScrapbookViewController.cs" />
+    <Compile Include="Controllers\AddToScrapbookViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -142,9 +142,11 @@
   <ItemGroup>
     <Content Include="Images\Picture%402x.png" />
     <Content Include="Images\Picture.png" />
-    <Content Include="Images\Tag.png" />
-    <Content Include="Images\Tag%402x.png" />
     <Content Include="Images\Polaroid%402x.png" />
     <Content Include="Images\Polaroid.png" />
+    <Content Include="Images\Bookmark.png" />
+    <Content Include="Images\Bookmark%402x.png" />
+    <Content Include="Images\Magnifier.png" />
+    <Content Include="Images\Magnifer%402x.png" />
   </ItemGroup>
 </Project>

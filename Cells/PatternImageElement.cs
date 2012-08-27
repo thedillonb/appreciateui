@@ -32,6 +32,7 @@ namespace MobilePatterns.Cells
         {
             var cell = base.GetCell(tv);
             cell.ImageView.Image = UIImage.FromFile(_projectImage.Path);
+            cell.Tag = _projectImage.Id;
             cell.ImageView.Transform = CGAffineTransform.MakeRotation((float)Math.PI * 90f / 180f);
             return cell;
         }

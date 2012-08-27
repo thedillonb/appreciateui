@@ -5,12 +5,12 @@ using MobilePatterns.Models;
 
 namespace MobilePatterns.Controllers
 {
-    public class ProjectPatternsViewController : DialogViewController
+    public class ScrapbookPatternsViewController : DialogViewController
     {
-        public ProjectPatternsViewController()
+        public ScrapbookPatternsViewController()
             : base (UITableViewStyle.Plain, null)
         {
-            Title = "Projects";
+            Title = "Scrapbook";
             TabBarItem.Image = Images.Tag;
         }
 
@@ -19,7 +19,7 @@ namespace MobilePatterns.Controllers
             base.ViewDidLoad();
 
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentModalViewController(new UINavigationController(new NewProjectViewController((r) => {
+                PresentModalViewController(new UINavigationController(new NewScrapbookViewController((r) => {
                     DismissModalViewControllerAnimated(true);
                 })), true);
             });

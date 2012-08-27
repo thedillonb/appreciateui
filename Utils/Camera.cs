@@ -61,8 +61,6 @@ namespace MobilePatterns.Utils
             public override void FinishedPickingMedia (UIImagePickerController picker, NSDictionary info)
             {
                 var cb = _callback;
-                _callback = null;
-                _canceled = null;
                 cb (info);
             }
 

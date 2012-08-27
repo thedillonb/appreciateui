@@ -46,35 +46,41 @@ namespace MobilePatterns
             TabBarController.ViewControllers = new UIViewController[] {
                 new UINavigationController(new BrowsePatternsViewController()),
                 new AddPatternViewController(),
-                new UINavigationController(new ProjectPatternsViewController()),
+                new UINavigationController(new ScrapbookPatternsViewController()),
             };
 
-            UIViewController previousController = TabBarController.ViewControllers[0];
-            TabBarController.ViewControllerSelected += (sender, e) => {
-                if (e.ViewController is AddPatternViewController)
-                {
-                    TabBarController.SelectedViewController = previousController;
-                    UIImagePickerController ctrl;
-                    ctrl = Camera.SelectPicture(TabBarController, (dic) => { 
-                        
-                        ctrl.PushViewController(new AddToProjectViewController(null), true);
-
-
-                    }, () => { 
-                        ctrl.DismissModalViewControllerAnimated(true);
-                    });
-
-                    TabBarController.PresentModalViewController(ctrl, true);
-                }
-                else
-                {
-                    previousController = e.ViewController;
-                }
-            };
+            _previousController = TabBarController.ViewControllers[0];
+            TabBarController.ViewControllerSelected += ViewControllerSelected;
 
             Window.RootViewController = TabBarController;
             Window.MakeKeyAndVisible();
             return true;
+        }
+
+        private UIViewController _previousController;
+        private void ViewControllerSelected(object sender, UITabBarSelectionEventArgs e)
+        {
+            if (e.ViewController is AddPatternViewController)
+            {
+                TabBarController.SelectedViewController = _previousController;
+                UIImagePickerController ctrl = null;
+                ctrl = Camera.SelectPicture(TabBarController, (dic) => { 
+
+                    var original = dic[UIImagePickerController.OriginalImage] as UIImage;
+                    if (original == null)
+                        return;
+
+                    ctrl.PushViewController(new AddToScrapbookViewController(original), true);
+                }, () => { 
+                    ctrl.DismissModalViewControllerAnimated(true);
+                });
+
+                TabBarController.PresentModalViewController(ctrl, true);
+            }
+            else
+            {
+                _previousController = e.ViewController;
+            }
         }
     }
 }

@@ -6,11 +6,11 @@ using MobilePatterns.Models;
 
 namespace MobilePatterns.Controllers
 {
-    public class NewProjectViewController : DialogViewController
+    public class NewScrapbookViewController : DialogViewController
     {
         private Func<bool, Void> _action;
 
-        public NewProjectViewController(Func<bool, Void> action)
+        public NewScrapbookViewController(Func<bool, Void> action)
             : base(UITableViewStyle.Grouped, null, true)
         {
             _action = action;

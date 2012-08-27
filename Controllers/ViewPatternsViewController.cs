@@ -18,6 +18,25 @@ namespace MobilePatterns.Controllers
     {
         public Project Project { get; set; }
 
+        public LocalViewPatternsViewController()
+        {
+            var flex = new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace);
+            ToolbarItems = new UIBarButtonItem[] {
+                flex,
+                new UIBarButtonItem("Delete", UIBarButtonItemStyle.Done, (s, e) => DeleteImage()),
+                flex,
+            };
+        }
+
+        private void DeleteImage()
+        {
+            var cells = this.TableView.VisibleCells;
+            if (cells.Length == 0)
+                return;
+
+            var img = cells[0].Tag;
+        }
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -82,6 +101,10 @@ namespace MobilePatterns.Controllers
             _source = source;
             _cropButton = new UIBarButtonItem("Crop", UIBarButtonItemStyle.Bordered, CropImage);
             _addButton = new UIBarButtonItem("Add", UIBarButtonItemStyle.Bordered, SaveImage);
+
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
+                NavigationController.PopViewControllerAnimated(true);
+            });
         }
 
         public override void ViewDidLoad ()
@@ -162,7 +185,7 @@ namespace MobilePatterns.Controllers
                 UIGraphics.EndImageContext();
             }
 
-            var saveCtrl = new AddToProjectViewController(img);
+            var saveCtrl = new AddToScrapbookViewController(img);
             saveCtrl.Success = () => { IsCropping = false; };
             NavigationController.PushViewController(saveCtrl, true);
         }

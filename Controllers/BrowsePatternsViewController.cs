@@ -12,7 +12,7 @@ namespace MobilePatterns.Controllers
         public BrowsePatternsViewController(bool pushing = false)
             : base(UITableViewStyle.Plain, null, pushing)
         {
-            Title = "Browse";
+            Title = "Patterns";
             TabBarItem.Image = Images.Polaroid;
         }
 

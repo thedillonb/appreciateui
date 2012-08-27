@@ -7,18 +7,24 @@ using System.IO;
 
 namespace MobilePatterns.Controllers
 {
-    public class AddToProjectViewController : DialogViewController
+    public class AddToScrapbookViewController : DialogViewController
     {
         private UIImage _img;
         private static string SavePath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 
         public Action Success;
 
-        public AddToProjectViewController(UIImage img)
+        public AddToScrapbookViewController(UIImage img)
             : base (UITableViewStyle.Plain, null, true)
         {
             _img = img;
-            Title = "Add To Project";
+            Title = "Add To Scrapbook";
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            NavigationController.NavigationBar.Translucent = false;
         }
 
         public override void ViewDidLoad()
@@ -27,7 +33,7 @@ namespace MobilePatterns.Controllers
 
             //Add a new project
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentModalViewController(new UINavigationController(new NewProjectViewController((r) => {
+                PresentModalViewController(new UINavigationController(new NewScrapbookViewController((r) => {
                     DismissModalViewControllerAnimated(true);
                     if (r == true)
                         LoadTable();
@@ -44,8 +50,7 @@ namespace MobilePatterns.Controllers
             foreach (var p in projects)
             {
                 var project = p;
-                var element = new StyledStringElement(project.Name, () => Save(project))
-                                  { Accessory = UITableViewCellAccessory.DisclosureIndicator };
+                var element = new StyledStringElement(project.Name, () => Save(project));
                 section.Add(element);
             }
 

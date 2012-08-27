@@ -16,7 +16,7 @@ namespace MobilePatterns.Controllers
 {
     public class LocalViewPatternsViewController : PatternViewController
     {
-        public Project Project { get; set; }
+        public ProjectImage[] Images { get; set; }
 
         public LocalViewPatternsViewController()
         {
@@ -48,9 +48,8 @@ namespace MobilePatterns.Controllers
         {
             base.ViewDidLoad();
 
-            var images = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == Project.Id);
             var section = new Section();
-            foreach (var d in images)
+            foreach (var d in Images)
             {
                 var element = new LocalPatternImageElement(d);
                 section.Add(element);
@@ -188,7 +187,7 @@ namespace MobilePatterns.Controllers
                 UIGraphics.EndImageContext();
             }
 
-            var saveCtrl = new AddToScrapbookViewController(img);
+            var saveCtrl = new AddToScrapbookViewController(img, Title);
             saveCtrl.Success = () => { IsCropping = false; };
             NavigationController.PushViewController(saveCtrl, true);
         }

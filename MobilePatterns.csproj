@@ -121,6 +121,7 @@
     <Compile Include="Controllers\ScrapbookPatternsViewController.cs" />
     <Compile Include="Controllers\NewScrapbookViewController.cs" />
     <Compile Include="Controllers\AddToScrapbookViewController.cs" />
+    <Compile Include="Controllers\ScrapbookCategoryViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

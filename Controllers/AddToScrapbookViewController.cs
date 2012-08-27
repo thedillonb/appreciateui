@@ -10,14 +10,16 @@ namespace MobilePatterns.Controllers
     public class AddToScrapbookViewController : DialogViewController
     {
         private UIImage _img;
+        private string _category;
         private static string SavePath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 
         public Action Success;
 
-        public AddToScrapbookViewController(UIImage img)
+        public AddToScrapbookViewController(UIImage img, string category)
             : base (UITableViewStyle.Plain, null, true)
         {
             _img = img;
+            _category = category;
             Title = "Add To Scrapbook";
         }
 
@@ -74,7 +76,7 @@ namespace MobilePatterns.Controllers
             }
 
 
-            var pi = new ProjectImage() { ProjectId = project.Id, Path = path };
+            var pi = new ProjectImage() { ProjectId = project.Id, Path = path, Category = _category };
             Data.Database.Main.Insert(pi);
 
             if (Success != null)

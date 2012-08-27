@@ -13,6 +13,8 @@ namespace MobilePatterns.Models
 
         public string Path { get; set; }
 
+        public string Category { get; set; }
+
         public int Remove()
         {
             System.IO.File.Delete(this.Path);

@@ -10,11 +10,8 @@ namespace MobilePatterns.Controllers
         public ScrapbookPatternsViewController()
             : base (UITableViewStyle.Plain, null)
         {
-            Title = "Scrapbook";
+            Title = "Scrapbooks";
             TabBarItem.Image = Images.Tag;
-            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
-                NavigationController.PopViewControllerAnimated(true);
-            });
         }
 
         public override void ViewDidLoad()
@@ -43,7 +40,9 @@ namespace MobilePatterns.Controllers
                 var project = p;
                 var element = new ProjectElement(project);
                 element.Tapped += () => {
-                    NavigationController.PushViewController(new LocalViewPatternsViewController() 
+
+
+                    NavigationController.PushViewController(new ScrapbookCategoryViewController() 
                                                             { Project = project, Title = project.Name }, true);
                 };
                 section.Add(element);

@@ -70,7 +70,7 @@ namespace MobilePatterns
                     if (original == null)
                         return;
 
-                    var atsvc = new AddToScrapbookViewController(original);
+                    var atsvc = new AddToScrapbookViewController(original, null);
                     atsvc.Success = () => {
                         ctrl.DismissModalViewControllerAnimated(true);
                     };

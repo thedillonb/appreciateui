@@ -12,11 +12,12 @@ namespace MobilePatterns.Cells
 {
     public class LocalPatternImageElement : OwnerDrawnElement
     {
-        private ProjectImage _projectImage;
+        public ProjectImage ProjectImage { get; private set; }
+
         public LocalPatternImageElement(ProjectImage projectImage)
             : base(UITableViewCellStyle.Default, "myimage")
         {
-            _projectImage = projectImage;
+            ProjectImage = projectImage;
         }
 
         public override float Height(System.Drawing.RectangleF bounds)
@@ -31,8 +32,7 @@ namespace MobilePatterns.Cells
         public override UITableViewCell GetCell(UITableView tv)
         {
             var cell = base.GetCell(tv);
-            cell.ImageView.Image = UIImage.FromFile(_projectImage.Path);
-            cell.Tag = _projectImage.Id;
+            cell.ImageView.Image = UIImage.FromFile(ProjectImage.Path);
             cell.ImageView.Transform = CGAffineTransform.MakeRotation((float)Math.PI * 90f / 180f);
             return cell;
         }

@@ -14,7 +14,7 @@ namespace MobilePatterns.Controllers
             : base(UITableViewStyle.Grouped, null, true)
         {
             _action = action;
-            Title = "New Project";
+            Title = "New Scrapbook";
         }
 
         public override void ViewDidLoad()
@@ -26,11 +26,11 @@ namespace MobilePatterns.Controllers
             });
 
             var root = new RootElement(Title) {
-                new Section("Add A New Project") {
-                    new EntryElement("Name", "Project Name", "")
+                new Section("Add A New Scrapbook to keep collections similar mobile patterns") {
+                    new EntryElement("Name", "Scrapbook Name", "")
                 },
                 new Section() {
-                    new StyledStringElement("Create Project", CreateProject)
+                    new StyledStringElement("Create Scrapbook", CreateProject)
                 }
             };
 

@@ -30,11 +30,18 @@ namespace MobilePatterns.Controllers
 
         private void DeleteImage()
         {
-            var cells = this.TableView.VisibleCells;
-            if (cells.Length == 0)
+            var indexes = this.TableView.IndexPathsForVisibleRows;
+            if (indexes.Length == 0)
                 return;
 
-            var img = cells[0].Tag;
+            var element = Root[indexes[0].Section][indexes[0].Row];
+            var item = element as LocalPatternImageElement;
+            if (item == null)
+                return;
+
+            //Remove the image!
+            item.ProjectImage.Remove();
+            Root[indexes[0].Section].Remove(item);
         }
 
         public override void ViewDidLoad()
@@ -101,10 +108,6 @@ namespace MobilePatterns.Controllers
             _source = source;
             _cropButton = new UIBarButtonItem("Crop", UIBarButtonItemStyle.Bordered, CropImage);
             _addButton = new UIBarButtonItem("Add", UIBarButtonItemStyle.Bordered, SaveImage);
-
-            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
-                NavigationController.PopViewControllerAnimated(true);
-            });
         }
 
         public override void ViewDidLoad ()

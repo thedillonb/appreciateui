@@ -14,6 +14,11 @@ namespace MobilePatterns.Controllers
         {
             Title = "Patterns";
             TabBarItem.Image = Images.Polaroid;
+
+            
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
+                NavigationController.PopViewControllerAnimated(true);
+            });
         }
 
         public override void ViewDidLoad()

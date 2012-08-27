@@ -70,7 +70,12 @@ namespace MobilePatterns
                     if (original == null)
                         return;
 
-                    ctrl.PushViewController(new AddToScrapbookViewController(original), true);
+                    var atsvc = new AddToScrapbookViewController(original);
+                    atsvc.Success = () => {
+                        ctrl.DismissModalViewControllerAnimated(true);
+                    };
+
+                    ctrl.PushViewController(atsvc, true);
                 }, () => { 
                     ctrl.DismissModalViewControllerAnimated(true);
                 });

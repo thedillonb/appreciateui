@@ -12,6 +12,9 @@ namespace MobilePatterns.Controllers
         {
             Title = "Scrapbook";
             TabBarItem.Image = Images.Tag;
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
+                NavigationController.PopViewControllerAnimated(true);
+            });
         }
 
         public override void ViewDidLoad()

@@ -19,6 +19,10 @@ namespace MobilePatterns.Controllers
             _tapGesture = new UITapGestureRecognizer();
             _tapGesture.NumberOfTapsRequired = 1;
             _tapGesture.AddTarget(ShowToolbars);
+
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
+                NavigationController.PopViewControllerAnimated(true);
+            });
         }
 
         private void ShowToolbars()

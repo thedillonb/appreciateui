@@ -12,6 +12,8 @@ namespace MobilePatterns.Controllers
         private UIImage _img;
         private static string SavePath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 
+        public Action Success;
+
         public AddToProjectViewController(UIImage img)
             : base (UITableViewStyle.Plain, null, true)
         {
@@ -69,6 +71,9 @@ namespace MobilePatterns.Controllers
 
             var pi = new ProjectImage() { ProjectId = project.Id, Path = path };
             Data.Database.Main.Insert(pi);
+
+            if (Success != null)
+                Success();
 
             //Return to the previous controller
             NavigationController.PopViewControllerAnimated(true);

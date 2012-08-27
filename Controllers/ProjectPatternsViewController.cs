@@ -107,8 +107,8 @@ namespace MobilePatterns.Controllers
                     var alert = new UIAlertView();
                     alert.Title = "Confirm?";
                     alert.Message = "Are you sure you want to delete this project and all " + count + " images?";
-                    var ok = alert.AddButton("Yes");
                     alert.CancelButtonIndex = alert.AddButton("No");
+                    var ok = alert.AddButton("Yes");
 
                     alert.Clicked += (sender, e) => {
                         if (e.ButtonIndex == ok)

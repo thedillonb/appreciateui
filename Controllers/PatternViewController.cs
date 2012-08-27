@@ -18,20 +18,23 @@ namespace MobilePatterns.Controllers
 
             _tapGesture = new UITapGestureRecognizer();
             _tapGesture.NumberOfTapsRequired = 1;
-            _tapGesture.AddTarget(() => {
-                NavigationController.SetNavigationBarHidden(false, true);
-                if (ToolbarItems != null && ToolbarItems.Length > 0)
-                {
-                    NavigationController.SetToolbarHidden(false, true);
-                }
-            });
+            _tapGesture.AddTarget(ShowToolbars);
+        }
+
+        private void ShowToolbars()
+        {
+            NavigationController.SetNavigationBarHidden(!NavigationController.NavigationBarHidden, true);
+            if (ToolbarItems != null && ToolbarItems.Length > 0)
+            {
+                NavigationController.SetToolbarHidden(!NavigationController.ToolbarHidden, true);
+            }
         }
 
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
 
-            this.TableView.Frame = new System.Drawing.RectangleF(-80, 80, UIScreen.MainScreen.Bounds.Height, UIScreen.MainScreen.Bounds.Width);
+            this.TableView.Frame = new System.Drawing.RectangleF(-79, 81, UIScreen.MainScreen.Bounds.Height, UIScreen.MainScreen.Bounds.Width);
             this.View.AddSubview(this.TableView);
             this.TableView.Transform = CGAffineTransform.MakeRotation((float)Math.PI * -90f / 180f);
             this.TableView.ShowsHorizontalScrollIndicator = false;

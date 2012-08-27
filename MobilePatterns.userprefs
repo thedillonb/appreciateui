@@ -1,20 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Data/Database.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/NewProjectViewController.cs">
     <Files>
-      <File FileName="Data/Database.cs" Line="4" Column="1" />
+      <File FileName="Controllers/PatternViewController.cs" Line="50" Column="67" />
+      <File FileName="Controllers/NewProjectViewController.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="MobilePatterns" expanded="True">
-            <Node name="Controllers" expanded="True" />
-            <Node name="Data" expanded="True">
-              <Node name="Database.cs" selected="True" />
-            </Node>
+            <Node name="References" expanded="True" />
             <Node name="Utils" expanded="True" />
           </Node>
-          <Node name="MonoTouch.Dialog" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
@@ -23,9 +20,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/Controllers/BrowsePatternsViewController.cs" line="23" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

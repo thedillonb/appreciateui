@@ -1,14 +1,12 @@
 using System;
-using System.Web;
-using System.Net;
-using System.IO;
 using System.Collections.Generic;
+using System.Net;
 
 namespace MobilePatterns.Data
 {
-    public class PattrnData : PatternSource
+    public class MobilePatterns : PatternSource
     {
-        public static Uri BaseUrl = new Uri("http://pttrns.com");
+        public static Uri BaseUrl = new Uri("http://mobile-patterns.com/");
 
         public List<WebMenu> GetMenus()
         {
@@ -21,7 +19,7 @@ namespace MobilePatterns.Data
                 var html = new HtmlAgilityPack.HtmlDocument();
                 html.Load(r);
 
-                var nodes = html.DocumentNode.SelectNodes("//div[@id='container']/nav/ul[2]/li/a");
+                var nodes = html.DocumentNode.SelectNodes("//div[@id='site_nav']/ul/li/span/a");
                 foreach (var n in nodes)
                 {
                     try
@@ -29,7 +27,7 @@ namespace MobilePatterns.Data
                         var uri = new Uri(BaseUrl, n.Attributes["href"].Value);
                         models.Add(new WebMenu() { Name = n.InnerText, Uri = uri, Source = this });
                     }
-                    catch 
+                    catch
                     {
                     }
                 }
@@ -49,24 +47,20 @@ namespace MobilePatterns.Data
                 var html = new HtmlAgilityPack.HtmlDocument();
                 html.Load(r);
 
-                var nodes = html.DocumentNode.SelectNodes("//div[@id='main']/section/a/img");
+                var nodes = html.DocumentNode.SelectNodes("//div[@class='media photo portrait']/p/img");
                 foreach (var n in nodes)
                 {
                     try
                     {
-                        Uri url = null;
-                        if (Utils.Util.IsRetina && n.Attributes.Contains("data-pttrns-retina"))
-                        {
-                            url = new Uri(BaseUrl, n.Attributes["data-pttrns-retina"].Value);
-                        }
+                        //Hidden in the params
+                        var param = n.Attributes["params"].Value;
+                        param = param.Substring(23);
+                        param = param.Substring(0, param.Length - 7);
 
-                        //Fallback
-                        if (url == null)
-                            url = new Uri(BaseUrl, n.Attributes["src"].Value);
-
+                        Uri url = new Uri(param);
                         models.Add(new PatternImages() { Image = url.ToString() });
                     }
-                    catch 
+                    catch
                     {
                     }
                 }

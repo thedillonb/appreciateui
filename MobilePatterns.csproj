@@ -23,6 +23,8 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>true</MtouchProfiling>
     <MtouchLink>None</MtouchLink>
+    <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -45,6 +47,10 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>true</MtouchProfiling>
+    <CodesignProvision>7C4BC714-1865-4FCA-8D6B-18BFB8281226</CodesignProvision>
+    <IpaPackageName />
+    <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -54,6 +60,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -80,13 +87,13 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="System.Web.Services" />
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>Resources\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPackMT">
+      <HintPath>Resources\HtmlAgilityPackMT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
-    <None Include="Resources\HtmlAgilityPack.dll" />
+    <None Include="Resources\HtmlAgilityPackMT.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDelegate.cs" />
@@ -108,6 +115,12 @@
     <Compile Include="Controllers\NewProjectViewController.cs" />
     <Compile Include="Images\Images.cs" />
     <Compile Include="Utils\MbProgressHud.cs" />
+    <Compile Include="Utils\Util.cs" />
+    <Compile Include="Controllers\CropViewController.cs" />
+    <Compile Include="Views\CropView.cs" />
+    <Compile Include="Data\MobilePatterns.cs" />
+    <Compile Include="Data\PatternSource.cs" />
+    <Compile Include="Data\InspiredUI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -118,6 +131,7 @@
     <Folder Include="Controllers\" />
     <Folder Include="Resources\" />
     <Folder Include="Cells\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">

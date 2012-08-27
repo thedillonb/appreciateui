@@ -33,9 +33,9 @@ namespace MobilePatterns.Utils
     //   http://stackoverflow.com/questions/487173
     // (Follow the links)
     //
-    public static class Camera
+    public class Camera : UIImagePickerController
     {
-        static UIImagePickerController picker;
+        static Camera picker;
         static Action<NSDictionary> _callback;
         static Action _canceled;
         
@@ -44,8 +44,17 @@ namespace MobilePatterns.Utils
             if (picker != null)
                 return;
             
-            picker = new UIImagePickerController ();
-            picker.Delegate = new CameraDelegate ();
+            picker = new Camera ();
+        }
+
+        protected Camera()
+        {
+        }
+
+        public override void ViewDidLoad ()
+        {
+            base.ViewDidLoad ();
+            Delegate = new CameraDelegate ();
         }
         
         class CameraDelegate : UIImagePickerControllerDelegate {
@@ -65,6 +74,11 @@ namespace MobilePatterns.Utils
                 if (cb != null)
                     cb();
             }
+
+            public override void WillShowViewController (UINavigationController navigationController, UIViewController viewController, bool animated)
+            {
+                navigationController.NavigationBar.BarStyle = UIBarStyle.Default;
+            }
         }
         
         public static void TakePicture (UIViewController parent, Action<NSDictionary> callback)
@@ -82,23 +96,6 @@ namespace MobilePatterns.Utils
             _callback = callback;
             _canceled = canceled;
             return picker;
-        }
-
-        public static void SelectOrTakePicture(UIViewController parent, Action<NSDictionary> callback)
-        {
-            var action = new UIActionSheet();
-            action.AddButton("Take Photo");
-            action.AddButton("Choose Existing");
-            action.CancelButtonIndex = action.AddButton("Cancel");
-
-            action.Clicked += (sender, e) => {
-                if (e.ButtonIndex == 0)
-                    TakePicture(parent, callback);
-                else if (e.ButtonIndex == 1)
-                    SelectPicture(parent, callback);
-            };
-
-            action.ShowInView(parent.View);
         }
     }
 }

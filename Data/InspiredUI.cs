@@ -1,14 +1,12 @@
 using System;
-using System.Web;
 using System.Net;
-using System.IO;
 using System.Collections.Generic;
 
 namespace MobilePatterns.Data
 {
-    public class PattrnData : PatternSource
+    public class InspiredUI : PatternSource
     {
-        public static Uri BaseUrl = new Uri("http://pttrns.com");
+        public static Uri BaseUrl = new Uri("http://inspired-ui.com/");
 
         public List<WebMenu> GetMenus()
         {
@@ -21,7 +19,7 @@ namespace MobilePatterns.Data
                 var html = new HtmlAgilityPack.HtmlDocument();
                 html.Load(r);
 
-                var nodes = html.DocumentNode.SelectNodes("//div[@id='container']/nav/ul[2]/li/a");
+                var nodes = html.DocumentNode.SelectNodes("//ul[@id='tags']/li/a");
                 foreach (var n in nodes)
                 {
                     try
@@ -49,21 +47,12 @@ namespace MobilePatterns.Data
                 var html = new HtmlAgilityPack.HtmlDocument();
                 html.Load(r);
 
-                var nodes = html.DocumentNode.SelectNodes("//div[@id='main']/section/a/img");
+                var nodes = html.DocumentNode.SelectNodes("//div[@class='post']/div/img");
                 foreach (var n in nodes)
                 {
                     try
                     {
-                        Uri url = null;
-                        if (Utils.Util.IsRetina && n.Attributes.Contains("data-pttrns-retina"))
-                        {
-                            url = new Uri(BaseUrl, n.Attributes["data-pttrns-retina"].Value);
-                        }
-
-                        //Fallback
-                        if (url == null)
-                            url = new Uri(BaseUrl, n.Attributes["src"].Value);
-
+                        Uri url = new Uri(n.Attributes["src"].Value);
                         models.Add(new PatternImages() { Image = url.ToString() });
                     }
                     catch 

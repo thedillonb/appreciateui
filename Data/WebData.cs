@@ -16,6 +16,7 @@ namespace MobilePatterns.Data
     {
         public string Name { get; set; }
         public Uri Uri { get; set; }
+        public PatternSource Source { get; set; }
     }
 }
 

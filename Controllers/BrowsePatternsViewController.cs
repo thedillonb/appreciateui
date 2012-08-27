@@ -29,7 +29,8 @@ namespace MobilePatterns.Controllers
 
             //Do the loading
             ThreadPool.QueueUserWorkItem(delegate {
-                var data = PattrnData.GetMenus();
+                var patternSource = new MobilePatterns.Data.InspiredUI();
+                var data = patternSource.GetMenus();
                 var section = new Section();
 
                 BeginInvokeOnMainThread(() => {
@@ -41,7 +42,7 @@ namespace MobilePatterns.Controllers
                 {
                     var menu = d;
                     var element = new StyledStringElement(d.Name, () => {
-                        NavigationController.PushViewController(new WebViewPatternsViewController(menu.Uri)
+                        NavigationController.PushViewController(new WebViewPatternsViewController(patternSource, menu.Uri)
                                                                 { Title = menu.Name }
                                                                 , true);
                     }) { Accessory = UITableViewCellAccessory.DisclosureIndicator };

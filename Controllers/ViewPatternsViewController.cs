@@ -10,6 +10,7 @@ using MobilePatterns.Cells;
 using System.Collections.Generic;
 using MobilePatterns.Models;
 using MonoTouch.CoreGraphics;
+using MobilePatterns.Views;
 
 namespace MobilePatterns.Controllers
 {
@@ -38,10 +39,49 @@ namespace MobilePatterns.Controllers
     public class WebViewPatternsViewController : PatternViewController
     {
         private Uri _uri;
+        private PatternSource _source;
+        private UIBarButtonItem _cropButton, _addButton;
+        private CropView _crop;
+        private bool _isCropping;
 
-        public WebViewPatternsViewController(Uri uri)
+        private bool IsCropping
+        {
+            get { return _isCropping; }
+            set
+            {
+                if (_isCropping == value)
+                    return;
+
+                _isCropping = value;
+                if (_isCropping)
+                {
+                    _crop = new CropView();
+                    _crop.Frame = new RectangleF(100, 100, 100, 100);
+                    this.View.AddSubview(_crop);
+                }
+                else
+                {
+                    _crop.RemoveFromSuperview();
+                    _crop.Dispose();
+                    _crop = null;
+                }
+
+
+                _cropButton.Title = _isCropping ? "Exit Crop" : "Crop";
+                _addButton.Title = _isCropping ? "Add Crop" : "Add";
+
+                TableView.ScrollEnabled = !_isCropping;
+                NavigationController.SetNavigationBarHidden(true, true);
+                NavigationController.SetToolbarHidden(true, true);
+            }
+        }
+
+        public WebViewPatternsViewController(PatternSource source, Uri uri)
         {
             _uri = uri;
+            _source = source;
+            _cropButton = new UIBarButtonItem("Crop", UIBarButtonItemStyle.Bordered, CropImage);
+            _addButton = new UIBarButtonItem("Add", UIBarButtonItemStyle.Bordered, SaveImage);
         }
 
         public override void ViewDidLoad ()
@@ -51,7 +91,9 @@ namespace MobilePatterns.Controllers
             //Save the current item you're looking at!
             ToolbarItems = new UIBarButtonItem[] {
                 new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-                new UIBarButtonItem("Add", UIBarButtonItemStyle.Bordered, SaveImage),
+                _cropButton,
+                _addButton,
+                new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
             };
 
             var hud = new RedPlum.MBProgressHUD(View.Frame)
@@ -63,7 +105,7 @@ namespace MobilePatterns.Controllers
 
             //Do the loading
             ThreadPool.QueueUserWorkItem(delegate {
-                var data = PattrnData.GetPatterns(_uri);
+                var data = _source.GetPatterns(_uri);
 
                 BeginInvokeOnMainThread(() => {
                     hud.Hide(true);
@@ -82,21 +124,47 @@ namespace MobilePatterns.Controllers
 
                 BeginInvokeOnMainThread(() => { Root = root; });
             });
+
+            this.View.BackgroundColor = UIColor.Red;
+        }
+
+        private void CropImage(object sender, EventArgs args)
+        {
+            var cells = this.TableView.VisibleCells;
+            if (cells.Length == 0 || cells[0].ImageView.Image == null)
+                return;
+
+
+            IsCropping = !IsCropping;
         }
 
         private void SaveImage(object sender, EventArgs args)
         {
-            //var action = new UIActionSheet();
-            //action.CancelButtonIndex = action.AddButton("Cancel");
-            //action.AddButton("
-
             var cells = this.TableView.VisibleCells;
             if (cells.Length == 0 || cells[0].ImageView.Image == null)
                 return;
 
             var img = cells[0].ImageView.Image;
 
-            NavigationController.PushViewController(new AddToProjectViewController(img), true);
+            if (IsCropping)
+            {
+                var s = UIScreen.MainScreen.Scale;
+                var f = new RectangleF(s * _crop.Frame.X, s * _crop.Frame.Y, s * _crop.Frame.Width, s * _crop.Frame.Height);
+
+                UIGraphics.BeginImageContext(f.Size);
+                var context = UIGraphics.GetCurrentContext();
+                context.ScaleCTM(1.0f, -1.0f);
+                context.TranslateCTM(0, -f.Size.Height);
+
+                var cgImage = img.CGImage.WithImageInRect(f);
+                context.DrawImage(new RectangleF(new PointF(0, 0), f.Size), cgImage);
+                img = UIGraphics.GetImageFromCurrentImageContext();
+                UIGraphics.EndImageContext();
+            }
+
+            var saveCtrl = new AddToProjectViewController(img);
+            saveCtrl.Success = () => { IsCropping = false; };
+            NavigationController.PushViewController(saveCtrl, true);
         }
     }
 }

@@ -15,12 +15,17 @@ namespace MobilePatterns.Controllers
         {
         }
 
-        public override void ViewDidAppear (bool animated)
+        public override void ViewWillAppear(bool animated)
         {
-            base.ViewDidAppear (animated);
+            base.ViewWillAppear(animated);
 
             var scraps = new Dictionary<string, List<ProjectImage>>(StringComparer.InvariantCultureIgnoreCase);
             var images = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == Project.Id);
+
+            if (images.Count() == 0)
+            {
+                NavigationController.PopViewControllerAnimated(true);
+            }
 
             foreach (var img in images)
             {

@@ -39,12 +39,14 @@ namespace MobilePatterns.Controllers
             {
                 var project = p;
                 var element = new ProjectElement(project);
-                element.Tapped += () => {
-
-
-                    NavigationController.PushViewController(new ScrapbookCategoryViewController() 
-                                                            { Project = project, Title = project.Name }, true);
-                };
+                if (Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == p.Id).Count() > 0)
+                {
+                    element.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+                    element.Tapped += () => {
+                        NavigationController.PushViewController(new ScrapbookCategoryViewController() 
+                                                                { Project = project, Title = project.Name }, true);
+                    };
+                }
                 section.Add(element);
             }
 
@@ -66,7 +68,6 @@ namespace MobilePatterns.Controllers
                 Project = p;
                 var count = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == p.Id).Count();
                 this.Value = count.ToString();
-                this.Accessory = UITableViewCellAccessory.DisclosureIndicator;
             }
         }
 

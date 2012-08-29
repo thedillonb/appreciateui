@@ -37,7 +37,7 @@ namespace MobilePatterns
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            UIApplication.SharedApplication.SetStatusBarHidden(true, true); 
+
 
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
             //SlideController = new SlideoutNavigationController();

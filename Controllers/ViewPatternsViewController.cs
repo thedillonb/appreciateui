@@ -42,6 +42,12 @@ namespace MobilePatterns.Controllers
             //Remove the image!
             item.ProjectImage.Remove();
             Root[indexes[0].Section].Remove(item);
+
+            //If you've deleted them all return to the other screen.
+            if (Root[indexes[0].Section].Count == 0)
+            {
+                NavigationController.PopViewControllerAnimated(true);
+            }
         }
 
         public override void ViewDidLoad()

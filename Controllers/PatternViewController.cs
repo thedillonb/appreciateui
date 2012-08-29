@@ -63,6 +63,8 @@ namespace MobilePatterns.Controllers
             base.ViewDidAppear(animated);
             NavigationController.SetNavigationBarHidden(true, true);
             NavigationController.SetToolbarHidden(true, true);
+            UIApplication.SharedApplication.SetStatusBarHidden(true, true); 
+            this.TableView.Frame = View.Bounds;
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -72,6 +74,10 @@ namespace MobilePatterns.Controllers
             NavigationController.Toolbar.Translucent = false;
             NavigationController.SetNavigationBarHidden(false, true);
             NavigationController.SetToolbarHidden(true, true);
+            UIApplication.SharedApplication.SetStatusBarHidden(false, true); 
+            var f = NavigationController.NavigationBar.Frame;
+            f.Y += 20f;
+            NavigationController.NavigationBar.Frame = f;
         }
 
         protected override void DraggingStarted ()

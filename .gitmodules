@@ -1,0 +1,6 @@
+[submodule "MonoTouch.Dialog"]
+	path = MonoTouch.Dialog
+	url = https://github.com/thedillonb/MonoTouch.Dialog.git
+[submodule "RestSharp"]
+	path = RestSharp
+	url = https://github.com/thedillonb/RestSharp.git

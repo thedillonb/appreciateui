@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1B39FE9D-F25D-4456-80D0-9A741B5E36A6}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MobilePatterns</RootNamespace>
+    <AssemblyName>SwipeFile</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchProfiling>True</MtouchProfiling>
+    <MtouchLink>None</MtouchLink>
+    <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchProfiling>True</MtouchProfiling>
+    <CodesignProvision>7C4BC714-1865-4FCA-8D6B-18BFB8281226</CodesignProvision>
+    <IpaPackageName />
+    <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Developer: Dillon Buchanan (BD3M6C4CAK)</CodesignKey>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchUseLlvm>True</MtouchUseLlvm>
+    <MtouchUseThumb>True</MtouchUseThumb>
+    <IpaPackageName />
+    <MtouchI18n />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <BuildIpa>True</BuildIpa>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Web.Services" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Data\Database.cs" />
+    <Compile Include="Utils\Camera.cs" />
+    <Compile Include="Controllers\AddPatternViewController.cs" />
+    <Compile Include="Data\WebData.cs" />
+    <Compile Include="Models\ProjectImage.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Images\Images.cs" />
+    <Compile Include="Utils\MbProgressHud.cs" />
+    <Compile Include="Utils\Util.cs" />
+    <Compile Include="Views\CropView.cs" />
+    <Compile Include="Controllers\ScrapbookPatternsViewController.cs" />
+    <Compile Include="Controllers\NewScrapbookViewController.cs" />
+    <Compile Include="Controllers\AddToScrapbookViewController.cs" />
+    <Compile Include="Controllers\ScrapbookCategoryViewController.cs" />
+    <Compile Include="Data\SQLite.cs" />
+    <Compile Include="Cells\StyledElement.cs" />
+    <Compile Include="Controllers\BaseDialogViewController.cs" />
+    <Compile Include="Cells\PatternCell.cs" />
+    <Compile Include="Controllers\PatternViewController.cs" />
+    <Compile Include="Controllers\PatternCategoriesViewController.cs" />
+    <Compile Include="Controllers\WebPatternsViewController.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Images\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Cells\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Picture%402x.png" />
+    <Content Include="Images\Picture.png" />
+    <Content Include="Images\Polaroid%402x.png" />
+    <Content Include="Images\Polaroid.png" />
+    <Content Include="Images\Bookmark.png" />
+    <Content Include="Images\Bookmark%402x.png" />
+    <Content Include="Images\Magnifier.png" />
+    <Content Include="Images\Magnifer%402x.png" />
+    <Content Include="Images\Controls\navbar.png" />
+    <Content Include="Images\Controls\navbar%402x.png" />
+    <Content Include="Images\Controls\tabbar.png" />
+    <Content Include="Images\Controls\tabbar%402x.png" />
+    <Content Include="Images\background.png" />
+    <Content Include="Images\background%402x.png" />
+    <Content Include="Images\tablecell.png" />
+    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowLeft%402x.png" />
+    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowLeft.png" />
+    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowRight.png" />
+    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowRight%402x.png" />
+    <Content Include="MWPhotoBrowser.bundle\images\Checkmark%402x.png" />
+    <Content Include="MWPhotoBrowser.bundle\images\Checkmark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
+      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
+      <Name>MonoTouch.Dialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RestSharp\RestSharp.MonoTouch\RestSharp.MonoTouch.csproj">
+      <Project>{E9A9D1C5-4E06-4D31-9809-A97188C70B2C}</Project>
+      <Name>RestSharp.MonoTouch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CollectionViewBinding\CollectionViewBinding.csproj">
+      <Project>{A8C50A68-A01E-47F9-9914-8BF236EECBAA}</Project>
+      <Name>CollectionViewBinding</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhotoBrowser\PhotoBrowser.csproj">
+      <Project>{BAB4D1D9-A003-4380-9D61-A1D42C8650A0}</Project>
+      <Name>PhotoBrowser</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

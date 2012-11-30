@@ -1,30 +1,38 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ScrapbookCategoryViewController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CollectionViewBinding/libCollectionViewUniversal.linkwith.cs">
     <Files>
-      <File FileName="AppDelegate.cs" Line="73" Column="53" />
-      <File FileName="Utils/Camera.cs" Line="69" Column="1" />
-      <File FileName="Controllers/AddToScrapbookViewController.cs" Line="66" Column="26" />
-      <File FileName="Controllers/NewScrapbookViewController.cs" Line="33" Column="62" />
-      <File FileName="Controllers/ScrapbookPatternsViewController.cs" Line="17" Column="1" />
-      <File FileName="Controllers/ViewPatternsViewController.cs" Line="44" Column="46" />
-      <File FileName="Controllers/PatternViewController.cs" Line="23" Column="13" />
-      <File FileName="Controllers/BrowsePatternsViewController.cs" Line="21" Column="16" />
-      <File FileName="Cells/PatternImageElement.cs" Line="16" Column="9" />
-      <File FileName="Controllers/ScrapbookCategoryViewController.cs" Line="20" Column="26" />
+      <File FileName="MobilePatterns/Cells/PatternCell.cs" Line="56" Column="88" />
+      <File FileName="PhotoBrowser/libMWPhotoBrowser.arm7.linkwith.cs" Line="4" Column="50" />
+      <File FileName="MobilePatterns/Controllers/PatternViewController.cs" Line="8" Column="7" />
+      <File FileName="PhotoBrowser/libMWPhotoBrowserUniversal.linkwith.cs" Line="5" Column="1" />
+      <File FileName="CollectionViewBinding/libCollectionViewUniversal.linkwith.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="MobilePatterns" expanded="True">
-            <Node name="Controllers" expanded="True">
-              <Node name="ScrapbookCategoryViewController.cs" selected="True" />
+          <Node name="API" expanded="True">
+            <Node name="CollectionViewBinding" expanded="True">
+              <Node name="libCollectionViewUniversal.a" expanded="True">
+                <Node name="libCollectionViewUniversal.linkwith.cs" selected="True" />
+              </Node>
             </Node>
+            <Node name="PhotoBrowser" expanded="True">
+              <Node name="libMWPhotoBrowserUniversal.a" expanded="True" />
+            </Node>
+          </Node>
+          <Node name="MobilePatterns" expanded="True">
+            <Node name="Cells" expanded="True" />
+            <Node name="Controllers" expanded="True" />
+            <Node name="Data" expanded="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

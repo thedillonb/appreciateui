@@ -151,6 +151,10 @@
     <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowRight%402x.png" />
     <Content Include="MWPhotoBrowser.bundle\images\Checkmark%402x.png" />
     <Content Include="MWPhotoBrowser.bundle\images\Checkmark.png" />
+    <Content Include="Images\Controls\back_button.png" />
+    <Content Include="Images\Controls\back_button%402x.png" />
+    <Content Include="Images\Controls\button.png" />
+    <Content Include="Images\Controls\button%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">

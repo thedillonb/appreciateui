@@ -15,6 +15,8 @@ namespace MobilePatterns
         {
             public static UIImage Tabbar = UIImage.FromBundle("Images/Controls/tabbar");
             public static UIImage Navbar = UIImage.FromBundle("Images/Controls/navbar");
+            public static UIImage BackButton = UIImage.FromBundle("Images/Controls/back_button");
+            public static UIImage Button = UIImage.FromBundle("Images/Controls/button");
         }
     }
 }

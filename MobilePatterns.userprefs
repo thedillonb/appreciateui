@@ -1,21 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CollectionViewBinding/libCollectionViewUniversal.linkwith.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MobilePatterns/AppDelegate.cs">
     <Files>
-      <File FileName="MobilePatterns/Cells/PatternCell.cs" Line="56" Column="88" />
-      <File FileName="PhotoBrowser/libMWPhotoBrowser.arm7.linkwith.cs" Line="4" Column="50" />
-      <File FileName="MobilePatterns/Controllers/PatternViewController.cs" Line="8" Column="7" />
-      <File FileName="PhotoBrowser/libMWPhotoBrowserUniversal.linkwith.cs" Line="5" Column="1" />
-      <File FileName="CollectionViewBinding/libCollectionViewUniversal.linkwith.cs" Line="1" Column="1" />
+      <File FileName="MobilePatterns/Controllers/WebPatternsViewController.cs" Line="145" Column="37" />
+      <File FileName="MobilePatterns/Data/WebData.cs" Line="44" Column="91" />
+      <File FileName="MobilePatterns/Cells/PatternCell.cs" Line="124" Column="1" />
+      <File FileName="MobilePatterns/Images/Images.cs" Line="19" Column="86" />
+      <File FileName="MobilePatterns/AppDelegate.cs" Line="44" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="API" expanded="True">
             <Node name="CollectionViewBinding" expanded="True">
-              <Node name="libCollectionViewUniversal.a" expanded="True">
-                <Node name="libCollectionViewUniversal.linkwith.cs" selected="True" />
-              </Node>
+              <Node name="libCollectionViewUniversal.a" expanded="True" />
+            </Node>
+            <Node name="MonoTouch.Dialog" expanded="True">
+              <Node name="Utilities" expanded="True" />
             </Node>
             <Node name="PhotoBrowser" expanded="True">
               <Node name="libMWPhotoBrowserUniversal.a" expanded="True" />
@@ -25,6 +26,7 @@
             <Node name="Cells" expanded="True" />
             <Node name="Controllers" expanded="True" />
             <Node name="Data" expanded="True" />
+            <Node name="AppDelegate.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -37,7 +39,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MobilePatterns/Cells/PatternCell.cs" line="124" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

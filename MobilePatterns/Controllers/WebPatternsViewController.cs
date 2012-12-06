@@ -55,7 +55,7 @@ namespace MobilePatterns.Controllers
         protected override void OnAssignObject (PatternCell view, int index)
         {
             if (index < Images.Length)
-                view.FillViewWithObject(UIImage.FromFile(Images[index].Path));
+                view.FillWithLocal(Images[index].Path);
         }
 
         protected override PhotoBrowser.MWPhoto OnGetPhoto (int index)
@@ -142,7 +142,7 @@ namespace MobilePatterns.Controllers
         protected override void OnAssignObject (PatternCell view, int index)
         {
             if (index < _screenshots.Count)
-                view.FillViewWithObject(_screenshots[index].Url);
+                view.FillViewWithObject(_screenshots[index].Thumb);
         }
 
         protected override PhotoBrowser.MWPhoto OnGetPhoto (int index)

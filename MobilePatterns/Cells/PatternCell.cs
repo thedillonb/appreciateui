@@ -4,6 +4,7 @@ using MonoTouch.UIKit;
 using System.Drawing;
 using MobilePatterns.Data;
 using MonoTouch.Foundation;
+using System.Threading;
 
 namespace MobilePatterns.Cells
 {
@@ -65,14 +66,15 @@ namespace MobilePatterns.Cells
         
         public void FillViewWithObject(string sc)
         {
+            AddSpinner();
+
             _requestUri = new Uri(sc);
             UpdatedImage(_requestUri);
+        }
 
+        private void AddSpinner()
+        {
             RemoveSpinner();
-
-            //Theres already an image in teh cache
-            if (_imageView.Image != null)
-                return;
 
             _activity = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.Gray);
             _activity.Frame = new RectangleF(0, 0, 48, 48);
@@ -81,11 +83,15 @@ namespace MobilePatterns.Cells
             this.AddSubview(_activity);
             _activity.StartAnimating();
         }
+
+        public void FillWithLocal(string path)
+        {
+            _imageView.Image = UIImage.FromFile(path);
+        }
         
         
         public override void FillViewWithObject (MonoTouch.Foundation.NSObject obj)
         {
-            _imageView.Image = obj as UIImage;
         }
 
         private void RemoveSpinner()
@@ -106,19 +112,25 @@ namespace MobilePatterns.Cells
             if (uri != _requestUri)
                 return;
 
-            _imageView.Image = MonoTouch.Dialog.Utilities.ImageLoader.DefaultRequestImage(uri, this);
-            if (_imageView.Image == null)
+            var img = MonoTouch.Dialog.Utilities.ImageLoader.DefaultRequestImage(uri, this);
+            if (img == null)
                 return;
 
             RemoveSpinner();
-            
+            _imageView.Image = img;
+
+            if (img.Size.Width == 0)
+            {
+                throw new Exception("Shit");
+            }
+
             //Fade the image in
-            _imageView.Alpha = 0;
-            UIView.BeginAnimations("imageFade");
-            UIView.SetAnimationCurve(UIViewAnimationCurve.EaseInOut);
-            UIView.SetAnimationDuration(0.3);
-            _imageView.Alpha = 1;
-            UIView.CommitAnimations();
+//            _imageView.Alpha = 0;
+//            UIView.BeginAnimations("imageFade");
+//            UIView.SetAnimationCurve(UIViewAnimationCurve.EaseInOut);
+//            UIView.SetAnimationDuration(0.3);
+//            _imageView.Alpha = 1;
+//            UIView.CommitAnimations();
         }
     }
 

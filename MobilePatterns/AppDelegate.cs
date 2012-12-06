@@ -39,8 +39,12 @@ namespace MobilePatterns
         {
             //Set the status bar
             UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackOpaque, false);
+
+            System.IO.Directory.Delete(System.IO.Path.Combine(System.IO.Path.Combine(Environment.GetFolderPath (Environment.SpecialFolder.Personal), ".."), "Library/Caches/Pictures.MonoTouch.Dialog/"), true);
             
             //Set the theming
+            UIBarButtonItem.Appearance.SetBackButtonBackgroundImage(Images.Controls.BackButton.CreateResizableImage(new UIEdgeInsets(0, 0, 0, -5)), UIControlState.Normal, UIBarMetrics.Default);
+            UIBarButtonItem.Appearance.SetBackgroundImage(Images.Controls.Button, UIControlState.Normal, UIBarMetrics.Default);
             UINavigationBar.Appearance.SetBackgroundImage(Images.Controls.Navbar.CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0)), UIBarMetrics.Default);
             UITabBar.Appearance.BackgroundImage = Images.Controls.Tabbar.CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0));
             UIBarButtonItem.Appearance.TintColor = UIColor.FromRGBA(.16f, .16f, .16f, 0.9f);

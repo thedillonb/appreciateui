@@ -13,11 +13,14 @@ namespace MobilePatterns.Models
 
         public string Path { get; set; }
 
+        public string ThumbPath { get; set; }
+
         public string Category { get; set; }
 
         public int Remove()
         {
             System.IO.File.Delete(this.Path);
+            System.IO.File.Delete(this.ThumbPath);
             return Data.Database.Main.Delete(this);
         }
     }

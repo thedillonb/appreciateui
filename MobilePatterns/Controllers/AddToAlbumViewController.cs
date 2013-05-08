@@ -7,7 +7,7 @@ using System.IO;
 
 namespace MobilePatterns.Controllers
 {
-    public class AddToScrapbookViewController : DialogViewController
+    public class AddToAlbumViewController : DialogViewController
     {
         private UIImage _img;
         private string _category;
@@ -15,18 +15,21 @@ namespace MobilePatterns.Controllers
 
         public Action Success;
 
-        public AddToScrapbookViewController(UIImage img, string category)
+        public AddToAlbumViewController(UIImage img, string category)
             : base (UITableViewStyle.Plain, null, true)
         {
             _img = img;
             _category = category;
-            Title = "Add To Scrapbook";
+            Title = "Add";
         }
 
-        public override void ViewDidAppear(bool animated)
+        public override void ViewWillAppear (bool animated)
         {
-            base.ViewDidAppear(animated);
-            NavigationController.NavigationBar.Translucent = false;
+            base.ViewWillAppear (animated);
+            if (MobilePatterns.Utils.Util.iOSVersion.Item1 < 6)
+                UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackOpaque, false);
+            else
+                UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackTranslucent, false);
         }
 
         public override void ViewDidLoad()
@@ -35,7 +38,7 @@ namespace MobilePatterns.Controllers
 
             //Add a new project
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentModalViewController(new UINavigationController(new NewScrapbookViewController((r) => {
+                PresentModalViewController(new UINavigationController(new NewAlbumViewController((r) => {
                     DismissModalViewControllerAnimated(true);
                     if (r == true)
                         LoadTable();
@@ -64,6 +67,7 @@ namespace MobilePatterns.Controllers
         {
             //Save the image to the project
             var path = Path.Combine(SavePath, Guid.NewGuid().ToString() + ".png");
+            var thumbPath = Path.Combine(SavePath, Guid.NewGuid().ToString() + ".png");
             NSError error;
             _img.AsPNG().Save(path, true, out error);
             if (error != null && error.Code != 0)
@@ -76,14 +80,36 @@ namespace MobilePatterns.Controllers
             }
 
 
-            var pi = new ProjectImage() { ProjectId = project.Id, Path = path, Category = _category };
+            var size = new System.Drawing.SizeF(148, 222);
+            UIGraphics.BeginImageContextWithOptions(size, false, 0f);
+            var context = UIGraphics.GetCurrentContext();
+            context.TranslateCTM(0, size.Height);
+            context.ScaleCTM(1f, -1f);
+            context.DrawImage(new System.Drawing.RectangleF(0, 0, size.Width, size.Height), _img.CGImage);
+            var cgImage = UIGraphics.GetImageFromCurrentImageContext();
+
+            cgImage.AsPNG().Save(thumbPath, true, out error);
+            if (error != null && error.Code != 0)
+            {
+                //Delete the first save..
+                System.IO.File.Delete(path);
+                var alert = new UIAlertView() { Title = "Error", Message = "Unable to save image. Error code: " + error.Code };
+                alert.CancelButtonIndex = alert.AddButton("Ok");
+                alert.Show();
+                return;
+            }
+
+            UIGraphics.EndImageContext();
+
+
+            var pi = new ProjectImage() { ProjectId = project.Id, Path = path, ThumbPath = thumbPath, Category = _category };
             Data.Database.Main.Insert(pi);
 
             if (Success != null)
                 Success();
 
-            //Return to the previous controller
-            NavigationController.PopViewControllerAnimated(true);
+//            //Return to the previous controller
+//            NavigationController.PopViewControllerAnimated(true);
         }
     }
 }

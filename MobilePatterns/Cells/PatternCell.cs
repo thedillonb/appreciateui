@@ -5,30 +5,21 @@ using System.Drawing;
 using MobilePatterns.Data;
 using MonoTouch.Foundation;
 using System.Threading;
+using SDWebImage;
 
 namespace MobilePatterns.Cells
 {
-    public class PatternCell : PSCollectionViewCell, MonoTouch.Dialog.Utilities.IImageUpdated
+    public class PatternCell : PSCollectionViewCell
     {
         UIImageView _imageView;
         UIActivityIndicatorView _activity;
         Uri _requestUri;
 
-        UILabel _label;
-
         public PatternCell()
         {
             _imageView = new UIImageView(RectangleF.Empty);
-            _imageView.ClipsToBounds = true;
+            _imageView.ContentMode = UIViewContentMode.ScaleToFill;
             this.AddSubview(_imageView);
-
-            _label = new UILabel();
-            _label.TextColor = UIColor.FromRGB(41, 41, 41);
-            _label.BackgroundColor = UIColor.FromWhiteAlpha(0.95f, 0.9f);
-            _label.TextAlignment = UITextAlignment.Left;
-            _label.Font = UIFont.SystemFontOfSize(8f);
-            _label.Text = "Evernote";
-            this.AddSubview(_label);
             
             this.Layer.ShadowColor = UIColor.FromRGB(41, 41, 41).CGColor;
             this.Layer.ShadowOffset = new SizeF(0, 0);
@@ -41,9 +32,11 @@ namespace MobilePatterns.Cells
         public override void PrepareForReuse ()
         {
             base.PrepareForReuse ();
+            SDWebImageManager.SharedManager.CancelForDelegate(this);
+            _requestUri = null;
             if (_imageView.Image != null)
             {
-                _imageView.Image.Dispose();
+                //_imageView.Image.Dispose();
                 _imageView.Image = null;
             }
         }
@@ -53,23 +46,32 @@ namespace MobilePatterns.Cells
             base.LayoutSubviews ();
             this.Layer.ShadowPath = UIBezierPath.FromRect(this.Bounds).CGPath;
             
-            _imageView.Frame = new RectangleF(1, 1, Bounds.Width - 2, Bounds.Height - 16);
-            _label.Frame = new RectangleF(1, Bounds.Height - 14f, Bounds.Width - 2f, 13f);
+            _imageView.Frame = new RectangleF(0, 0, Bounds.Width, Bounds.Height);
         }
         
         public override float HeightForViewWithObject (NSObject obj, float columnWidth)
         {
-            var width = Bounds.Width - 2f;
+            var width = Bounds.Width;
             var scale = 960f / (640f / width);
-            return scale + 16;
+            return scale;
         }
         
         public void FillViewWithObject(string sc)
         {
             AddSpinner();
+            SizeF size;
+            if (MobilePatterns.Utils.Util.IsRetina)
+                size = new SizeF(296, 444);
+            else
+                size = new SizeF(148, 222);
 
-            _requestUri = new Uri(sc);
-            UpdatedImage(_requestUri);
+            var url = "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + sc + "&w=" + size.Width + "&h=" + size.Height;
+            SDWebImageManager.SharedManager.CancelForDelegate(this);
+            SDWebImageManager.SharedManager.Download(new NSUrl(url), this, SDWebImageOptions.SDWebImageCacheMemoryOnly, (i, c) => {
+                FillWithLocal(i);
+            }, (e) => { 
+                Console.WriteLine("Crap.");
+            });
         }
 
         private void AddSpinner()
@@ -84,12 +86,48 @@ namespace MobilePatterns.Cells
             _activity.StartAnimating();
         }
 
-        public void FillWithLocal(string path)
+        public void FillWithLocal(UIImage img)
         {
-            _imageView.Image = UIImage.FromFile(path);
+            RemoveSpinner();
+            _imageView.Image = img;
+            _imageView.Alpha = 0;
+            UIView.BeginAnimations("imageFade");
+            UIView.SetAnimationCurve(UIViewAnimationCurve.EaseInOut);
+            UIView.SetAnimationDuration(0.3);
+            _imageView.Alpha = 1;
+            UIView.CommitAnimations();
         }
-        
-        
+
+
+        UIImage currentLoad;
+        public void FillWithLocalNotResized(UIImage img)
+        {
+            AddSpinner();
+
+            currentLoad = img;
+            var size = new SizeF(148, 222);
+
+            ThreadPool.QueueUserWorkItem(delegate {
+                var ciimage = MonoTouch.CoreImage.CIImage.FromCGImage (img.CGImage);
+                var transform = MonoTouch.CoreGraphics.CGAffineTransform.MakeScale (size.Width / img.Size.Width * 2, size.Height / img.Size.Height * 2);
+                var affineTransform = new MonoTouch.CoreImage.CIAffineTransform () { 
+                    Image = ciimage,
+                    Transform = transform
+                };
+                var output = affineTransform.OutputImage;
+                var context = MonoTouch.CoreImage.CIContext.FromOptions (null);
+                var a = context.CreateCGImage (output, output.Extent);
+
+                _imageView.BeginInvokeOnMainThread(() => {
+                    if (img == currentLoad)
+                    {
+                        FillWithLocal(UIImage.FromImage(a));
+                    }
+                });
+
+            });
+        }
+
         public override void FillViewWithObject (MonoTouch.Foundation.NSObject obj)
         {
         }
@@ -102,36 +140,7 @@ namespace MobilePatterns.Cells
                 _activity.RemoveFromSuperview();
                 _activity = null;
             }
-        }
-        
-        public void UpdatedImage (Uri uri)
-        {
-            if (uri == null)
-                return;
-
-            if (uri != _requestUri)
-                return;
-
-            var img = MonoTouch.Dialog.Utilities.ImageLoader.DefaultRequestImage(uri, this);
-            if (img == null)
-                return;
-
-            RemoveSpinner();
-            _imageView.Image = img;
-
-            if (img.Size.Width == 0)
-            {
-                throw new Exception("Shit");
-            }
-
-            //Fade the image in
-//            _imageView.Alpha = 0;
-//            UIView.BeginAnimations("imageFade");
-//            UIView.SetAnimationCurve(UIViewAnimationCurve.EaseInOut);
-//            UIView.SetAnimationDuration(0.3);
-//            _imageView.Alpha = 1;
-//            UIView.CommitAnimations();
-        }
+        } 
     }
 
 }

@@ -107,9 +107,6 @@
     <Compile Include="Utils\MbProgressHud.cs" />
     <Compile Include="Utils\Util.cs" />
     <Compile Include="Views\CropView.cs" />
-    <Compile Include="Controllers\ScrapbookPatternsViewController.cs" />
-    <Compile Include="Controllers\NewScrapbookViewController.cs" />
-    <Compile Include="Controllers\AddToScrapbookViewController.cs" />
     <Compile Include="Controllers\ScrapbookCategoryViewController.cs" />
     <Compile Include="Data\SQLite.cs" />
     <Compile Include="Cells\StyledElement.cs" />
@@ -118,6 +115,12 @@
     <Compile Include="Controllers\PatternViewController.cs" />
     <Compile Include="Controllers\PatternCategoriesViewController.cs" />
     <Compile Include="Controllers\WebPatternsViewController.cs" />
+    <Compile Include="Controllers\AlbumsViewController.cs" />
+    <Compile Include="Controllers\AddToAlbumViewController.cs" />
+    <Compile Include="Controllers\NewAlbumViewController.cs" />
+    <Compile Include="Utils\UIRaisedTabBar.cs" />
+    <Compile Include="Controllers\SettingsViewController.cs" />
+    <Compile Include="Controllers\RecentPatternsViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -155,6 +158,20 @@
     <Content Include="Images\Controls\back_button%402x.png" />
     <Content Include="Images\Controls\button.png" />
     <Content Include="Images\Controls\button%402x.png" />
+    <Content Include="Icons\Icon.png" />
+    <Content Include="Icons\Icon%402x.png" />
+    <Content Include="Icons\Icon-72.png" />
+    <Content Include="Icons\Icon-72%402x.png" />
+    <Content Include="Icons\Icon-Small.png" />
+    <Content Include="Icons\Icon-Small%402x.png" />
+    <Content Include="Icons\Icon-Small-50.png" />
+    <Content Include="Icons\Icon-Small-50%402x.png" />
+    <Content Include="Default.jpg" />
+    <Content Include="Default%402x.jpg" />
+    <Content Include="Default-568h%402x.jpg" />
+    <Content Include="Default-Portrait.jpg" />
+    <Content Include="Default-Portrait%402x.jpg" />
+    <Content Include="iPad-Portrait.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
@@ -173,5 +190,16 @@
       <Project>{BAB4D1D9-A003-4380-9D61-A1D42C8650A0}</Project>
       <Name>PhotoBrowser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <ITunesArtwork Include="iTunesArtwork.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Controls\capture-button%402x.png" />
+    <BundleResource Include="Images\gear%402x.png" />
+    <BundleResource Include="Images\gear.png" />
+    <BundleResource Include="Images\tray_full.png" />
+    <BundleResource Include="Images\tray_full%402x.png" />
   </ItemGroup>
 </Project>

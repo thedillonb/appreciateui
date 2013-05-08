@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace MobilePatterns.Controllers
 {
-    public class ScrapbookPatternsViewController : BaseDialogViewController
+    public class AlbumsViewController : BaseDialogViewController
     {
-        public ScrapbookPatternsViewController()
+        public AlbumsViewController()
         {
-            Title = "Scrapbooks";
+            Title = "Albums";
             TabBarItem.Image = Images.Tag;
         }
 
@@ -20,7 +20,7 @@ namespace MobilePatterns.Controllers
             base.ViewDidLoad();
 
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentModalViewController(new UINavigationController(new NewScrapbookViewController((r) => {
+                PresentModalViewController(new UINavigationController(new NewAlbumViewController((r) => {
                     DismissModalViewControllerAnimated(true);
                 })), true);
             });

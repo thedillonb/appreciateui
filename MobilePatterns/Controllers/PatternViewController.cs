@@ -20,10 +20,14 @@ namespace MobilePatterns.Controllers
             : base ()
         {
             _browserDelegate = new PhotoBrowserDelegate(this);
-            _photoBrowser = new PhotoBrowser.MWPhotoBrowser(_browserDelegate);
+            _photoBrowser = new CustomBrowser(_browserDelegate);
             _photoBrowser.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
             _photoBrowser.WantsFullScreenLayout = true;
             _photoBrowser.DisplayActionButton = true;
+
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
+                NavigationController.PopViewControllerAnimated(true);
+            });
         }
 
         protected abstract int OnGetItemsInCollection();
@@ -35,7 +39,33 @@ namespace MobilePatterns.Controllers
         protected virtual void OnClickItem(PSCollectionView view, PatternCell cell, int index)
         {
             _photoBrowser.SetInitialPageIndex(index);
-            PresentModalViewController(new UINavigationController(_photoBrowser), true);
+            NavigationController.PushViewController(_photoBrowser, true);
+            //PresentModalViewController(new UINavigationController(_photoBrowser), true);
+        }
+
+        public class CustomBrowser : PhotoBrowser.MWPhotoBrowser
+        {
+            public CustomBrowser(PhotoBrowserDelegate del)
+                : base(del)
+            {
+                NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
+                    NavigationController.PopViewControllerAnimated(true);
+                });
+            }
+
+            public override void SetNavBarAppearance(bool animated)
+            {
+                NavigationController.NavigationBar.BarStyle = UIBarStyle.BlackTranslucent;
+                NavigationController.NavigationBar.Alpha = 0.9f;
+            }
+
+//            public override void StorePreviousNavBarAppearance()
+//            {
+//            }
+//
+//            public override void RestorePreviousNavBarAppearance(bool animated)
+//            {
+//            }
         }
         
         protected class DS : CollectionViewBinding.PSCollectionViewDataSource
@@ -53,7 +83,7 @@ namespace MobilePatterns.Controllers
                 _t.OnAssignObject(v, viewAtIndex);
                 return v;
             }
-            
+
             public override int NumberOfViewsInCollectionView (CollectionViewBinding.PSCollectionView collectionView)
             {
                 return _t.OnGetItemsInCollection();
@@ -67,7 +97,7 @@ namespace MobilePatterns.Controllers
             }
         }
         
-        private class PhotoBrowserDelegate : PhotoBrowser.MWPhotoBrowserDelegate
+        public class PhotoBrowserDelegate : PhotoBrowser.MWPhotoBrowserDelegate
         {
             PatternViewController _t;
             public PhotoBrowserDelegate(PatternViewController pvc)

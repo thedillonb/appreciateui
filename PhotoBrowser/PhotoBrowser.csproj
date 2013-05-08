@@ -49,5 +49,6 @@
     <Compile Include="libMWPhotoBrowserUniversal.linkwith.cs">
       <DependentUpon>libMWPhotoBrowserUniversal.a</DependentUpon>
     </Compile>
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
 </Project>

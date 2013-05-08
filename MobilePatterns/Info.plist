@@ -2,8 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>MobilePatterns</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icons/Icon-72.png</string>
+		<string>Icons/Icon-72@2x.png</string>
+		<string>Icons/Icon.png</string>
+		<string>Icons/Icon@2x.png</string>
+		<string>Icons/Icon-Small.png</string>
+		<string>Icons/Icon-Small@2x.png</string>
+		<string>Icons/Icon-Small-50.png</string>
+		<string>Icons/Icon-Small-50@2x.png</string>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>MinimumOSVersion</key>
@@ -13,6 +22,10 @@
 		<integer>1</integer>
 		<integer>2</integer>
 	</array>
+	<key>UILaunchImageFile</key>
+	<string>Default.jpg</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackOpaque</string>
 	<key>UISupportedInterfaceOrientations</key>
@@ -26,5 +39,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>newProperty</key>
+	<string>UILaunchImageFile</string>
+	<key>CFBundleDisplayName</key>
+	<string>AppreciateUI</string>
 </dict>
 </plist>

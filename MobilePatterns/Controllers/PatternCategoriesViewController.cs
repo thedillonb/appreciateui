@@ -12,8 +12,8 @@ namespace MobilePatterns.Controllers
     {
         public PatternCategoriesViewController()
         {
-            Title = "Patterns";
-            TabBarItem.Image = Images.Polaroid;
+            Title = "Categories";
+            TabBarItem.Image = Images.Tray;
             RefreshRequested += (s, e) => Refresh();
         }
 

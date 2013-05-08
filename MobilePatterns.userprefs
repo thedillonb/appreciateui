@@ -1,32 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MobilePatterns/AppDelegate.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.Dillon Buchanan’s iPhone" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MobilePatterns/Controllers/PatternCategoriesViewController.cs">
     <Files>
-      <File FileName="MobilePatterns/Controllers/WebPatternsViewController.cs" Line="145" Column="37" />
-      <File FileName="MobilePatterns/Data/WebData.cs" Line="44" Column="91" />
-      <File FileName="MobilePatterns/Cells/PatternCell.cs" Line="124" Column="1" />
-      <File FileName="MobilePatterns/Images/Images.cs" Line="19" Column="86" />
-      <File FileName="MobilePatterns/AppDelegate.cs" Line="44" Column="13" />
+      <File FileName="MobilePatterns/Controllers/PatternViewController.cs" Line="13" Column="5" />
+      <File FileName="MobilePatterns/Controllers/PatternCategoriesViewController.cs" Line="15" Column="32" />
+      <File FileName="MobilePatterns/Controllers/SettingsViewController.cs" Line="10" Column="34" />
+      <File FileName="MobilePatterns/Controllers/RecentPatternsViewController.cs" Line="10" Column="38" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="API" expanded="True">
-            <Node name="CollectionViewBinding" expanded="True">
-              <Node name="libCollectionViewUniversal.a" expanded="True" />
-            </Node>
-            <Node name="MonoTouch.Dialog" expanded="True">
-              <Node name="Utilities" expanded="True" />
-            </Node>
-            <Node name="PhotoBrowser" expanded="True">
-              <Node name="libMWPhotoBrowserUniversal.a" expanded="True" />
-            </Node>
-          </Node>
-          <Node name="MobilePatterns" expanded="True">
+          <Node name="MobilePatterns" expanded="True" selected="True">
             <Node name="Cells" expanded="True" />
             <Node name="Controllers" expanded="True" />
             <Node name="Data" expanded="True" />
-            <Node name="AppDelegate.cs" selected="True" />
+            <Node name="Images" expanded="True" />
+            <Node name="Utils" expanded="True" />
+            <Node name="Views" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -40,7 +30,9 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MobilePatterns/Cells/PatternCell.cs" line="124" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="70" column="1" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="76" column="1" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="114" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

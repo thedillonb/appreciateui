@@ -17,6 +17,7 @@ namespace MobilePatterns.Controllers
     public class LocalViewPatternsViewController : PatternViewController
     {
         List<PhotoBrowser.MWPhoto> _photos = new List<PhotoBrowser.MWPhoto>();
+        UIImage[] _thumbs;
         public ProjectImage[] Images { get; set; }
 
         public LocalViewPatternsViewController(ProjectImage[] images)
@@ -46,7 +47,6 @@ namespace MobilePatterns.Controllers
 //            }
 //        }
 
-
         protected override int OnGetItemsInCollection ()
         {
             return Images.Length;
@@ -55,7 +55,7 @@ namespace MobilePatterns.Controllers
         protected override void OnAssignObject (PatternCell view, int index)
         {
             if (index < Images.Length)
-                view.FillWithLocal(Images[index].Path);
+                view.FillWithLocal(_thumbs[index]);
         }
 
         protected override PhotoBrowser.MWPhoto OnGetPhoto (int index)
@@ -68,8 +68,12 @@ namespace MobilePatterns.Controllers
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
-            foreach (var img in Images)
+
+            _thumbs = new UIImage[Images.Length];
+            for (int i = 0; i < Images.Length; i++)
             {
+                var img = Images[i];
+                _thumbs[i] = UIImage.FromFile(img.ThumbPath);
                 var photo = new PhotoBrowser.MWPhoto(UIImage.FromFile(img.Path));
                 if (img.Category != null)
                     photo.Caption = img.Category;
@@ -79,59 +83,21 @@ namespace MobilePatterns.Controllers
         }
     }
 
-    public class WebPatternsViewController : PatternViewController, IImageUpdated
+    public class WebPatternsViewController : PatternViewController
     {
         Category _source;
         List<Screenshot> _screenshots;
 
-
-//        private UIBarButtonItem _cropButton, _addButton;
-//        private CropView _crop;
-//        private bool _isCropping;
-//
-//        private bool IsCropping
-//        {
-//            get { return _isCropping; }
-//            set
-//            {
-//                if (_isCropping == value)
-//                    return;
-//
-//                _isCropping = value;
-//                if (_isCropping)
-//                {
-//                    _crop = new CropView();
-//                    _crop.Frame = new RectangleF(100, 100, 100, 100);
-//                    this.View.AddSubview(_crop);
-//                }
-//                else
-//                {
-//                    _crop.RemoveFromSuperview();
-//                    _crop.Dispose();
-//                    _crop = null;
-//                }
-//
-//
-//                _cropButton.Title = _isCropping ? "Exit Crop" : "Crop";
-//                _addButton.Title = _isCropping ? "Add Crop" : "Add";
-//
-//                TableView.ScrollEnabled = !_isCropping;
-//                NavigationController.SetNavigationBarHidden(true, true);
-//                NavigationController.SetToolbarHidden(true, true);
-//            }
-//        }
+		public WebPatternsViewController()
+			: this (null)
+		{
+		}
 
         public WebPatternsViewController(Category source)
         {
             _source = source;
-//            _cropButton = new UIBarButtonItem("Crop", UIBarButtonItemStyle.Bordered, CropImage);
-//            _addButton = new UIBarButtonItem("Add", UIBarButtonItemStyle.Bordered, SaveImage);
         }
-
-        public void UpdatedImage (Uri uri)
-        {
-        }
-
+       
         protected override int OnGetItemsInCollection ()
         {
             if (_screenshots == null)
@@ -142,7 +108,7 @@ namespace MobilePatterns.Controllers
         protected override void OnAssignObject (PatternCell view, int index)
         {
             if (index < _screenshots.Count)
-                view.FillViewWithObject(_screenshots[index].Thumb);
+                view.FillViewWithObject(_screenshots[index].Id.ToString());
         }
 
         protected override PhotoBrowser.MWPhoto OnGetPhoto (int index)
@@ -158,17 +124,9 @@ namespace MobilePatterns.Controllers
         {
             base.ViewDidLoad ();
 
-            //Save the current item you're looking at!
-//            ToolbarItems = new UIBarButtonItem[] {
-//                new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-//                _cropButton,
-//                _addButton,
-//                new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-//            };
-
             var hud = new RedPlum.MBProgressHUD(View.Frame)
             { Mode = RedPlum.MBProgressHUDMode.Indeterminate };
-            hud.TitleText = "Requesting Patterns...";
+            hud.TitleText = "Loading...";
             hud.TitleFont = UIFont.BoldSystemFontOfSize(14f);
             this.View.AddSubview(hud);
             hud.Show(false);
@@ -177,7 +135,14 @@ namespace MobilePatterns.Controllers
             ThreadPool.QueueUserWorkItem(delegate {
                 try
                 {
-                    _screenshots = Data.RequestFactory.GetScreenshots(_source.Id);
+					if (_source != null)
+					{
+                    	_screenshots = Data.RequestFactory.GetScreenshots(_source.Id);
+					}
+					else
+					{
+						_screenshots = Data.RequestFactory.GetRecentScreenshots();
+					}
 
                     fuck = new List<PhotoBrowser.MWPhoto>();
                     _screenshots.ForEach(x => {
@@ -193,24 +158,16 @@ namespace MobilePatterns.Controllers
                 }
                 catch (Exception e)
                 {
-                    UIAlertView alert = new UIAlertView();
-                    alert.Message = e.Message;
-                    alert.Title = "Error";
-                    alert.CancelButtonIndex = alert.AddButton("Ok");
-                    alert.Show();
+					BeginInvokeOnMainThread(() =>  {
+						UIAlertView alert = new UIAlertView();
+						alert.Message = e.Message;
+						alert.Title = "Error";
+						alert.CancelButtonIndex = alert.AddButton("Ok");
+						alert.Show();
+					});
                 }
             });
         }
-
-//        private void CropImage(object sender, EventArgs args)
-//        {
-//            var cells = this.TableView.VisibleCells;
-//            if (cells.Length == 0 || cells[0].ImageView.Image == null)
-//                return;
-//
-//
-//            IsCropping = !IsCropping;
-//        }
 
 //        private void SaveImage(object sender, EventArgs args)
 //        {

@@ -93,6 +93,9 @@ namespace PhotoBrowser
 
         [Export("initWithURL:")]
         IntPtr Constructor(NSUrl a);
+
+		[Export("underlyingImage")]
+		UIImage UnderlyingImage { get; }
     }
 
     [BaseType (typeof (UIView))]
@@ -119,6 +122,9 @@ namespace PhotoBrowser
 
         [Export("reloadData")]
         void ReloadData();
+
+		[Export("getCurrentPhoto")]
+		MWPhoto GetCurrentPhoto();
 
         [Export("setInitialPageIndex:")]
         void SetInitialPageIndex(int index);

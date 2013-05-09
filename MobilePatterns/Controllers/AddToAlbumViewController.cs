@@ -20,7 +20,7 @@ namespace MobilePatterns.Controllers
         {
             _img = img;
             _category = category;
-            Title = "Add";
+            Title = "Add To Album";
         }
 
         public override void ViewWillAppear (bool animated)

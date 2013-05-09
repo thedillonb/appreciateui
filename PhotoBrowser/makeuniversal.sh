@@ -1,0 +1,1 @@
+lipo -create -output libMWPhotoBrowserUniversal.a /Users/dillonb/Library/Developer/Xcode/DerivedData/MWPhotoBrowser-ctxmiahjjkiibqgeqhzhwopeeeni/Build/Products/Debug-iphonesimulator/libMWPhotoBrowser.a /Users/dillonb/Library/Developer/Xcode/DerivedData/MWPhotoBrowser-ctxmiahjjkiibqgeqhzhwopeeeni/Build/Products/Debug-iphoneos/libMWPhotoBrowser.a

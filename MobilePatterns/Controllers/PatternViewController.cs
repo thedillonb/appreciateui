@@ -6,6 +6,7 @@ using MonoTouch.Foundation;
 using System.Threading;
 using MobilePatterns.Cells;
 using CollectionViewBinding;
+using System.Collections.Generic;
 
 namespace MobilePatterns.Controllers
 {
@@ -59,13 +60,45 @@ namespace MobilePatterns.Controllers
                 NavigationController.NavigationBar.Alpha = 0.9f;
             }
 
-//            public override void StorePreviousNavBarAppearance()
-//            {
-//            }
-//
-//            public override void RestorePreviousNavBarAppearance(bool animated)
-//            {
-//            }
+			public override void ReloadData ()
+			{
+				base.ReloadData ();
+
+				if (this.View.Subviews.Length == 0)
+					return;
+
+				UIToolbar toolbar = null;
+				foreach (var view in this.View.Subviews)
+					if (view is UIToolbar)
+						toolbar = view as UIToolbar;
+				
+				if (toolbar == null)
+					return;
+				
+				var items = new List<UIBarButtonItem>(toolbar.Items);
+				var saveItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => SaveSelection());
+				
+				items.RemoveAt(items.Count - 1);
+				items.Add(saveItem);
+				toolbar.SetItems(items.ToArray(), true);
+			}
+
+			private void SaveSelection()
+			{
+				var photo = this.GetCurrentPhoto();
+				if (photo == null)
+					return;
+
+				var img = photo.UnderlyingImage;
+				if (img == null)
+					return;
+
+				var ctrl = new AddToAlbumViewController(img, photo.Caption);
+				ctrl.Success = () => {
+					NavigationController.PopToViewController(this, true);
+				};
+				NavigationController.PushViewController(ctrl, true);
+			}
         }
         
         protected class DS : CollectionViewBinding.PSCollectionViewDataSource
@@ -112,7 +145,7 @@ namespace MobilePatterns.Controllers
             
             public override PhotoBrowser.MWPhoto PhotoBrowser (PhotoBrowser.MWPhotoBrowser photoBrowser, int photoAtIndex)
             {
-                return _t.OnGetPhoto(photoAtIndex);
+				return _t.OnGetPhoto(photoAtIndex);
             }
         }
         

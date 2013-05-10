@@ -108,7 +108,7 @@ namespace MobilePatterns.Controllers
         protected override void OnAssignObject (PatternCell view, int index)
         {
             if (index < _screenshots.Count)
-                view.FillViewWithObject(_screenshots[index].Id.ToString());
+                view.FillViewWithObject(_screenshots[index].Url, _screenshots[index].Ext);
         }
 
         protected override PhotoBrowser.MWPhoto OnGetPhoto (int index)
@@ -146,7 +146,7 @@ namespace MobilePatterns.Controllers
 
                     fuck = new List<PhotoBrowser.MWPhoto>();
                     _screenshots.ForEach(x => {
-                        fuck.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.Url)) { Caption = x.App });
+                        fuck.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
 
                     });
   

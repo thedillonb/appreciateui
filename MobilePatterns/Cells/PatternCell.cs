@@ -56,7 +56,7 @@ namespace MobilePatterns.Cells
             return scale;
         }
         
-        public void FillViewWithObject(string sc)
+        public void FillViewWithObject(string id, string ext)
         {
             AddSpinner();
             SizeF size;
@@ -65,7 +65,7 @@ namespace MobilePatterns.Cells
             else
                 size = new SizeF(148, 222);
 
-            var url = "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + sc + "&w=" + size.Width + "&h=" + size.Height;
+            var url = "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;
             SDWebImageManager.SharedManager.CancelForDelegate(this);
             SDWebImageManager.SharedManager.Download(new NSUrl(url), this, SDWebImageOptions.SDWebImageCacheMemoryOnly, (i, c) => {
                 FillWithLocal(i);

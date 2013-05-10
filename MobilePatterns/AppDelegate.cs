@@ -67,7 +67,7 @@ namespace MobilePatterns
 //            UISegmentedControl.Appearance.SetDividerImage(Images.Divider, UIControlState.Normal, UIControlState.Normal, UIBarMetrics.Default);
 //            
 //            UIToolbar.Appearance.SetBackgroundImage(Images.Bottombar.CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0)), UIToolbarPosition.Bottom, UIBarMetrics.Default);
-//            //UIBarButtonItem.Appearance.TintColor = UIColor.White;
+              UIBarButtonItem.Appearance.TintColor = UIColor.White;
 //            UISearchBar.Appearance.BackgroundImage = Images.Searchbar;
 //            
 //            var textAttrs = new UITextAttributes() { TextColor = UIColor.White, TextShadowColor = UIColor.DarkGray, TextShadowOffset = new UIOffset(0, -1) };

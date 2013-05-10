@@ -57,7 +57,7 @@ namespace MobilePatterns.Controllers
             public override void SetNavBarAppearance(bool animated)
             {
                 NavigationController.NavigationBar.BarStyle = UIBarStyle.BlackTranslucent;
-                NavigationController.NavigationBar.Alpha = 0.9f;
+                NavigationController.NavigationBar.Alpha = 0.95f;
             }
 
 			public override void ReloadData ()

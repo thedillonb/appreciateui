@@ -196,10 +196,11 @@
     <ITunesArtwork Include="iTunesArtwork.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Images\Controls\capture-button%402x.png" />
     <BundleResource Include="Images\gear%402x.png" />
     <BundleResource Include="Images\gear.png" />
     <BundleResource Include="Images\tray_full.png" />
     <BundleResource Include="Images\tray_full%402x.png" />
+    <BundleResource Include="Images\Controls\capture-button.png" />
+    <BundleResource Include="Images\Controls\capture-button%402x.png" />
   </ItemGroup>
 </Project>

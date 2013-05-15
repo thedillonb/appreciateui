@@ -16,20 +16,76 @@ namespace MobilePatterns.Controllers
         protected CollectionViewBinding.PSCollectionView _collectionView;
         PhotoBrowser.MWPhotoBrowser _photoBrowser;
         PhotoBrowserDelegate _browserDelegate;
+		bool _editActive = false;
+		readonly bool _local;
+		List<int> _selectedList = new List<int>();
         
-        public PatternViewController ()
+        public PatternViewController(bool local)
             : base ()
         {
+			_local = local;
+
             _browserDelegate = new PhotoBrowserDelegate(this);
-            _photoBrowser = new CustomBrowser(_browserDelegate);
+            _photoBrowser = new CustomBrowser(_browserDelegate, !local);
             _photoBrowser.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
             _photoBrowser.WantsFullScreenLayout = true;
             _photoBrowser.DisplayActionButton = true;
 
+			this.ToolbarItems = new UIBarButtonItem[] {
+				new UIBarButtonItem(UIBarButtonSystemItem.Trash, (s, e) => {
+
+				})
+			};
+
             NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
                 NavigationController.PopViewControllerAnimated(true);
             });
+
+			if (local)
+			{
+//				NavigationItem.RightBarButtonItem = new UIBarButtonItem("Edit", UIBarButtonItemStyle.Plain, (s, e) =>  {
+//					EditActive(!_editActive);
+//				});
+			}
         }
+
+		private void EditActive(bool active)
+		{
+			_editActive = active;
+			_selectedList.Clear();
+
+			if (_editActive)
+			{
+				NavigationItem.SetHidesBackButton(true, true);
+				NavigationItem.RightBarButtonItem.Title = "Done";
+				NavigationItem.RightBarButtonItem.Style = UIBarButtonItemStyle.Done;
+				NavigationController.SetToolbarHidden(false, false);
+			}
+			else 
+			{
+				NavigationItem.SetHidesBackButton(false, true);
+				NavigationItem.RightBarButtonItem.Title = "Edit";
+				NavigationItem.RightBarButtonItem.Style = UIBarButtonItemStyle.Plain;
+				NavigationController.SetToolbarHidden(true, false);
+
+				for (var i = 0; i < ds.NumberOfViewsInCollectionView(_collectionView); i++)
+				{
+					var view = ds.ViewAtIndex(_collectionView, i);
+					if (view != null && view is PatternCell)
+					{
+						((PatternCell)view).SetSelected(false);
+					}
+				}
+			}
+
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewDidDisappear (animated);
+//			if (_local)
+//				EditActive(false);
+		}
 
         protected abstract int OnGetItemsInCollection();
 
@@ -39,19 +95,42 @@ namespace MobilePatterns.Controllers
 
         protected virtual void OnClickItem(PSCollectionView view, PatternCell cell, int index)
         {
-            _photoBrowser.SetInitialPageIndex(index);
-            NavigationController.PushViewController(_photoBrowser, true);
-            //PresentModalViewController(new UINavigationController(_photoBrowser), true);
+			if (_editActive)
+			{
+				if (_selectedList.Contains(index))
+				{
+					_selectedList.Remove(index);
+					cell.SetSelected(false);
+				}
+				else
+				{
+					_selectedList.Add(index);
+					cell.SetSelected(true);
+				}
+			}
+			else
+			{
+	            _photoBrowser.SetInitialPageIndex(index);
+	            NavigationController.PushViewController(_photoBrowser, true);
+	            //PresentModalViewController(new UINavigationController(_photoBrowser), true);
+			}
         }
 
         public class CustomBrowser : PhotoBrowser.MWPhotoBrowser
         {
-            public CustomBrowser(PhotoBrowserDelegate del)
+            public CustomBrowser(PhotoBrowserDelegate del, bool saveMenu)
                 : base(del)
             {
                 NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
                     NavigationController.PopViewControllerAnimated(true);
                 });
+
+				if (saveMenu)
+				{
+					NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Save, (s, e) => {
+						SaveSelection();
+					});
+				}
             }
 
             public override void SetNavBarAppearance(bool animated)
@@ -76,10 +155,10 @@ namespace MobilePatterns.Controllers
 					return;
 				
 				var items = new List<UIBarButtonItem>(toolbar.Items);
-				var saveItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => SaveSelection());
-				
+				var endItem = new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace);
+				endItem.Width = items[items.Count - 1].Width;
 				items.RemoveAt(items.Count - 1);
-				items.Add(saveItem);
+				items.Add(endItem);
 				toolbar.SetItems(items.ToArray(), true);
 			}
 
@@ -178,8 +257,8 @@ namespace MobilePatterns.Controllers
             
             _collectionView = new CollectionViewBinding.PSCollectionView(this.View.Bounds);
             _collectionView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
-            _collectionView.NumColsLandscape = 2;
-            _collectionView.NumColsPortrait = 2;
+            _collectionView.NumColsLandscape = 4;
+            _collectionView.NumColsPortrait = 3;
             _collectionView.BackgroundColor = UIColor.Clear;
             _collectionView.PSCollectionViewDataSourceDelegate = ds;
             _collectionView.PSCollectionViewDelegate = cd;

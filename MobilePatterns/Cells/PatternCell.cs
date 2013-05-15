@@ -12,11 +12,22 @@ namespace MobilePatterns.Cells
     public class PatternCell : PSCollectionViewCell
     {
         UIImageView _imageView;
+		UIView _selectedView;
         UIActivityIndicatorView _activity;
-        Uri _requestUri;
+		MonoTouch.Dialog.GlassButton _deleteButton;
+
+		public bool DeleteButtonActive
+		{
+			get { return !_deleteButton.Hidden; }
+			set { _deleteButton.Hidden = !value; }
+		}
 
         public PatternCell()
         {
+			_deleteButton = new MonoTouch.Dialog.GlassButton(new RectangleF(0, 0, 120, 44));
+			_deleteButton.Tapped += DeleteButtonTapped;
+			_deleteButton.SetTitle("Delete", UIControlState.Normal);
+
             _imageView = new UIImageView(RectangleF.Empty);
             _imageView.ContentMode = UIViewContentMode.ScaleToFill;
             this.AddSubview(_imageView);
@@ -28,12 +39,38 @@ namespace MobilePatterns.Cells
 
             BackgroundColor = UIColor.White;
         }
-        
+
+        void DeleteButtonTapped (MonoTouch.Dialog.GlassButton obj)
+        {
+
+        }
+
+		public void SetSelected(bool selected)
+		{
+			if (selected)
+			{
+				if (_selectedView != null)
+					return;
+
+				_selectedView = new UIView(_imageView.Frame);
+				_selectedView.UserInteractionEnabled = false;
+				_selectedView.BackgroundColor = UIColor.FromRGBA(1f, 1f, 1f, 0.8f);
+				this.AddSubview(_selectedView);
+			}
+			else
+			{
+				if (_selectedView != null)
+				{
+					_selectedView.RemoveFromSuperview();
+					_selectedView = null;
+				}
+			}
+		}
+
         public override void PrepareForReuse ()
         {
             base.PrepareForReuse ();
             SDWebImageManager.SharedManager.CancelForDelegate(this);
-            _requestUri = null;
             if (_imageView.Image != null)
             {
                 //_imageView.Image.Dispose();
@@ -58,7 +95,9 @@ namespace MobilePatterns.Cells
         
         public void FillViewWithObject(string id, string ext)
         {
+			LayoutDeleteButton();
             AddSpinner();
+
             SizeF size;
             if (MobilePatterns.Utils.Util.IsRetina)
                 size = new SizeF(296, 444);
@@ -67,10 +106,10 @@ namespace MobilePatterns.Cells
 
             var url = "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;
             SDWebImageManager.SharedManager.CancelForDelegate(this);
-            SDWebImageManager.SharedManager.Download(new NSUrl(url), this, SDWebImageOptions.SDWebImageCacheMemoryOnly, (i, c) => {
+            SDWebImageManager.SharedManager.Download(new NSUrl(url), this, SDWebImageOptions.SDWebImageLowPriority, (i, c) => {
                 FillWithLocal(i);
             }, (e) => { 
-                Console.WriteLine("Crap.");
+                Console.WriteLine("Unable to fill with local image: " + e.ToString());
             });
         }
 
@@ -85,6 +124,15 @@ namespace MobilePatterns.Cells
             this.AddSubview(_activity);
             _activity.StartAnimating();
         }
+
+		private void LayoutDeleteButton()
+		{
+			_deleteButton.Frame = new RectangleF(0, 0, 120, 44);
+			_deleteButton.Center = this.Center;
+			//_deleteButton.AutoresizingMask = UIViewAutoresizing.All;
+			//_deleteButton.Hidden = true;
+			//this.AddSubview(_deleteButton);
+		}
 
         public void FillWithLocal(UIImage img)
         {

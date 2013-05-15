@@ -121,6 +121,7 @@
     <Compile Include="Utils\UIRaisedTabBar.cs" />
     <Compile Include="Controllers\SettingsViewController.cs" />
     <Compile Include="Controllers\RecentPatternsViewController.cs" />
+    <Compile Include="Controllers\LocalPatternsViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

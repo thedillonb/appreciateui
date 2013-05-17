@@ -21,7 +21,6 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchDebug>True</MtouchDebug>
-    <MtouchProfiling>True</MtouchProfiling>
     <MtouchLink>None</MtouchLink>
     <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>
@@ -34,6 +33,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchLink>None</MtouchLink>
+    <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>True</DebugSymbols>
@@ -44,10 +45,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Dillon Buchanan (BD3M6C4CAK)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <MtouchProfiling>True</MtouchProfiling>
-    <CodesignProvision>7C4BC714-1865-4FCA-8D6B-18BFB8281226</CodesignProvision>
+    <CodesignProvision>E781ABE9-8BE9-4DC6-A167-509F9A8DD32C</CodesignProvision>
     <IpaPackageName />
     <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>
@@ -59,12 +60,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <CodesignKey>iPhone Developer: Dillon Buchanan (BD3M6C4CAK)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Dillon Buchanan</CodesignKey>
     <MtouchArch>ARMv7</MtouchArch>
     <MtouchUseLlvm>True</MtouchUseLlvm>
     <MtouchUseThumb>True</MtouchUseThumb>
     <IpaPackageName />
     <MtouchI18n />
+    <CodesignProvision>6EFA8279-47DA-4C7A-97A4-0C29827172EA</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>

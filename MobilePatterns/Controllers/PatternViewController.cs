@@ -13,7 +13,6 @@ namespace MobilePatterns.Controllers
     public abstract class PatternViewController : UIViewController
     {
         protected CollectionViewBinding.PSCollectionView _collectionView;
-		List<int> _selectedList = new List<int>();
         
         public PatternViewController()
             : base ()
@@ -98,7 +97,7 @@ namespace MobilePatterns.Controllers
             _collectionView = new CollectionViewBinding.PSCollectionView(this.View.Bounds);
             _collectionView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             _collectionView.NumColsLandscape = 4;
-            _collectionView.NumColsPortrait = 3;
+            _collectionView.NumColsPortrait = 4;
             _collectionView.BackgroundColor = UIColor.Clear;
             _collectionView.PSCollectionViewDataSourceDelegate = ds;
             _collectionView.PSCollectionViewDelegate = cd;

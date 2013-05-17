@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using System.Threading;
@@ -25,10 +26,14 @@ namespace MobilePatterns.Controllers
 		}
 
         public WebPatternsViewController(Category source)
-			: base (false)
         {
             _source = source;
         }
+
+		protected override BrowserViewController CreateBrowserViewController()
+		{
+			return new WebBrowserViewController(loadedImages);
+		}
        
         protected override int OnGetItemsInCollection ()
         {
@@ -43,14 +48,7 @@ namespace MobilePatterns.Controllers
                 view.FillViewWithObject(_screenshots[index].Url, _screenshots[index].Ext);
         }
 
-        protected override PhotoBrowser.MWPhoto OnGetPhoto (int index)
-        {
-            if (index < _screenshots.Count)
-                return fuck[index];
-            return null;
-        }
-
-        List<PhotoBrowser.MWPhoto> fuck;
+		List<PhotoBrowser.MWPhoto> loadedImages = new List<PhotoBrowser.MWPhoto>();
 
         public override void ViewDidLoad ()
         {
@@ -76,9 +74,9 @@ namespace MobilePatterns.Controllers
 						_screenshots = Data.RequestFactory.GetRecentScreenshots();
 					}
 
-                    fuck = new List<PhotoBrowser.MWPhoto>();
+                    loadedImages = new List<PhotoBrowser.MWPhoto>();
                     _screenshots.ForEach(x => {
-                        fuck.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
+                        loadedImages.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
 
                     });
   

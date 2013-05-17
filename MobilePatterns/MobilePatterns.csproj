@@ -122,6 +122,9 @@
     <Compile Include="Controllers\SettingsViewController.cs" />
     <Compile Include="Controllers\RecentPatternsViewController.cs" />
     <Compile Include="Controllers\LocalPatternsViewController.cs" />
+    <Compile Include="Controllers\LocalBrowserViewController.cs" />
+    <Compile Include="Controllers\BrowserViewController.cs" />
+    <Compile Include="Controllers\WebBrowserViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -149,10 +152,6 @@
     <Content Include="Images\background.png" />
     <Content Include="Images\background%402x.png" />
     <Content Include="Images\tablecell.png" />
-    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowLeft%402x.png" />
-    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowLeft.png" />
-    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowRight.png" />
-    <Content Include="MWPhotoBrowser.bundle\images\UIBarButtonItemArrowRight%402x.png" />
     <Content Include="MWPhotoBrowser.bundle\images\Checkmark%402x.png" />
     <Content Include="MWPhotoBrowser.bundle\images\Checkmark.png" />
     <Content Include="Images\Controls\back_button.png" />

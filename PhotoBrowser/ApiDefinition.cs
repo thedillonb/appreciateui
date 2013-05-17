@@ -117,6 +117,12 @@ namespace PhotoBrowser
         [Export("displayActionButton")]
         bool DisplayActionButton { get; set; }
 
+		[Export("currentIndex")]
+		int CurrentIndex { get; set; }
+
+		[Export("photoDelegate")]
+		MWPhotoBrowserDelegate PhotoDelegate { get; set; }
+
         [Export("initWithDelegate:")]
         IntPtr Constructor(MWPhotoBrowserDelegate del);
 
@@ -137,6 +143,21 @@ namespace PhotoBrowser
 
         [ExportAttribute("restorePreviousNavBarAppearance:")]
         void RestorePreviousNavBarAppearance(bool animated);
+
+		[Export("jumpToPageAtIndex:")]
+		void JumpToPageAtIndex(int index);
+
+		[Export("gotoNextPage")]
+		void GotoNextPage();
+
+		[Export("gotoPreviousPage")]
+		void GotoPreviousPage();
+
+		[Export("showProgressHUDCompleteMessage:")]
+		void ShowProgressHUDCompleteMessage(string message);
+
+		[Export("showProgressHUDWithMessage:")]
+		void ShowProgressHUDWithMessage(string message);
     }
 
 }

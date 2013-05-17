@@ -43,7 +43,7 @@ namespace MobilePatterns.Controllers
             var e = new StyledStringElement("All Patterns", images.Count().ToString(), UITableViewCellStyle.Value1) 
                               { Accessory = UITableViewCellAccessory.DisclosureIndicator };
             e.Tapped += () => {
-                NavigationController.PushViewController(new LocalViewPatternsViewController(new List<ProjectImage>(images).ToArray()) { Title = "All Patterns" }, true);
+                NavigationController.PushViewController(new LocalViewPatternsViewController(new List<ProjectImage>(images)) { Title = "All Patterns" }, true);
             };
             allItems.Add(e);
 
@@ -54,7 +54,7 @@ namespace MobilePatterns.Controllers
                 var element = new StyledStringElement(key, scraps[key].Count.ToString(), UITableViewCellStyle.Value1) 
                               { Accessory = UITableViewCellAccessory.DisclosureIndicator };
                 element.Tapped += () => {
-                    NavigationController.PushViewController(new LocalViewPatternsViewController(scraps[key].ToArray()) { Title = key }, true);
+                    NavigationController.PushViewController(new LocalViewPatternsViewController(scraps[key]) { Title = key }, true);
                 };
                 categories.Add(element);
             }

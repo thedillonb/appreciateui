@@ -55,7 +55,7 @@ namespace AppreciateUI.Controllers
 					if (img != null) 
 						img.Dispose();
 			_thumbs = new UIImage[_images.Count];
-			_collectionView.ReloadData();
+            CollectionView.ReloadData();
 		}
 	}
 

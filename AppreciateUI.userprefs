@@ -1,0 +1,29 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True" selected="True">
+          <Node name="API" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="ConnectionManagerPad">
+        <State selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="70" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="76" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="114" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

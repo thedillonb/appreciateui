@@ -10,6 +10,13 @@ AppreciateUI is the ideal tool for gathering inspiration when designing a mobile
 ![Screenshot 5](http://a247.phobos.apple.com/us/r1000/110/Purple2/v4/62/47/92/624792a2-11f8-5b30-7841-3ae1682c1bc8/mzl.bdnljfhh.320x480-75.jpg)
 
 
+Web Inteface
+-----------
+
+In addition to the native mobile application, a web inteface was created that mirrored the native app. The source is also
+public and can be found here: [appreciateui-web](https://github.com/thedillonb/appreciateui-web). 
+
+
 License
 -----------
 

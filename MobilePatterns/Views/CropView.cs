@@ -4,7 +4,7 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.CoreGraphics;
 
-namespace MobilePatterns.Views
+namespace AppreciateUI.Views
 {
     public class CropView : UIView
     {

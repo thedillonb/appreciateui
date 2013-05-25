@@ -3,7 +3,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System.Drawing;
 
-namespace MobilePatterns.Utils
+namespace AppreciateUI.Utils
 {
 	public class UIRaisedTabBar  : UITabBarController 
 	{

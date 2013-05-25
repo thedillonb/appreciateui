@@ -1,13 +1,12 @@
-using System;
+using AppreciateUI.Models;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
-using MobilePatterns.Models;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
 	public class LocalBrowserViewController : BrowserViewController
 	{
-		List<ProjectImage> _projectImages;
+	    readonly List<ProjectImage> _projectImages;
 
 		public LocalBrowserViewController(List<PhotoBrowser.MWPhoto> photos, List<ProjectImage> projectImages)
 			: base(photos)
@@ -21,7 +20,7 @@ namespace MobilePatterns.Controllers
 
 				var currentIndex = this.CurrentIndex;
 
-				_photos.RemoveAt(currentIndex);
+				Photos.RemoveAt(currentIndex);
 				_projectImages[currentIndex].Remove();
 				_projectImages.RemoveAt(currentIndex);
 
@@ -29,7 +28,7 @@ namespace MobilePatterns.Controllers
 				this.ShowProgressHUDCompleteMessage("Deleted!");
 
 			
-				if (_photos.Count == 0)
+				if (Photos.Count == 0)
 				{
 					//Nothing more to see...
 					NavigationController.PopViewControllerAnimated(true);

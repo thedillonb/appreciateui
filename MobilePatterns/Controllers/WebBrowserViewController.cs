@@ -1,8 +1,7 @@
-using System;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
 	public class WebBrowserViewController : BrowserViewController
 	{
@@ -11,11 +10,9 @@ namespace MobilePatterns.Controllers
 		{
 		}
 
-		protected override MonoTouch.UIKit.UIBarButtonItem CreateActionButton ()
+		protected override UIBarButtonItem CreateActionButton ()
 		{
-			return new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-				SaveSelection();
-			});
+			return new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => SaveSelection());
 		}
 		
 		private void SaveSelection()

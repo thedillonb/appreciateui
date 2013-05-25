@@ -1,25 +1,16 @@
-using System;
+using AppreciateUI.Cells;
 using MonoTouch.UIKit;
-using MonoTouch.Dialog;
-using MonoTouch.CoreGraphics;
-using MonoTouch.Foundation;
-using System.Threading;
-using MobilePatterns.Cells;
 using CollectionViewBinding;
-using System.Collections.Generic;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public abstract class PatternViewController : UIViewController
     {
-        protected CollectionViewBinding.PSCollectionView _collectionView;
-        
-        public PatternViewController()
-            : base ()
+        protected CollectionViewBinding.PSCollectionView CollectionView;
+
+        protected PatternViewController()
         {
-            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
-                NavigationController.PopViewControllerAnimated(true);
-            });
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => NavigationController.PopViewControllerAnimated(true));
         }
 
 		protected abstract BrowserViewController CreateBrowserViewController();
@@ -38,18 +29,16 @@ namespace MobilePatterns.Controllers
 			NavigationController.PushViewController(photoBrowser, true);
         }
         
-        protected class DS : CollectionViewBinding.PSCollectionViewDataSource
+        protected class CollectionDataSource : CollectionViewBinding.PSCollectionViewDataSource
         {
-            PatternViewController _t;
-            public DS(PatternViewController t)
+            readonly PatternViewController _t;
+            public CollectionDataSource(PatternViewController t)
             {
                 _t = t;
             }
             public override CollectionViewBinding.PSCollectionViewCell ViewAtIndex (CollectionViewBinding.PSCollectionView collectionView, int viewAtIndex)
             {
-                var v = collectionView.DequeueReusableView() as PatternCell;
-                if (v == null)
-                    v = new PatternCell();
+                var v = collectionView.DequeueReusableView() as PatternCell ?? new PatternCell();
                 _t.OnAssignObject(v, viewAtIndex);
                 return v;
             }
@@ -61,7 +50,7 @@ namespace MobilePatterns.Controllers
             
             public override float HeightForViewAtIndex (int index)
             {
-                var width = _t._collectionView.ColWidth;
+                var width = _t.CollectionView.ColWidth;
                 var scale = 960f / (640f / width);
                 return scale;
             }
@@ -69,7 +58,7 @@ namespace MobilePatterns.Controllers
    
         private class ClickDelegate : CollectionViewBinding.PSCollectionViewDelegate
         {
-            PatternViewController _t;
+            readonly PatternViewController _t;
             public ClickDelegate(PatternViewController t)
             {
                 _t = t;
@@ -84,24 +73,24 @@ namespace MobilePatterns.Controllers
 
 
         
-        private DS ds;
-        private ClickDelegate cd;
+        private CollectionDataSource _collectionDataSource;
+        private ClickDelegate _cd;
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
-            ds = new DS(this);
-            cd = new ClickDelegate(this);
+            _collectionDataSource = new CollectionDataSource(this);
+            _cd = new ClickDelegate(this);
             
             this.View.BackgroundColor = UIColor.FromPatternImage(Images.Background);
             
-            _collectionView = new CollectionViewBinding.PSCollectionView(this.View.Bounds);
-            _collectionView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
-            _collectionView.NumColsLandscape = 4;
-            _collectionView.NumColsPortrait = 4;
-            _collectionView.BackgroundColor = UIColor.Clear;
-            _collectionView.PSCollectionViewDataSourceDelegate = ds;
-            _collectionView.PSCollectionViewDelegate = cd;
-            this.View.AddSubview(_collectionView);
+            CollectionView = new CollectionViewBinding.PSCollectionView(this.View.Bounds);
+            CollectionView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+            CollectionView.NumColsLandscape = 4;
+            CollectionView.NumColsPortrait = 4;
+            CollectionView.BackgroundColor = UIColor.Clear;
+            CollectionView.PSCollectionViewDataSourceDelegate = _collectionDataSource;
+            CollectionView.PSCollectionViewDelegate = _cd;
+            this.View.AddSubview(CollectionView);
         }
     }
 }

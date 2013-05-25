@@ -2,7 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 
-namespace MobilePatterns.Cells
+namespace AppreciateUI.Cells
 {
     public class StyledElement : MonoTouch.Dialog.StyledStringElement
     {

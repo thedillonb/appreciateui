@@ -1,11 +1,11 @@
 using System;
+using AppreciateUI.Cells;
+using AppreciateUI.Models;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
-using MobilePatterns.Models;
-using MobilePatterns.Cells;
 using System.Linq;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public class AlbumsViewController : BaseDialogViewController
     {
@@ -40,7 +40,7 @@ namespace MobilePatterns.Controllers
             {
                 var project = p;
                 var element = new ProjectElement(project);
-                if (Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == p.Id).Count() > 0)
+                if (Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == project.Id).Count() > 0)
                 {
                     element.Accessory = UITableViewCellAccessory.DisclosureIndicator;
                     element.Tapped += () => {
@@ -64,7 +64,7 @@ namespace MobilePatterns.Controllers
 
         private class ProjectElement : StyledElement
         {
-            public Project Project;
+            public readonly Project Project;
             public ProjectElement(Project p)
                 : base(p.Name, "", UITableViewCellStyle.Value1)
             {
@@ -75,7 +75,7 @@ namespace MobilePatterns.Controllers
         }
 
 
-        private class EditingSource : DialogViewController.Source 
+        private class EditingSource : Source 
         {
             public EditingSource(DialogViewController dvc)
                 : base(dvc)
@@ -110,9 +110,7 @@ namespace MobilePatterns.Controllers
                 var count = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == item.Project.Id).Count();
                 if (count > 0)
                 {
-                    var alert = new UIAlertView();
-                    alert.Title = "Confirm?";
-                    alert.Message = "Are you sure you want to delete this project and all " + count + " images?";
+                    var alert = new UIAlertView {Title = "Confirm?", Message = "Are you sure you want to delete this project and all " + count + " images?"};
                     alert.CancelButtonIndex = alert.AddButton("No");
                     var ok = alert.AddButton("Yes");
 

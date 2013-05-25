@@ -1,17 +1,18 @@
 using System;
+using AppreciateUI.Models;
+using AppreciateUI.Utils;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
-using MobilePatterns.Models;
 using MonoTouch.Foundation;
 using System.IO;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public class AddToAlbumViewController : DialogViewController
     {
-        private UIImage _img;
-        private string _category;
-        private static string SavePath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+        private readonly UIImage _img;
+        private readonly string _category;
+        private static readonly string SavePath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 
         public Action Success;
 
@@ -26,10 +27,7 @@ namespace MobilePatterns.Controllers
         public override void ViewWillAppear (bool animated)
         {
             base.ViewWillAppear (animated);
-            if (MobilePatterns.Utils.Util.iOSVersion.Item1 < 6)
-                UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackOpaque, false);
-            else
-                UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackTranslucent, false);
+            UIApplication.SharedApplication.SetStatusBarStyle(Util.iOSVersion.Item1 < 6 ? UIStatusBarStyle.BlackOpaque : UIStatusBarStyle.BlackTranslucent, false);
         }
 
         public override void ViewDidLoad()
@@ -40,7 +38,7 @@ namespace MobilePatterns.Controllers
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
                 PresentModalViewController(new UINavigationController(new NewAlbumViewController((r) => {
                     DismissModalViewControllerAnimated(true);
-                    if (r == true)
+                    if (r)
                         LoadTable();
                 })), true);
             });
@@ -73,7 +71,7 @@ namespace MobilePatterns.Controllers
             if (error != null && error.Code != 0)
             {
                 //Unable to save image
-                var alert = new UIAlertView() { Title = "Error", Message = "Unable to save image. Error code: " + error.Code };
+                var alert = new UIAlertView { Title = "Error", Message = "Unable to save image. Error code: " + error.Code };
                 alert.CancelButtonIndex = alert.AddButton("Ok");
                 alert.Show();
                 return;
@@ -92,8 +90,8 @@ namespace MobilePatterns.Controllers
             if (error != null && error.Code != 0)
             {
                 //Delete the first save..
-                System.IO.File.Delete(path);
-                var alert = new UIAlertView() { Title = "Error", Message = "Unable to save image. Error code: " + error.Code };
+                File.Delete(path);
+                var alert = new UIAlertView { Title = "Error", Message = "Unable to save image. Error code: " + error.Code };
                 alert.CancelButtonIndex = alert.AddButton("Ok");
                 alert.Show();
                 return;
@@ -102,14 +100,11 @@ namespace MobilePatterns.Controllers
             UIGraphics.EndImageContext();
 
 
-            var pi = new ProjectImage() { ProjectId = project.Id, Path = path, ThumbPath = thumbPath, Category = _category };
+            var pi = new ProjectImage { ProjectId = project.Id, Path = path, ThumbPath = thumbPath, Category = _category };
             Data.Database.Main.Insert(pi);
 
             if (Success != null)
                 Success();
-
-//            //Return to the previous controller
-//            NavigationController.PopViewControllerAnimated(true);
         }
     }
 }

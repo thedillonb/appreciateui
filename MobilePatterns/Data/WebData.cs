@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-namespace MobilePatterns.Data
+namespace AppreciateUI.Data
 {
     public class Category
     {

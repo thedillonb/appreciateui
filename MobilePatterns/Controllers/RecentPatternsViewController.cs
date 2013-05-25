@@ -1,6 +1,4 @@
-using System;
-
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
 	public class RecentPatternsViewController : WebPatternsViewController
 	{

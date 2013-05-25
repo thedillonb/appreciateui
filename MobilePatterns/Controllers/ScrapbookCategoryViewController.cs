@@ -1,18 +1,14 @@
 using System;
+using AppreciateUI.Models;
 using MonoTouch.Dialog;
-using MobilePatterns.Models;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public class ScrapbookCategoryViewController : BaseDialogViewController
     {
         public Project Project { get; set; }
-
-        public ScrapbookCategoryViewController()
-        {
-        }
 
         public override void ViewWillAppear(bool animated)
         {
@@ -28,23 +24,19 @@ namespace MobilePatterns.Controllers
 
             foreach (var img in images)
             {
-                var category = img.Category;
-                if (category == null)
-                    category = "Uncategorized";
+                var category = img.Category ?? "Uncategorized";
 
 
                 if (scraps.ContainsKey(category))
                     scraps[category].Add(img);
                 else
-                    scraps[category] = new List<ProjectImage>() { img };
+                    scraps[category] = new List<ProjectImage> { img };
             }
 
             var allItems = new Section("All");
             var e = new StyledStringElement("All Patterns", images.Count().ToString(), UITableViewCellStyle.Value1) 
                               { Accessory = UITableViewCellAccessory.DisclosureIndicator };
-            e.Tapped += () => {
-                NavigationController.PushViewController(new LocalViewPatternsViewController(new List<ProjectImage>(images)) { Title = "All Patterns" }, true);
-            };
+            e.Tapped += () => NavigationController.PushViewController(new LocalViewPatternsViewController(new List<ProjectImage>(images)) { Title = "All Patterns" }, true);
             allItems.Add(e);
 
             var categories = new Section("Categories");
@@ -53,15 +45,11 @@ namespace MobilePatterns.Controllers
                 var key = k;
                 var element = new StyledStringElement(key, scraps[key].Count.ToString(), UITableViewCellStyle.Value1) 
                               { Accessory = UITableViewCellAccessory.DisclosureIndicator };
-                element.Tapped += () => {
-                    NavigationController.PushViewController(new LocalViewPatternsViewController(scraps[key]) { Title = key }, true);
-                };
+                element.Tapped += () => NavigationController.PushViewController(new LocalViewPatternsViewController(scraps[key]) { Title = key }, true);
                 categories.Add(element);
             }
 
-            var root = new RootElement(Title);
-            root.Add(allItems);
-            root.Add(categories);
+            var root = new RootElement(Title) {allItems, categories};
             Root = root;
         }
     }

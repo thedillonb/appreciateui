@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using MobilePatterns.Models;
+using AppreciateUI.Models;
 
-namespace MobilePatterns.Data
+namespace AppreciateUI.Data
 {
     public class Database : SQLite.SQLiteConnection
     {
@@ -14,7 +14,7 @@ namespace MobilePatterns.Data
 
             if (Table<Project>().Count() == 0)
             {
-                Insert(new Project() { Name = "Scrapbook" });
+                Insert(new Project { Name = "Scrapbook" });
             }
         }
 

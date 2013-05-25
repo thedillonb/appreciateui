@@ -1,7 +1,7 @@
 using System;
 using MonoTouch.UIKit;
 
-namespace MobilePatterns.Utils
+namespace AppreciateUI.Utils
 {
     public static class Util
     {

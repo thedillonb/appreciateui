@@ -25,7 +25,7 @@ using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 
-namespace MobilePatterns.Utils
+namespace AppreciateUI.Utils
 {
     //
     // A static class that will reuse the UIImagePickerController

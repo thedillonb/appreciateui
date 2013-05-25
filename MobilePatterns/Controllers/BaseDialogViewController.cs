@@ -1,17 +1,14 @@
-using System;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public class BaseDialogViewController : DialogViewController
     {
         public BaseDialogViewController()
             : base(UITableViewStyle.Grouped, null, true)
         {
-            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
-                NavigationController.PopViewControllerAnimated(true);
-            });
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => NavigationController.PopViewControllerAnimated(true));
         }
 
         public override void ViewDidLoad ()

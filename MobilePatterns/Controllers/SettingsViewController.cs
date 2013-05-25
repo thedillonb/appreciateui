@@ -1,11 +1,10 @@
-using System;
+using AppreciateUI.Cells;
 using MonoTouch.Dialog;
-using MobilePatterns.Cells;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using MonoTouch.MessageUI;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
 	public class SettingsViewController : BaseDialogViewController
 	{

@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
-using MobilePatterns.Models;
+using AppreciateUI.Cells;
+using AppreciateUI.Models;
 using MonoTouch.UIKit;
-using MobilePatterns.Cells;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
 	public class LocalViewPatternsViewController : PatternViewController
 	{
 		UIImage[] _thumbs;
-		List<ProjectImage> _images;
+	    readonly List<ProjectImage> _images;
 		
 		public LocalViewPatternsViewController(List<ProjectImage> images)
 		{
@@ -57,11 +56,6 @@ namespace MobilePatterns.Controllers
 						img.Dispose();
 			_thumbs = new UIImage[_images.Count];
 			_collectionView.ReloadData();
-		}
-
-		public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad ();
 		}
 	}
 

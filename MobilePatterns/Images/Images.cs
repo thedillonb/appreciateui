@@ -1,7 +1,7 @@
 using System;
 using MonoTouch.UIKit;
 
-namespace MobilePatterns
+namespace AppreciateUI
 {
     public static class Images
     {

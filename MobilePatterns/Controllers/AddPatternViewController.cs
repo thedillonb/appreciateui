@@ -1,12 +1,10 @@
-using System;
 using MonoTouch.UIKit;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public class AddPatternViewController : UIViewController
     {
         public AddPatternViewController()
-            : base()
         {
             Title = "Add Pattern";
             TabBarItem.Image = Images.Picture;

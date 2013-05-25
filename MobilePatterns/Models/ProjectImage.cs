@@ -1,7 +1,7 @@
 using System;
 using SQLite;
 
-namespace MobilePatterns.Models
+namespace AppreciateUI.Models
 {
     public class ProjectImage
     {

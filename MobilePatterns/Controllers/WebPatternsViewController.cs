@@ -1,23 +1,16 @@
 using System;
-using System.Linq;
-using MonoTouch.Dialog;
+using AppreciateUI.Cells;
+using AppreciateUI.Data;
 using MonoTouch.UIKit;
 using System.Threading;
 using MonoTouch.Foundation;
-using MobilePatterns.Data;
-using MonoTouch.Dialog.Utilities;
-using System.Drawing;
-using MobilePatterns.Cells;
 using System.Collections.Generic;
-using MobilePatterns.Models;
-using MonoTouch.CoreGraphics;
-using MobilePatterns.Views;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public class WebPatternsViewController : PatternViewController
     {
-        Category _source;
+        readonly Category _source;
         List<Screenshot> _screenshots;
 
 		public WebPatternsViewController()
@@ -32,7 +25,7 @@ namespace MobilePatterns.Controllers
 
 		protected override BrowserViewController CreateBrowserViewController()
 		{
-			return new WebBrowserViewController(loadedImages);
+			return new WebBrowserViewController(_loadedImages);
 		}
        
         protected override int OnGetItemsInCollection ()
@@ -48,16 +41,14 @@ namespace MobilePatterns.Controllers
                 view.FillViewWithObject(_screenshots[index].Url, _screenshots[index].Ext);
         }
 
-		List<PhotoBrowser.MWPhoto> loadedImages = new List<PhotoBrowser.MWPhoto>();
+		List<PhotoBrowser.MWPhoto> _loadedImages = new List<PhotoBrowser.MWPhoto>();
 
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
 
             var hud = new RedPlum.MBProgressHUD(View.Frame)
-            { Mode = RedPlum.MBProgressHUDMode.Indeterminate };
-            hud.TitleText = "Loading...";
-            hud.TitleFont = UIFont.BoldSystemFontOfSize(14f);
+                          {Mode = RedPlum.MBProgressHUDMode.Indeterminate, TitleText = "Loading...", TitleFont = UIFont.BoldSystemFontOfSize(14f)};
             this.View.AddSubview(hud);
             hud.Show(false);
 
@@ -65,34 +56,24 @@ namespace MobilePatterns.Controllers
             ThreadPool.QueueUserWorkItem(delegate {
                 try
                 {
-					if (_source != null)
-					{
-                    	_screenshots = Data.RequestFactory.GetScreenshots(_source.Id);
-					}
-					else
-					{
-						_screenshots = Data.RequestFactory.GetRecentScreenshots();
-					}
-
-                    loadedImages = new List<PhotoBrowser.MWPhoto>();
+					_screenshots = _source != null ? RequestFactory.GetScreenshots(_source.Id) : RequestFactory.GetRecentScreenshots();
+                    _loadedImages = new List<PhotoBrowser.MWPhoto>();
                     _screenshots.ForEach(x => {
-                        loadedImages.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
+                        _loadedImages.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
 
                     });
   
                     BeginInvokeOnMainThread(() => { 
                         hud.Hide(true);
                         hud.RemoveFromSuperview();
-                        _collectionView.ReloadData();
+                        CollectionView.ReloadData();
                     });
                 }
                 catch (Exception e)
                 {
 					BeginInvokeOnMainThread(() =>  {
-						UIAlertView alert = new UIAlertView();
-						alert.Message = e.Message;
-						alert.Title = "Error";
-						alert.CancelButtonIndex = alert.AddButton("Ok");
+					    var alert = new UIAlertView {Message = e.Message, Title = "Error"};
+					    alert.CancelButtonIndex = alert.AddButton("Ok");
 						alert.Show();
 					});
                 }

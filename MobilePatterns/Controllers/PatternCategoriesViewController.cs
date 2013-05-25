@@ -1,12 +1,10 @@
 using System;
+using AppreciateUI.Cells;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MobilePatterns.Data;
 using System.Threading;
-using MobilePatterns.Cells;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
     public class PatternCategoriesViewController : BaseDialogViewController
     {
@@ -38,22 +36,17 @@ namespace MobilePatterns.Controllers
                         hud.RemoveFromSuperview();
                     });
                     
-                    data.ForEach(d => {
-                        section.Add(new StyledElement(d.Name, () => NavigationController.PushViewController(new WebPatternsViewController(d) { Title = d.Name } , true)));
-                    });
+                    data.ForEach(d => section.Add(new StyledElement(d.Name, () => NavigationController.PushViewController(new WebPatternsViewController(d) { Title = d.Name } , true))));
                     
                     
                     BeginInvokeOnMainThread(() => { 
-                        var root = new RootElement(Title);
-                        root.Add(section);
+                        var root = new RootElement(Title) {section};
                         Root = root;
                     });
                 }
                 catch (Exception e)
                 {
-                    UIAlertView alert = new UIAlertView();
-                    alert.Message = e.Message;
-                    alert.Title = "Error";
+                    var alert = new UIAlertView {Message = e.Message, Title = "Error"};
                     alert.CancelButtonIndex = alert.AddButton("Ok");
                     alert.Show();
                 }

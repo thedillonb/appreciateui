@@ -2,17 +2,16 @@ using System;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
 
-namespace MobilePatterns.Controllers
+namespace AppreciateUI.Controllers
 {
 	public abstract class BrowserViewController : PhotoBrowser.MWPhotoBrowser
 	{
-		protected List<PhotoBrowser.MWPhoto> _photos;
-		private PhotoBrowserDelegate _delegate;
-		public BrowserViewController(List<PhotoBrowser.MWPhoto> photos)
-			: base()
-		{
-			_photos = photos;
-			this.PhotoDelegate = _delegate = new PhotoBrowserDelegate(photos);
+		protected List<PhotoBrowser.MWPhoto> Photos;
+
+	    protected BrowserViewController(List<PhotoBrowser.MWPhoto> photos)
+	    {
+			Photos = photos;
+			this.PhotoDelegate = new PhotoBrowserDelegate(photos);
 
 			NavigationItem.BackBarButtonItem = new UIBarButtonItem("Back", UIBarButtonItemStyle.Plain, (s, e) => {
 				NavigationController.PopViewControllerAnimated(true);
@@ -53,7 +52,7 @@ namespace MobilePatterns.Controllers
 
 		public class PhotoBrowserDelegate : PhotoBrowser.MWPhotoBrowserDelegate
 		{
-			List<PhotoBrowser.MWPhoto> _photos;
+		    readonly List<PhotoBrowser.MWPhoto> _photos;
 			public PhotoBrowserDelegate(List<PhotoBrowser.MWPhoto> photos)
 			{
 				_photos = photos;

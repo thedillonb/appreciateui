@@ -2,12 +2,11 @@ using System;
 using CollectionViewBinding;
 using MonoTouch.UIKit;
 using System.Drawing;
-using MobilePatterns.Data;
 using MonoTouch.Foundation;
 using System.Threading;
 using SDWebImage;
 
-namespace MobilePatterns.Cells
+namespace AppreciateUI.Cells
 {
     public class PatternCell : PSCollectionViewCell
     {

@@ -70,7 +70,7 @@ namespace AppreciateUI
             {
                 UIImageView killSplash = null;
                 if (IsTall)
-                    killSplash = new UIImageView(UIImageHelper.FromFileAuto("Default-568h", "jpg"));
+                    killSplash = new UIImageView(UIImageHelper.FromFileAuto("Default-568h", "png"));
                 else
                     killSplash = new UIImageView(UIImageHelper.FromFileAuto("Default", "jpg"));
                 

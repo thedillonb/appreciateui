@@ -36,5 +36,7 @@
 	<string>UILaunchImageFile</string>
 	<key>CFBundleDisplayName</key>
 	<string>AppreciateUI</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.dillonbuchanan.appreciateui</string>
 </dict>
 </plist>

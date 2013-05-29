@@ -163,10 +163,10 @@
     <Content Include="Icons\Icon-Small-50%402x.png" />
     <Content Include="Default.jpg" />
     <Content Include="Default%402x.jpg" />
-    <Content Include="Default-568h%402x.jpg" />
     <Content Include="Default-Portrait.jpg" />
     <Content Include="Default-Portrait%402x.jpg" />
     <Content Include="iPad-Portrait.png" />
+    <Content Include="Default-568h%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
@@ -197,5 +197,6 @@
     <BundleResource Include="Images\tray_full%402x.png" />
     <BundleResource Include="Images\Controls\capture-button.png" />
     <BundleResource Include="Images\Controls\capture-button%402x.png" />
+    <BundleResource Include="Resources\Default-568h%402x.jpg" />
   </ItemGroup>
 </Project>

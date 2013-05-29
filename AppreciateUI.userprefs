@@ -1,10 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True">
-          <Node name="API" expanded="True" />
+        <State expanded="True">
+          <Node name="AppreciateUI" expanded="True">
+            <Node name="AppDelegate.cs" selected="True" />
+          </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
@@ -20,10 +22,13 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="70" />
-      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="76" />
-      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="114" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="70" column="1" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="76" column="1" />
+      <Breakpoint file="/Users/dillonb/Projects/mobilepatterns/MonoTouch.Dialog/MonoTouch.Dialog/Utilities/LRUCache.cs" line="114" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.AppreciateUI>
+    <IPhoneZipBundleSettings CurrentFolder="/Users/dillonb/Desktop" />
+  </MonoDevelop.Ide.ItemProperties.AppreciateUI>
 </Properties>

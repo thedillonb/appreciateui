@@ -47,8 +47,7 @@
     <ConsolePause>False</ConsolePause>
     <CodesignKey>iPhone Developer: Dillon Buchanan (BD3M6C4CAK)</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
-    <MtouchProfiling>True</MtouchProfiling>
-    <CodesignProvision>E781ABE9-8BE9-4DC6-A167-509F9A8DD32C</CodesignProvision>
+    <CodesignProvision>8BFC63B1-300D-45AD-ABCB-95EC125D1539</CodesignProvision>
     <IpaPackageName />
     <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>

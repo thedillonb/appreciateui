@@ -98,9 +98,10 @@ namespace AppreciateUI.Cells
             AddSpinner();
 
             SizeF size;
-            //if (MobilePatterns.Utils.Util.IsRetina)
-            //    size = new SizeF(296, 444);
-            //else
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad && Utils.Util.IsRetina)
+            	size = new SizeF(296, 444);
+            else
                 size = new SizeF(148, 222);
 
             var url = "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;

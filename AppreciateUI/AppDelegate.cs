@@ -2,6 +2,7 @@ using AppreciateUI.Controllers;
 using AppreciateUI.Utils;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.Drawing;
 
 namespace AppreciateUI
 {
@@ -38,14 +39,24 @@ namespace AppreciateUI
             else
                 UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.BlackTranslucent, false);
 
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				var textAttrs = new UITextAttributes() { TextColor = UIColor.White, TextShadowColor = UIColor.DarkGray, TextShadowOffset = new UIOffset(0, -1) };
+				UINavigationBar.Appearance.SetTitleTextAttributes(textAttrs);
+				UISegmentedControl.Appearance.SetTitleTextAttributes(textAttrs, UIControlState.Normal);
+			}
+
             //Set the theming
             UIBarButtonItem.Appearance.SetBackButtonBackgroundImage(Images.Controls.BackButton.CreateResizableImage(new UIEdgeInsets(0, 16, 0, 10)), UIControlState.Normal, UIBarMetrics.Default);
+            UIBarButtonItem.AppearanceWhenContainedIn(typeof(UIPopoverController)).SetBackButtonBackgroundImage(null, UIControlState.Normal, UIBarMetrics.Default);
+
             UIBarButtonItem.Appearance.SetBackgroundImage(Images.Controls.Button, UIControlState.Normal, UIBarMetrics.Default);
+            UIBarButtonItem.AppearanceWhenContainedIn(typeof(UIPopoverController)).SetBackgroundImage(null, UIControlState.Normal, UIBarMetrics.Default);
+
             UINavigationBar.Appearance.SetBackgroundImage(Images.Controls.Navbar.CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0)), UIBarMetrics.Default);
+			UINavigationBar.AppearanceWhenContainedIn(typeof(UIPopoverController)).SetBackgroundImage (null, UIBarMetrics.Default);
+
             UIToolbar.Appearance.SetBackgroundImage(Images.Controls.Navbar.CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0)), UIToolbarPosition.Any, UIBarMetrics.Default);
             UITabBar.Appearance.BackgroundImage = Images.Controls.Tabbar.CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0));
-            UIBarButtonItem.Appearance.TintColor = UIColor.FromRGBA(.16f, .16f, .16f, 0.9f);
-            UIBarButtonItem.Appearance.TintColor = UIColor.White;
 
 
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
@@ -87,6 +98,7 @@ namespace AppreciateUI
         }
 
         private UIViewController _previousController;
+		private UIPopoverController _pop;
 		private void OpenAddPatternView()
 		{
 			TabBarController.SelectedViewController = _previousController;
@@ -98,16 +110,38 @@ namespace AppreciateUI
 					return;
 				
 				var atsvc = new AddToAlbumViewController(original, null);
-				atsvc.Success = () => {
-					ctrl.DismissModalViewControllerAnimated(true);
-				};
-				
+				atsvc.Success = () => DismissPopupOfModal(ctrl);
 				ctrl.PushViewController(atsvc, true);
 			}, () => { 
-				ctrl.DismissModalViewControllerAnimated(true);
+				DismissPopupOfModal(ctrl);
 			});
-			
-			TabBarController.PresentModalViewController(ctrl, true);
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				_pop = new UIPopoverController (ctrl);
+				_pop.PopoverContentSize = new System.Drawing.SizeF(320, 480);
+				_pop.PresentFromRect(TabBarController.TabBar.Frame, TabBarController.View, UIPopoverArrowDirection.Down, false);
+			} 
+			else {
+				TabBarController.PresentModalViewController(ctrl, true);
+			}
+
+		}
+
+		private void DismissPopupOfModal(UIImagePickerController ctrl)
+		{
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+			{
+				if (_pop != null)
+				{
+					_pop.Dismiss(true);
+					_pop.Dispose();
+					_pop = null;
+				}
+			}
+			else
+			{
+				ctrl.DismissModalViewControllerAnimated(true);
+			}
 		}
 
 

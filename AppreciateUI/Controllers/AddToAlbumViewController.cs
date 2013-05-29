@@ -28,6 +28,9 @@ namespace AppreciateUI.Controllers
         {
             base.ViewWillAppear (animated);
             UIApplication.SharedApplication.SetStatusBarStyle(Util.iOSVersion.Item1 < 6 ? UIStatusBarStyle.BlackOpaque : UIStatusBarStyle.BlackTranslucent, false);
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) 
+				ContentSizeForViewInPopover = new System.Drawing.SizeF(320,480);
         }
 
         public override void ViewDidLoad()

@@ -75,7 +75,8 @@ namespace AppreciateUI.Utils
 
             public override void WillShowViewController (UINavigationController navigationController, UIViewController viewController, bool animated)
             {
-                navigationController.NavigationBar.BarStyle = UIBarStyle.Default;
+                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
+                    navigationController.NavigationBar.BarStyle = UIBarStyle.Default;
             }
         }
         

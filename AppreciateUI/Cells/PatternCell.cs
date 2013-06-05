@@ -97,13 +97,7 @@ namespace AppreciateUI.Cells
 			LayoutDeleteButton();
             AddSpinner();
 
-            SizeF size;
-
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad && Utils.Util.IsRetina)
-            	size = new SizeF(296, 444);
-            else
-                size = new SizeF(148, 222);
-
+            SizeF size = AppreciateUI.Utils.Util.ThumbnailSize;
             var url = "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;
             SDWebImageManager.SharedManager.CancelForDelegate(this);
             SDWebImageManager.SharedManager.Download(new NSUrl(url), this, SDWebImageOptions.SDWebImageLowPriority, (i, c) => {

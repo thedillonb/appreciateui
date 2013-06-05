@@ -19,8 +19,24 @@ namespace AppreciateUI.Models
 
         public int Remove()
         {
-            System.IO.File.Delete(this.Path);
-            System.IO.File.Delete(this.ThumbPath);
+            try
+            {
+                System.IO.File.Delete(this.Path);
+            }
+            catch (Exception e)
+            {
+                AppreciateUI.Utils.Util.LogException("Unable to delete: " + this.Path, e);
+            }
+
+            try
+            {
+                System.IO.File.Delete(this.ThumbPath);
+            }
+            catch (Exception e)
+            {
+                AppreciateUI.Utils.Util.LogException("Unable to delete: " + this.ThumbPath, e);
+            }
+
             return Data.Database.Main.Delete(this);
         }
     }

@@ -81,7 +81,7 @@ namespace AppreciateUI.Controllers
             }
 
 
-            var size = new System.Drawing.SizeF(148, 222);
+            var size = AppreciateUI.Utils.Util.ThumbnailSize;
             UIGraphics.BeginImageContextWithOptions(size, false, 0f);
             var context = UIGraphics.GetCurrentContext();
             context.TranslateCTM(0, size.Height);
@@ -93,7 +93,15 @@ namespace AppreciateUI.Controllers
             if (error != null && error.Code != 0)
             {
                 //Delete the first save..
-                File.Delete(path);
+                try
+                {
+                    File.Delete(path);
+                }
+                catch (Exception e)
+                {
+                    AppreciateUI.Utils.Util.LogException("Unable to delete image file at: " + path, e);
+                }
+
                 var alert = new UIAlertView { Title = "Error", Message = "Unable to save image. Error code: " + error.Code };
                 alert.CancelButtonIndex = alert.AddButton("Ok");
                 alert.Show();

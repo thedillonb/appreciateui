@@ -65,7 +65,7 @@
     <MtouchUseThumb>True</MtouchUseThumb>
     <IpaPackageName />
     <MtouchI18n />
-    <CodesignProvision>6EFA8279-47DA-4C7A-97A4-0C29827172EA</CodesignProvision>
+    <CodesignProvision>32DDC6C0-BB00-476F-B8BA-F69EECF69FEC</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -84,7 +84,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignKey>iPhone Distribution: Dillon Buchanan</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

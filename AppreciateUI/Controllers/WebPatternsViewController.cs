@@ -11,7 +11,16 @@ namespace AppreciateUI.Controllers
     public class WebPatternsViewController : PatternViewController
     {
         readonly Category _source;
+        State _state = State.Waiting;
         List<Screenshot> _screenshots;
+
+        /// <summary>
+        /// A simple state machine enumeration
+        /// </summary>
+        enum State
+        {
+            Waiting, Loading, Loaded
+        }
 
 		public WebPatternsViewController()
 			: this (null)
@@ -46,9 +55,27 @@ namespace AppreciateUI.Controllers
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
+        }
 
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            LoadImages();
+        }
+
+        private void LoadImages()
+        {
+            if (_state != State.Waiting)
+                return;
+
+            _state = State.Loading;
             var hud = new RedPlum.MBProgressHUD(View.Frame)
-                          {Mode = RedPlum.MBProgressHUDMode.Indeterminate, TitleText = "Loading...", TitleFont = UIFont.BoldSystemFontOfSize(14f)};
+            {
+                Mode = RedPlum.MBProgressHUDMode.Indeterminate, 
+                TitleText = "Loading...", 
+                TitleFont = UIFont.BoldSystemFontOfSize(14f)
+            };
+
             this.View.AddSubview(hud);
             hud.Show(false);
 
@@ -56,14 +83,15 @@ namespace AppreciateUI.Controllers
             ThreadPool.QueueUserWorkItem(delegate {
                 try
                 {
-					_screenshots = _source != null ? RequestFactory.GetScreenshots(_source.Id) : RequestFactory.GetRecentScreenshots();
+                    _screenshots = _source != null ? RequestFactory.GetScreenshots(_source.Id) : RequestFactory.GetRecentScreenshots();
                     _loadedImages = new List<PhotoBrowser.MWPhoto>();
                     _screenshots.ForEach(x => {
                         _loadedImages.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
 
                     });
-  
+
                     BeginInvokeOnMainThread(() => { 
+                        _state = State.Loaded;
                         hud.Hide(true);
                         hud.RemoveFromSuperview();
                         CollectionView.ReloadData();
@@ -71,11 +99,14 @@ namespace AppreciateUI.Controllers
                 }
                 catch (Exception e)
                 {
-					BeginInvokeOnMainThread(() =>  {
-					    var alert = new UIAlertView {Message = e.Message, Title = "Error"};
-					    alert.CancelButtonIndex = alert.AddButton("Ok");
-						alert.Show();
-					});
+                    BeginInvokeOnMainThread(() =>  {
+                        _state = State.Waiting;
+                        hud.Hide(true);
+                        hud.RemoveFromSuperview();
+                        var alert = new UIAlertView {Message = e.Message, Title = "Error"};
+                        alert.CancelButtonIndex = alert.AddButton("Ok");
+                        alert.Show();
+                    });
                 }
             });
         }

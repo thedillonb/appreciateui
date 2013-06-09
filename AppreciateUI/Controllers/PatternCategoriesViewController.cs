@@ -46,6 +46,8 @@ namespace AppreciateUI.Controllers
                 }
                 catch (Exception e)
                 {
+                    hud.Hide(true);
+                    hud.RemoveFromSuperview();
                     var alert = new UIAlertView {Message = e.Message, Title = "Error"};
                     alert.CancelButtonIndex = alert.AddButton("Ok");
                     alert.Show();

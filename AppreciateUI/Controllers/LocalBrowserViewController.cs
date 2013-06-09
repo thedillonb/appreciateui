@@ -19,6 +19,8 @@ namespace AppreciateUI.Controllers
 			return new UIBarButtonItem(UIBarButtonSystemItem.Trash, (s, e) => {
 
 				var currentIndex = this.CurrentIndex;
+                if (currentIndex >= Photos.Count)
+                    return;
 
 				Photos.RemoveAt(currentIndex);
 				_projectImages[currentIndex].Remove();
@@ -31,7 +33,7 @@ namespace AppreciateUI.Controllers
 				if (Photos.Count == 0)
 				{
 					//Nothing more to see...
-					NavigationController.PopViewControllerAnimated(true);
+                    NavigationController.PopToRootViewController(true);
 					return;
 				}
 

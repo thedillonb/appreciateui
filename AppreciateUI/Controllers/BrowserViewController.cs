@@ -65,6 +65,9 @@ namespace AppreciateUI.Controllers
 			
 			public override PhotoBrowser.MWPhoto PhotoBrowser (PhotoBrowser.MWPhotoBrowser photoBrowser, int photoAtIndex)
 			{
+                if (photoAtIndex >= _photos.Count)
+                    return null;
+
 				return _photos[photoAtIndex];
 			}
 		}

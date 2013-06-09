@@ -34,6 +34,14 @@ namespace AppreciateUI.Controllers
 
         private void LoadTable()
         {
+            var imageCount = Data.Database.Main.Table<ProjectImage>().Count();
+            var allPatternsButton = new StyledElement("All UI Images", imageCount.ToString(), UITableViewCellStyle.Value1);
+            if (imageCount > 0)
+            {
+                allPatternsButton.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+                allPatternsButton.Tapped += () => NavigationController.PushViewController(new LocalViewPatternsViewController() { Title = "All" }, true);
+            }
+
             var section = new Section();
             var projects = Data.Database.Main.Table<Project>();
             foreach (var p in projects)
@@ -50,7 +58,7 @@ namespace AppreciateUI.Controllers
                 section.Add(element);
             }
 
-            var root = new RootElement(Title) { section };
+            var root = new RootElement(Title) { new Section() { allPatternsButton }, section };
             Root = root;
         }
 
@@ -74,9 +82,11 @@ namespace AppreciateUI.Controllers
 
         private class EditingSource : Source 
         {
-            public EditingSource(DialogViewController dvc)
+            readonly AlbumsViewController _parent;
+            public EditingSource(AlbumsViewController dvc)
                 : base(dvc)
             {
+                _parent = dvc;
             }
 
             public override bool CanEditRow(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
@@ -86,6 +96,11 @@ namespace AppreciateUI.Controllers
 
             public override UITableViewCellEditingStyle EditingStyleForRow(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
             {
+                //var section = Container.Root [indexPath.Section];
+                //var element = section [indexPath.Row];
+
+                if (indexPath.Section == 0)
+                    return UITableViewCellEditingStyle.None;
                 return UITableViewCellEditingStyle.Delete;
             }
 
@@ -102,6 +117,7 @@ namespace AppreciateUI.Controllers
                 Action deleteDelegate = () => {
                     item.Project.Remove();
                     section.Remove(element);
+                    _parent.LoadTable();
                 };
 
                 var count = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == item.Project.Id).Count();

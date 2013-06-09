@@ -17,15 +17,15 @@ namespace AppreciateUI.Controllers
 			_images = images;
 		}
 
+        public LocalViewPatternsViewController()
+            : this(-1)
+        {
+        }
+
         public LocalViewPatternsViewController(int projectId)
         {
             _projectId = projectId;
             _images = new List<ProjectImage>();
-        }
-
-        private static List<ProjectImage> GetProjectImagesFromProject(int projectId)
-        {
-            return Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == projectId).ToList();
         }
 
 		protected override BrowserViewController CreateBrowserViewController()
@@ -66,7 +66,13 @@ namespace AppreciateUI.Controllers
 
             //If we used a project id lets update the images, just incase they changed!
             if (_projectId.HasValue)
-                _images = GetProjectImagesFromProject(_projectId.Value);
+            {
+                //A project id of -1 indicates everything
+                if (_projectId == -1)
+                    _images = Data.Database.Main.Table<ProjectImage>().ToList();
+                else
+                    _images = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == _projectId.Value).ToList();
+            }
 
 			if (_thumbs != null)
 				foreach (var img in _thumbs)

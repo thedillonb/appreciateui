@@ -2,18 +2,31 @@ using System.Collections.Generic;
 using AppreciateUI.Cells;
 using AppreciateUI.Models;
 using MonoTouch.UIKit;
+using System.Linq;
 
 namespace AppreciateUI.Controllers
 {
 	public class LocalViewPatternsViewController : PatternViewController
 	{
 		UIImage[] _thumbs;
-	    readonly List<ProjectImage> _images;
+        List<ProjectImage> _images;
+        readonly int? _projectId;
 		
 		public LocalViewPatternsViewController(List<ProjectImage> images)
 		{
 			_images = images;
 		}
+
+        public LocalViewPatternsViewController(int projectId)
+        {
+            _projectId = projectId;
+            _images = new List<ProjectImage>();
+        }
+
+        private static List<ProjectImage> GetProjectImagesFromProject(int projectId)
+        {
+            return Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == projectId).ToList();
+        }
 
 		protected override BrowserViewController CreateBrowserViewController()
 		{
@@ -50,6 +63,11 @@ namespace AppreciateUI.Controllers
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
+
+            //If we used a project id lets update the images, just incase they changed!
+            if (_projectId.HasValue)
+                _images = GetProjectImagesFromProject(_projectId.Value);
+
 			if (_thumbs != null)
 				foreach (var img in _thumbs)
 					if (img != null) 

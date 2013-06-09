@@ -44,10 +44,7 @@ namespace AppreciateUI.Controllers
                 {
                     element.Accessory = UITableViewCellAccessory.DisclosureIndicator;
                     element.Tapped += () => {
-
-                        var images = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == project.Id);
-
-                        NavigationController.PushViewController(new LocalViewPatternsViewController(images.ToList()) { Title = project.Name }, true);
+                        NavigationController.PushViewController(new LocalViewPatternsViewController(project.Id) { Title = project.Name }, true);
                     };
                 }
                 section.Add(element);

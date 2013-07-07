@@ -20,9 +20,7 @@ namespace AppreciateUI.Controllers
             base.ViewDidLoad();
 
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentModalViewController(new UINavigationController(new NewAlbumViewController((r) => {
-                    DismissModalViewControllerAnimated(true);
-                })), true);
+
             });
         }
 
@@ -42,7 +40,7 @@ namespace AppreciateUI.Controllers
                 allPatternsButton.Tapped += () => NavigationController.PushViewController(new LocalViewPatternsViewController() { Title = "All" }, true);
             }
 
-            var section = new Section();
+            var section = new Section("Albums");
             var projects = Data.Database.Main.Table<Project>();
             foreach (var p in projects)
             {

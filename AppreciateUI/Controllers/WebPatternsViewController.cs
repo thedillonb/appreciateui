@@ -52,11 +52,6 @@ namespace AppreciateUI.Controllers
 
 		List<PhotoBrowser.MWPhoto> _loadedImages = new List<PhotoBrowser.MWPhoto>();
 
-        public override void ViewDidLoad ()
-        {
-            base.ViewDidLoad ();
-        }
-
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);

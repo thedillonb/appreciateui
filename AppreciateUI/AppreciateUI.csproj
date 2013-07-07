@@ -85,6 +85,12 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <CodesignKey>iPhone Distribution: Dillon Buchanan</CodesignKey>
+    <IpaPackageName />
+    <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
+    <CodesignProvision>32DDC6C0-BB00-476F-B8BA-F69EECF69FEC</CodesignProvision>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchUseThumb>true</MtouchUseThumb>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -110,7 +116,6 @@
     <Compile Include="Views\CropView.cs" />
     <Compile Include="Controllers\ScrapbookCategoryViewController.cs" />
     <Compile Include="Data\SQLite.cs" />
-    <Compile Include="Cells\StyledElement.cs" />
     <Compile Include="Controllers\BaseDialogViewController.cs" />
     <Compile Include="Cells\PatternCell.cs" />
     <Compile Include="Controllers\PatternViewController.cs" />
@@ -120,12 +125,20 @@
     <Compile Include="Controllers\AddToAlbumViewController.cs" />
     <Compile Include="Controllers\NewAlbumViewController.cs" />
     <Compile Include="Utils\UIRaisedTabBar.cs" />
-    <Compile Include="Controllers\SettingsViewController.cs" />
     <Compile Include="Controllers\RecentPatternsViewController.cs" />
     <Compile Include="Controllers\LocalPatternsViewController.cs" />
     <Compile Include="Controllers\LocalBrowserViewController.cs" />
     <Compile Include="Controllers\BrowserViewController.cs" />
     <Compile Include="Controllers\WebBrowserViewController.cs" />
+    <Compile Include="Controllers\SlideoutNavigationController.cs" />
+    <Compile Include="Views\NavigationButton.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Views\MenuSectionView.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Elements\MultilinedElement.cs" />
+    <Compile Include="Elements\StyledElement.cs" />
+    <Compile Include="Elements\CustomElement.cs" />
+    <Compile Include="Utils\StringExtensions.cs" />
   </ItemGroup>
   <Import Project="$(ProgramFiles)\MSBuild\MonoTouch\Novell.MonoTouch.Common.targets" Condition="'$(windir)' != '' " />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -184,6 +197,14 @@
       <Project>{BAB4D1D9-A003-4380-9D61-A1D42C8650A0}</Project>
       <Name>PhotoBrowser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">
+      <Project>{6D7B9B53-CFEF-46BE-A608-14A4A1381CF6}</Project>
+      <Name>MonoTouch.SlideoutNavigation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\monotouch-uservoice\UserVoice\UserVoice\UserVoice.csproj">
+      <Project>{3A0C5D98-D568-43C1-A877-B1BA00BA4A87}</Project>
+      <Name>UserVoice</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork%402x" />
@@ -197,5 +218,14 @@
     <BundleResource Include="Images\Controls\capture-button.png" />
     <BundleResource Include="Images\Controls\capture-button%402x.png" />
     <BundleResource Include="Resources\Default-568h%402x.jpg" />
+    <BundleResource Include="Images\Buttons\three_lines.png" />
+    <BundleResource Include="Images\Buttons\three_lines%402x.png" />
+    <BundleResource Include="Images\Components\menu_section_bg%402x.png" />
+    <BundleResource Include="Images\Components\menu_section_bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Buttons\" />
+    <Folder Include="Images\Components\" />
+    <Folder Include="Elements\" />
   </ItemGroup>
 </Project>

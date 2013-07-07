@@ -21,6 +21,16 @@ namespace AppreciateUI
             public static UIImage Button = UIImage.FromBundle("Images/Controls/button");
 			public static UIImage CenterButton = UIImage.FromBundle("Images/Controls/capture-button");
         }
+
+        public static class Buttons
+        {
+            public static UIImage ThreeLines = UIImage.FromBundle("Images/Buttons/three_lines");
+        }
+
+        public static class Components
+        {
+            public static UIImage MenuSectionBackground = UIImage.FromBundle("Images/Components/menu_section_bg");
+        }
     }
 }
 

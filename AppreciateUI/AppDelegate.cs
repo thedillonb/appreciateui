@@ -14,7 +14,7 @@ namespace AppreciateUI
     {
         // class-level declarations
         public override UIWindow Window { get; set; }
-        public UITabBarController TabBarController { get; set; }
+        public SlideoutNavigationController SlideController { get; set; }
 
         // This is the main entry point of the application.
         static void Main(string[] args)
@@ -60,20 +60,9 @@ namespace AppreciateUI
 
 
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
-			TabBarController = new UIRaisedTabBar(Images.Controls.CenterButton, Images.Controls.CenterButton, OpenAddPatternView);
-
-            TabBarController.ViewControllers = new UIViewController[] {
-				new UINavigationController(new RecentPatternsViewController()),
-                new UINavigationController(new PatternCategoriesViewController()),
-                new AddPatternViewController(),
-                new UINavigationController(new AlbumsViewController()),
-				new UINavigationController(new SettingsViewController())
-            };
-
-            _previousController = TabBarController.ViewControllers[0];
-            TabBarController.ViewControllerSelected += ViewControllerSelected;
-
-            Window.RootViewController = TabBarController;
+            SlideController = new SlideoutNavigationController();
+            Window.RootViewController = SlideController;
+            SlideController.SelectView(new RecentPatternsViewController());
             Window.MakeKeyAndVisible();
 
 
@@ -95,63 +84,6 @@ namespace AppreciateUI
 
 
             return true;
-        }
-
-        private UIViewController _previousController;
-		private UIPopoverController _pop;
-		private void OpenAddPatternView()
-		{
-			TabBarController.SelectedViewController = _previousController;
-			UIImagePickerController ctrl = null;
-			ctrl = Camera.SelectPicture(TabBarController, (dic) => { 
-				
-				var original = dic[UIImagePickerController.OriginalImage] as UIImage;
-				if (original == null)
-					return;
-				
-				var atsvc = new AddToAlbumViewController(original, null);
-				atsvc.Success = () => DismissPopupOfModal(ctrl);
-				ctrl.PushViewController(atsvc, true);
-			}, () => { 
-				DismissPopupOfModal(ctrl);
-			});
-
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				_pop = new UIPopoverController (ctrl);
-				_pop.PopoverContentSize = new System.Drawing.SizeF(320, 480);
-				_pop.PresentFromRect(TabBarController.TabBar.Frame, TabBarController.View, UIPopoverArrowDirection.Down, false);
-			} 
-			else {
-				TabBarController.PresentModalViewController(ctrl, true);
-			}
-
-		}
-
-		private void DismissPopupOfModal(UIImagePickerController ctrl)
-		{
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-			{
-				if (_pop != null)
-				{
-					_pop.Dismiss(true);
-					_pop.Dispose();
-					_pop = null;
-				}
-			}
-			else
-			{
-				ctrl.DismissModalViewControllerAnimated(true);
-			}
-		}
-
-
-        private void ViewControllerSelected(object sender, UITabBarSelectionEventArgs e)
-        {
-			//Remember what was selected last
-            if (e.ViewController is AddPatternViewController)
-				OpenAddPatternView();
-			else
-                _previousController = e.ViewController;
         }
 
         public static bool IsTall

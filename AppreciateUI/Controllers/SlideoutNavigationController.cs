@@ -21,13 +21,13 @@ namespace AppreciateUI.Controllers
 		/// <returns>The menu button.</returns>
 		protected override UIBarButtonItem CreateMenuButton()
 		{
-            return new UIBarButtonItem(NavigationButton.Create(Images.Buttons.ThreeLines, () => Show()));
+            //return new UIBarButtonItem(NavigationButton.Create(Images.Buttons.ThreeLines, () => Show()));
+            return new UIBarButtonItem(Images.Buttons.ThreeLines, UIBarButtonItemStyle.Bordered, (s, e) => Show());
 		}
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-            //SetMenuNavigationBackgroundImage(Images.Components.MenuNavbar.CreateResizableImage(new UIEdgeInsets(0, 0, 0, 0)), UIBarMetrics.Default);
 			MenuView = new MenuController();
 		}
 	}

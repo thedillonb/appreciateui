@@ -1,5 +1,8 @@
 using System;
 using MonoTouch.UIKit;
+using MonoTouch.CoreGraphics;
+using MonoTouch.CoreImage;
+using System.Drawing;
 
 namespace AppreciateUI
 {

@@ -221,10 +221,10 @@
     <BundleResource Include="Images\Controls\capture-button.png" />
     <BundleResource Include="Images\Controls\capture-button%402x.png" />
     <BundleResource Include="Resources\Default-568h%402x.jpg" />
-    <BundleResource Include="Images\Buttons\three_lines.png" />
-    <BundleResource Include="Images\Buttons\three_lines%402x.png" />
     <BundleResource Include="Images\Components\menu_section_bg%402x.png" />
     <BundleResource Include="Images\Components\menu_section_bg.png" />
+    <BundleResource Include="Images\Buttons\three_lines.png" />
+    <BundleResource Include="Images\Buttons\three_lines%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Buttons\" />

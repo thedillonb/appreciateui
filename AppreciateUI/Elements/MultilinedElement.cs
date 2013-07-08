@@ -27,6 +27,7 @@ namespace AppreciateUI.Elements
             Caption = caption;
             CaptionFont = UIFont.BoldSystemFontOfSize(15f);
             ValueFont = UIFont.SystemFontOfSize(14f);
+            BackgroundColor = UIColor.White;
             CaptionColor = ValueColor = UIColor.FromRGB(41, 41, 41);
         }
 

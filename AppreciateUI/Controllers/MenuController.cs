@@ -7,12 +7,14 @@ using AppreciateUI.Views;
 using AppreciateUI.Cells;
 using AppreciateUI.Utils;
 using AppreciateUI.Models;
+using System;
 
 namespace AppreciateUI.Controllers
 {
     public class MenuController : DialogViewController
     {
         UILabel _title;
+        MenuElement _allProjects;
 
         public MenuController()
             : base(UITableViewStyle.Plain, new RootElement("AppreciateUI"))
@@ -30,10 +32,11 @@ namespace AppreciateUI.Controllers
         }
 
 		/// <summary>
-		/// Invoked when it comes time to set the root so the child classes can create their own menus
+		/// Invoked when it comes time to set the root
 		/// </summary>
-		private void OnCreateMenu(RootElement root)
+		private void CreateMenu()
 		{
+            var root = new RootElement(Title);
             root.Add(new Section() {
                 new MenuElement("Add Pattern", () => {
                     var c = new AddPatternViewController();
@@ -43,11 +46,11 @@ namespace AppreciateUI.Controllers
 
             var browseSection = new Section() { HeaderView = new MenuSectionView("Browse") };
             root.Add(browseSection);
-            browseSection.Add(new MenuElement("Recent", () => { 
+            browseSection.Add(new MenuElement("Recently Added", () => { 
                 var c = new RecentPatternsViewController();
                 NavigationController.PushViewController(c, true);
             }, null));
-            browseSection.Add(new MenuElement("Categories", () => { 
+            browseSection.Add(new MenuElement("UI Patterns", () => { 
                 var c = new PatternCategoriesViewController();
                 NavigationController.PushViewController(c, true);
             }, null));
@@ -61,12 +64,10 @@ namespace AppreciateUI.Controllers
             var albumSection = new Section() { HeaderView = new MenuSectionView("Albums") };
             root.Add(albumSection);
 
-
-
             var imageCount = Data.Database.Main.Table<ProjectImage>().Count();
-            var allPatternsButton = new MenuElement("All UI Images", imageCount.ToString(), UITableViewCellStyle.Value1);
-            allPatternsButton.Tapped += () => NavigationController.PushViewController(new LocalViewPatternsViewController() { Title = "All" }, true);
-            albumSection.Add(allPatternsButton);
+            _allProjects = new MenuElement("All UI Images", imageCount.ToString(), UITableViewCellStyle.Value1);
+            _allProjects.Tapped += () => NavigationController.PushViewController(new LocalViewPatternsViewController() { Title = "All" }, true);
+            albumSection.Add(_allProjects);
 
             var projects = Data.Database.Main.Table<Project>();
             foreach (var p in projects)
@@ -91,15 +92,27 @@ namespace AppreciateUI.Controllers
                 UserVoice.UserVoice.PresentUserVoiceInterface(this, config);
             }, null));
 
-//
-//            TabBarController.ViewControllers = new UIViewController[] {
-//                new UINavigationController(new RecentPatternsViewController()),
-//                new UINavigationController(new PatternCategoriesViewController()),
-//                new AddPatternViewController(),
-//                new UINavigationController(new AlbumsViewController()),
-//            };
 
+            Root = root;
 		}
+
+        private void Delete(ProjectElement element)
+        {
+            element.Project.Remove();
+
+            //Shoudl always be true
+            if (element.Parent is Section)
+                ((Section)element.Parent).Remove(element);
+
+
+            //_parent.CreateMenu();
+            if (_allProjects != null)
+            {
+                var imageCount = Data.Database.Main.Table<ProjectImage>().Count();
+                _allProjects.Value = imageCount.ToString();
+                _allProjects.GetImmediateRootElement().Reload(_allProjects, UITableViewRowAnimation.None);
+            }
+        }
 
 
         public override void ViewDidLoad()
@@ -118,11 +131,7 @@ namespace AppreciateUI.Controllers
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-
-			var root = new RootElement(Title);
-            Title = root.Caption;
-			OnCreateMenu(root);
-			Root = root;
+            CreateMenu();
         }
 
         private UIViewController _previousController;
@@ -231,6 +240,67 @@ namespace AppreciateUI.Controllers
 				return cell;
 			}
 		}
+
+        public override Source CreateSizingSource(bool unevenRows)
+        {
+            return new EditingSource(this);
+        }
+       
+        private class EditingSource : Source 
+        {
+            readonly MenuController _parent;
+            public EditingSource(MenuController dvc)
+                : base(dvc)
+            {
+                _parent = dvc;
+            }
+
+            public override bool CanEditRow(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
+            {
+                return true;
+            }
+
+            public override UITableViewCellEditingStyle EditingStyleForRow(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
+            {
+                if (indexPath.Section != 2 || indexPath.Row == 0)
+                    return UITableViewCellEditingStyle.None;
+                return UITableViewCellEditingStyle.Delete;
+            }
+
+            public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, MonoTouch.Foundation.NSIndexPath indexPath)
+            {
+                var section = Container.Root [indexPath.Section];
+                var element = section [indexPath.Row];
+
+                var item = element as ProjectElement;
+                if (item == null)
+                    return;
+
+                var count = Data.Database.Main.Table<ProjectImage>().Where(a => a.ProjectId == item.Project.Id).Count();
+                if (count > 0)
+                {
+                    var alert = new UIAlertView {Title = "Confirm?", Message = "Are you sure you want to delete this project and all " + count + " images?"};
+                    alert.CancelButtonIndex = alert.AddButton("No");
+                    var ok = alert.AddButton("Yes");
+
+                    alert.Clicked += (sender, e) => {
+                        if (e.ButtonIndex == ok)
+                            _parent.Delete(item);
+                    };
+
+                    alert.Show();
+                }
+                else
+                {
+                    _parent.Delete(item);
+                }
+            }
+
+            public override bool CanMoveRow(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
+            {
+                return true;
+            }
+        }
     }
 }
 

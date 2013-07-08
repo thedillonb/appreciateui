@@ -23,10 +23,11 @@ namespace AppreciateUI.Controllers
         {
 			var photoBrowser = CreateBrowserViewController();
 			photoBrowser.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
-			photoBrowser.WantsFullScreenLayout = true;
+//			photoBrowser.WantsFullScreenLayout = true;
 			photoBrowser.DisplayActionButton = true;
 			photoBrowser.SetInitialPageIndex(index);
-			NavigationController.PushViewController(photoBrowser, true);
+            PresentViewController(new UINavigationController(photoBrowser), true, null);
+//			NavigationController.PushViewController(photoBrowser, true);
         }
         
         protected class CollectionDataSource : CollectionViewBinding.PSCollectionViewDataSource

@@ -23,6 +23,7 @@ namespace AppreciateUI.Controllers
 
         public IconBrowserController()
         {
+            this.WantsFullScreenLayout = true;
         }
 
         protected override BrowserViewController CreateBrowserViewController()

@@ -24,6 +24,13 @@ namespace AppreciateUI.Controllers
 			NavigationController.NavigationBar.Alpha = 0.95f;
 		}
 
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            NavigationItem.LeftBarButtonItem = NavigationItem.RightBarButtonItem;
+            NavigationItem.RightBarButtonItem = null;
+        }
+
 		protected abstract UIBarButtonItem CreateActionButton();
 		
 		public override void ReloadData ()

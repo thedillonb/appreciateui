@@ -38,10 +38,7 @@ namespace AppreciateUI.Controllers
 		{
             var root = new RootElement(Title);
             root.Add(new Section() {
-                new MenuElement("Add Pattern", () => {
-                    var c = new AddPatternViewController();
-                    PresentViewController(c, true, null);
-                }, null)
+                new MenuElement("Add Pattern", () => OpenAddPatternView(), null)
             });
 
             var browseSection = new Section() { HeaderView = new MenuSectionView("Browse") };
@@ -134,13 +131,11 @@ namespace AppreciateUI.Controllers
             CreateMenu();
         }
 
-        private UIViewController _previousController;
         private UIPopoverController _pop;
         private void OpenAddPatternView()
         {
-            TabBarController.SelectedViewController = _previousController;
             UIImagePickerController ctrl = null;
-            ctrl = Camera.SelectPicture(TabBarController, (dic) => { 
+            ctrl = Camera.SelectPicture(this, (dic) => { 
 
                 var original = dic[UIImagePickerController.OriginalImage] as UIImage;
                 if (original == null)
@@ -159,7 +154,7 @@ namespace AppreciateUI.Controllers
                 _pop.PresentFromRect(TabBarController.TabBar.Frame, TabBarController.View, UIPopoverArrowDirection.Down, false);
             } 
             else {
-                TabBarController.PresentModalViewController(ctrl, true);
+                PresentViewController(ctrl, true, null);
             }
 
         }

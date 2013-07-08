@@ -106,7 +106,6 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Utils\Camera.cs" />
-    <Compile Include="Controllers\AddPatternViewController.cs" />
     <Compile Include="Data\WebData.cs" />
     <Compile Include="Models\ProjectImage.cs" />
     <Compile Include="Models\Project.cs" />

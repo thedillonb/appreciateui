@@ -139,6 +139,9 @@
     <Compile Include="Elements\StyledElement.cs" />
     <Compile Include="Elements\CustomElement.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
+    <Compile Include="Cells\IconCell.cs" />
+    <Compile Include="Controllers\IconViewController.cs" />
+    <Compile Include="Controllers\IconBrowserController.cs" />
   </ItemGroup>
   <Import Project="$(ProgramFiles)\MSBuild\MonoTouch\Novell.MonoTouch.Common.targets" Condition="'$(windir)' != '' " />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

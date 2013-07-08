@@ -1,19 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="AppStore|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.Dillon Buchanan’s iPhone" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AppreciateUI/Controllers/AlbumsViewController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.Dillon Buchanan’s iPhone" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AppreciateUI/Controllers/MenuController.cs">
     <Files>
-      <File FileName="AppreciateUI/Utils/Camera.cs" Line="1" Column="1" />
-      <File FileName="AppreciateUI/Controllers/AlbumsViewController.cs" Line="28" Column="9" />
-      <File FileName="AppreciateUI/Data/Database.cs" Line="1" Column="1" />
-      <File FileName="AppreciateUI/Controllers/LocalPatternsViewController.cs" Line="1" Column="1" />
+      <File FileName="AppreciateUI/Controllers/MenuController.cs" Line="75" Column="5" />
+      <File FileName="AppreciateUI/Controllers/AlbumsViewController.cs" Line="35" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="AppreciateUI" expanded="True" selected="True">
-            <Node name="Cells" expanded="True" />
-            <Node name="Controllers" expanded="True" />
-            <Node name="Data" expanded="True" />
+          <Node name="API" expanded="True">
+            <Node name="MonoTouch.Dialog" expanded="True" />
+            <Node name="MonoTouch.SlideoutNavigation" expanded="True" />
+          </Node>
+          <Node name="AppreciateUI" expanded="True">
+            <Node name="Controllers" expanded="True">
+              <Node name="MenuController.cs" selected="True" />
+            </Node>
+            <Node name="Elements" expanded="True" />
             <Node name="Utils" expanded="True" />
           </Node>
         </State>

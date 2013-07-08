@@ -8,40 +8,29 @@ using SDWebImage;
 
 namespace AppreciateUI.Cells
 {
-    public class PatternCell : PSCollectionViewCell
+    public class IconCell : PSCollectionViewCell
     {
         UIImageView _imageView;
 		UIView _selectedView;
         UIActivityIndicatorView _activity;
-		MonoTouch.Dialog.GlassButton _deleteButton;
 
-		public bool DeleteButtonActive
-		{
-			get { return !_deleteButton.Hidden; }
-			set { _deleteButton.Hidden = !value; }
-		}
-
-        public PatternCell()
+        public IconCell()
         {
-			_deleteButton = new MonoTouch.Dialog.GlassButton(new RectangleF(0, 0, 120, 44));
-			_deleteButton.Tapped += DeleteButtonTapped;
-			_deleteButton.SetTitle("Delete", UIControlState.Normal);
-
             _imageView = new UIImageView(RectangleF.Empty);
             _imageView.ContentMode = UIViewContentMode.ScaleToFill;
+            _imageView.Layer.CornerRadius = 16f;
+            _imageView.Layer.MasksToBounds = true;
             this.AddSubview(_imageView);
-            
+
             this.Layer.ShadowColor = UIColor.FromRGB(41, 41, 41).CGColor;
             this.Layer.ShadowOffset = new SizeF(0, 0);
             this.Layer.ShadowOpacity = 0.6f;
-            this.Layer.ShadowRadius = 4f;
+            //this.Layer.ShadowRadius = 4f;
+            this.Layer.CornerRadius = 16f;
+            this.Layer.ShouldRasterize = true;
+            this.Layer.RasterizationScale = UIScreen.MainScreen.Scale;
 
             BackgroundColor = UIColor.White;
-        }
-
-        void DeleteButtonTapped (MonoTouch.Dialog.GlassButton obj)
-        {
-
         }
 
 		public void SetSelected(bool selected)
@@ -80,25 +69,22 @@ namespace AppreciateUI.Cells
         public override void LayoutSubviews ()
         {
             base.LayoutSubviews ();
-            this.Layer.ShadowPath = UIBezierPath.FromRect(this.Bounds).CGPath;
+            this.Layer.ShadowPath = UIBezierPath.FromRoundedRect(this.Bounds, 16f).CGPath;
             
             _imageView.Frame = new RectangleF(0, 0, Bounds.Width, Bounds.Height);
         }
         
         public override float HeightForViewWithObject (NSObject obj, float columnWidth)
         {
-            var width = Bounds.Width;
-            var scale = 960f / (640f / width);
-            return scale;
+            return Bounds.Width;
         }
         
         public void FillViewWithObject(string id, string ext)
         {
-			LayoutDeleteButton();
             AddSpinner();
 
-            SizeF size = AppreciateUI.Utils.Util.ThumbnailSize;
-            var url = "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;
+            SizeF size = AppreciateUI.Utils.Util.IconThumbnailSize;
+            var url = "http://www.dillonbuchanan.com/appreciateui/icon_downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;
             SDWebImageManager.SharedManager.CancelForDelegate(this);
             SDWebImageManager.SharedManager.Download(new NSUrl(url), this, 0, (i, c) => {
                 FillWithLocal(i);
@@ -118,15 +104,6 @@ namespace AppreciateUI.Cells
             this.AddSubview(_activity);
             _activity.StartAnimating();
         }
-
-		private void LayoutDeleteButton()
-		{
-			_deleteButton.Frame = new RectangleF(0, 0, 120, 44);
-			_deleteButton.Center = this.Center;
-			//_deleteButton.AutoresizingMask = UIViewAutoresizing.All;
-			//_deleteButton.Hidden = true;
-			//this.AddSubview(_deleteButton);
-		}
 
         public void FillWithLocal(UIImage img)
         {

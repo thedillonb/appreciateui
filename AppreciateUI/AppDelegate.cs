@@ -24,6 +24,14 @@ namespace AppreciateUI
             UIApplication.Main(args, null, "AppDelegate");
         }
 
+        public override void WillTerminate(UIApplication application)
+        {
+            //Don't allow the application to use any more than 
+            var size = SDWebImage.SDImageCache.SharedImageCache.GetSize();
+            if (size >= Utils.Util.MaxCacheSize)
+                SDWebImage.SDImageCache.SharedImageCache.ClearDisk();
+        }
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -81,7 +89,6 @@ namespace AppreciateUI
                     killSplash.Alpha = 0.0f; 
                 }, () => killSplash.RemoveFromSuperview());
             }
-
 
             return true;
         }

@@ -51,6 +51,10 @@ namespace AppreciateUI.Controllers
                 var c = new PatternCategoriesViewController();
                 NavigationController.PushViewController(c, true);
             }, null));
+            browseSection.Add(new MenuElement("Icons", () => { 
+                var c = new IconBrowserController();
+                NavigationController.PushViewController(c, true);
+            }, null));
 
       
 

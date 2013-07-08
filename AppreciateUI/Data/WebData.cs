@@ -25,6 +25,18 @@ namespace AppreciateUI.Data
         public static string Href = "http://www.dillonbuchanan.com/appreciateui/uploads/";
     }
 
+
+    public class Icon
+    {
+        public int Id { get; set; }
+        public string Url { get; set; }
+        public string App { get; set; }
+        public string Ext { get; set; }
+        public string FullUrl { get; set; }
+
+        public static string Href = "http://www.dillonbuchanan.com/appreciateui/uploads_icons/";
+    }
+
     public static class RequestFactory
     {
         public static List<Category> GetCategories()
@@ -52,6 +64,16 @@ namespace AppreciateUI.Data
             var response = client.Execute(request);
             var ret = new RestSharp.Deserializers.JsonDeserializer().Deserialize<List<Screenshot>>(response);
 			ret.ForEach(x => x.FullUrl = Screenshot.Href + x.Url + "." + x.Ext);
+            return ret;
+        }
+
+        public static List<Icon> GetIcons()
+        {
+            var client = new RestSharp.RestClient();
+            var request = new RestSharp.RestRequest("http://www.dillonbuchanan.com/appreciateui/icons.php");
+            var response = client.Execute(request);
+            var ret = new RestSharp.Deserializers.JsonDeserializer().Deserialize<List<Icon>>(response);
+            ret.ForEach(x => x.FullUrl = Icon.Href + x.Url + "." + x.Ext);
             return ret;
         }
     }

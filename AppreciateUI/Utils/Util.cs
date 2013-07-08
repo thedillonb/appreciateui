@@ -9,6 +9,9 @@ namespace AppreciateUI.Utils
     {
         public readonly static string BaseDir = Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), "..");
 
+        // The size of the cache in bytes: 512MB
+        public static readonly int MaxCacheSize = 1024 * 1024 * 512;
+
         public static bool IsRetina 
         { 
             get 
@@ -44,6 +47,17 @@ namespace AppreciateUI.Utils
                     return new SizeF(296, 444);
                 else
                     return new SizeF(148, 222);
+            }
+        }
+
+        public static SizeF IconThumbnailSize
+        {
+            get
+            {
+                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad && Utils.Util.IsRetina)
+                    return new SizeF(256, 256);
+                else
+                    return new SizeF(128, 128);
             }
         }
 

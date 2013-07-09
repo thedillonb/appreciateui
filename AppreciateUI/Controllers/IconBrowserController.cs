@@ -76,7 +76,14 @@ namespace AppreciateUI.Controllers
                     _icons = RequestFactory.GetIcons();
                     _loadedImages = new List<PhotoBrowser.MWPhoto>();
                     _icons.ForEach(x => {
-                        _loadedImages.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
+                        var photo = new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App };
+
+                        //if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+                            photo.CornerRadius = 80f;
+                        //else
+                        //    photo.CornerRadius = 16f;
+
+                        _loadedImages.Add(photo);
                     });
 
                     BeginInvokeOnMainThread(() => { 

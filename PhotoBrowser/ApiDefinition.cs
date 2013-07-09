@@ -85,6 +85,9 @@ namespace PhotoBrowser
         [Export("caption")]
         string Caption { get; set; }
 
+        [Export("cornerRadius")]
+        float CornerRadius { get; set; }
+
         [Export("initWithImage:")]
         IntPtr Constructor(UIImage a);
 

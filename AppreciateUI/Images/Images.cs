@@ -18,11 +18,9 @@ namespace AppreciateUI
 
         public static class Controls
         {
-            public static UIImage Tabbar = UIImage.FromBundle("Images/Controls/tabbar");
             public static UIImage Navbar = UIImage.FromBundle("Images/Controls/navbar");
             public static UIImage BackButton = UIImage.FromBundle("Images/Controls/back_button");
             public static UIImage Button = UIImage.FromBundle("Images/Controls/button");
-			public static UIImage CenterButton = UIImage.FromBundle("Images/Controls/capture-button");
         }
 
         public static class Buttons

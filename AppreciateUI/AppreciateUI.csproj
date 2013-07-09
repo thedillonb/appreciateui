@@ -156,8 +156,6 @@
     <Content Include="Images\Magnifer%402x.png" />
     <Content Include="Images\Controls\navbar.png" />
     <Content Include="Images\Controls\navbar%402x.png" />
-    <Content Include="Images\Controls\tabbar.png" />
-    <Content Include="Images\Controls\tabbar%402x.png" />
     <Content Include="Images\background.png" />
     <Content Include="Images\background%402x.png" />
     <Content Include="Images\tablecell.png" />
@@ -217,13 +215,9 @@
     <BundleResource Include="Images\gear.png" />
     <BundleResource Include="Images\tray_full.png" />
     <BundleResource Include="Images\tray_full%402x.png" />
-    <BundleResource Include="Images\Controls\capture-button.png" />
-    <BundleResource Include="Images\Controls\capture-button%402x.png" />
     <BundleResource Include="Resources\Default-568h%402x.jpg" />
     <BundleResource Include="Images\Components\menu_section_bg%402x.png" />
     <BundleResource Include="Images\Components\menu_section_bg.png" />
-    <BundleResource Include="Images\Buttons\three_lines.png" />
-    <BundleResource Include="Images\Buttons\three_lines%402x.png" />
     <BundleResource Include="Images\Menu\feedback.png" />
     <BundleResource Include="Images\Menu\feedback%402x.png" />
     <BundleResource Include="Images\Menu\info.png" />
@@ -242,6 +236,7 @@
     <BundleResource Include="Images\Components\title%402x.png" />
     <BundleResource Include="Images\Components\title.png" />
     <BundleResource Include="Images\Menu\allalbums.png" />
+    <BundleResource Include="Images\Buttons\three_lines.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Buttons\" />

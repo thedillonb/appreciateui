@@ -224,10 +224,29 @@
     <BundleResource Include="Images\Components\menu_section_bg.png" />
     <BundleResource Include="Images\Buttons\three_lines.png" />
     <BundleResource Include="Images\Buttons\three_lines%402x.png" />
+    <BundleResource Include="Images\Menu\feedback.png" />
+    <BundleResource Include="Images\Menu\feedback%402x.png" />
+    <BundleResource Include="Images\Menu\info.png" />
+    <BundleResource Include="Images\Menu\info%402x.png" />
+    <BundleResource Include="Images\Menu\album.png" />
+    <BundleResource Include="Images\Menu\album%402x.png" />
+    <BundleResource Include="Images\Menu\icons.png" />
+    <BundleResource Include="Images\Menu\icons%402x.png" />
+    <BundleResource Include="Images\Menu\recent.png" />
+    <BundleResource Include="Images\Menu\recent%402x.png" />
+    <BundleResource Include="Images\Menu\uipatterns.png" />
+    <BundleResource Include="Images\Menu\uipatterns%402x.png" />
+    <BundleResource Include="Images\Menu\plus%402x.png" />
+    <BundleResource Include="Images\Menu\plus.png" />
+    <BundleResource Include="Images\Menu\allalbums%402x.png" />
+    <BundleResource Include="Images\Components\title%402x.png" />
+    <BundleResource Include="Images\Components\title.png" />
+    <BundleResource Include="Images\Menu\allalbums.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Buttons\" />
     <Folder Include="Images\Components\" />
     <Folder Include="Elements\" />
+    <Folder Include="Images\Menu\" />
   </ItemGroup>
 </Project>

@@ -13,20 +13,16 @@ namespace AppreciateUI.Controllers
 {
     public class MenuController : DialogViewController
     {
-        UILabel _title;
+        UIImageView _title;
         MenuElement _allProjects;
 
         public MenuController()
             : base(UITableViewStyle.Plain, new RootElement("AppreciateUI"))
         {
             Autorotate = true;
-            _title = new UILabel(new RectangleF(0, 40, 320, 40));
-            _title.TextAlignment = UITextAlignment.Left;
+            _title = new UIImageView(new RectangleF(0, 0, 260, 40));
+            _title.Image = Images.Components.Title;
             _title.BackgroundColor = UIColor.Clear;
-            _title.Font = UIFont.BoldSystemFontOfSize(20f);
-            _title.TextColor = UIColor.FromRGB(246, 246, 246);
-            _title.ShadowColor = UIColor.FromRGB(21, 21, 21);
-            _title.ShadowOffset = new SizeF(0, 1);
             NavigationItem.TitleView = _title;
             Title = Root.Caption;
         }
@@ -38,7 +34,7 @@ namespace AppreciateUI.Controllers
 		{
             var root = new RootElement(Title);
             root.Add(new Section() {
-                new MenuElement("Add Pattern", () => OpenAddPatternView(), null)
+                new MenuElement("Add Pattern", () => OpenAddPatternView(), Images.Menu.Plus)
             });
 
             var browseSection = new Section() { HeaderView = new MenuSectionView("Browse") };
@@ -46,15 +42,15 @@ namespace AppreciateUI.Controllers
             browseSection.Add(new MenuElement("Recently Added", () => { 
                 var c = new RecentPatternsViewController();
                 NavigationController.PushViewController(c, true);
-            }, null));
+            }, Images.Menu.Recent));
             browseSection.Add(new MenuElement("UI Patterns", () => { 
                 var c = new PatternCategoriesViewController();
                 NavigationController.PushViewController(c, true);
-            }, null));
+            }, Images.Menu.UIPatterns));
             browseSection.Add(new MenuElement("Icons", () => { 
                 var c = new IconBrowserController();
                 NavigationController.PushViewController(c, true);
-            }, null));
+            }, Images.Menu.Icons));
 
       
 
@@ -62,15 +58,21 @@ namespace AppreciateUI.Controllers
             root.Add(albumSection);
 
             var imageCount = Data.Database.Main.Table<ProjectImage>().Count();
-            _allProjects = new MenuElement("All UI Images", imageCount.ToString(), UITableViewCellStyle.Value1);
-            _allProjects.Tapped += () => NavigationController.PushViewController(new LocalViewPatternsViewController() { Title = "All" }, true);
+            _allProjects = new MenuElement("All Albums", imageCount.ToString(), UITableViewCellStyle.Value1) { Image = Images.Menu.AllAlbums };
+            _allProjects.Tapped += () => {
+                if (Data.Database.Main.Table<ProjectImage>().Count() > 0)
+                    NavigationController.PushViewController(new LocalViewPatternsViewController() { Title = "All" }, true);
+                else
+                {
+                }
+            };
             albumSection.Add(_allProjects);
 
             var projects = Data.Database.Main.Table<Project>();
             foreach (var p in projects)
             {
                 var project = p;
-                var element = new ProjectElement(project, this);
+                var element = new ProjectElement(project, this) { Image = Images.Menu.Album };
                 albumSection.Add(element);
             }
 
@@ -83,11 +85,11 @@ namespace AppreciateUI.Controllers
 
             var moreSection = new Section() { HeaderView = new MenuSectionView("Info") };
             root.Add(moreSection);
-            moreSection.Add(new MenuElement("About", () => NavigationController.PushViewController(new AboutController(), true), null));
+            moreSection.Add(new MenuElement("About", () => NavigationController.PushViewController(new AboutController(), true), Images.Menu.Info));
             moreSection.Add(new MenuElement("Feedback & Support", () => { 
                 var config = UserVoice.UVConfig.Create("http://gistacular.uservoice.com", "lYY6AwnzrNKjHIkiiYbbqA", "9iLse96r8yki4ZKknfHKBlWcbZAH9g8yQWb9fuG4");
                 UserVoice.UserVoice.PresentUserVoiceInterface(this, config);
-            }, null));
+            }, Images.Menu.Feedback));
 
 
             Root = root;

@@ -18,17 +18,24 @@ namespace AppreciateUI.Cells
         {
             _imageView = new UIImageView(RectangleF.Empty);
             _imageView.ContentMode = UIViewContentMode.ScaleToFill;
-            _imageView.Layer.CornerRadius = 16f;
+
+            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+                _imageView.Layer.CornerRadius = 32f;
+            else
+                _imageView.Layer.CornerRadius = 16f;
+
             _imageView.Layer.MasksToBounds = true;
             this.AddSubview(_imageView);
+            this.Layer.CornerRadius = _imageView.Layer.CornerRadius;
 
-            this.Layer.ShadowColor = UIColor.FromRGB(41, 41, 41).CGColor;
-            this.Layer.ShadowOffset = new SizeF(0, 0);
-            this.Layer.ShadowOpacity = 0.6f;
-            //this.Layer.ShadowRadius = 4f;
-            this.Layer.CornerRadius = 16f;
-            this.Layer.ShouldRasterize = true;
-            this.Layer.RasterizationScale = UIScreen.MainScreen.Scale;
+            //Shadowing causes performance issues... I'll fix later.
+//            this.Layer.ShadowColor = UIColor.FromRGB(41, 41, 41).CGColor;
+//            this.Layer.ShadowOffset = new SizeF(0, 0);
+//            this.Layer.ShadowOpacity = 0.6f;
+//            //this.Layer.ShadowRadius = 4f;
+//            this.Layer.CornerRadius = 16f;
+//            this.Layer.ShouldRasterize = true;
+//            this.Layer.RasterizationScale = UIScreen.MainScreen.Scale;
 
             BackgroundColor = UIColor.White;
         }
@@ -69,7 +76,7 @@ namespace AppreciateUI.Cells
         public override void LayoutSubviews ()
         {
             base.LayoutSubviews ();
-            this.Layer.ShadowPath = UIBezierPath.FromRoundedRect(this.Bounds, 16f).CGPath;
+//            this.Layer.ShadowPath = UIBezierPath.FromRoundedRect(this.Bounds, 16f).CGPath;
             
             _imageView.Frame = new RectangleF(0, 0, Bounds.Width, Bounds.Height);
         }
@@ -118,34 +125,34 @@ namespace AppreciateUI.Cells
         }
 
 
-        UIImage currentLoad;
-        public void FillWithLocalNotResized(UIImage img)
-        {
-            AddSpinner();
-
-            currentLoad = img;
-            var size = new SizeF(148, 222);
-
-            ThreadPool.QueueUserWorkItem(delegate {
-                var ciimage = MonoTouch.CoreImage.CIImage.FromCGImage (img.CGImage);
-                var transform = MonoTouch.CoreGraphics.CGAffineTransform.MakeScale (size.Width / img.Size.Width * 2, size.Height / img.Size.Height * 2);
-                var affineTransform = new MonoTouch.CoreImage.CIAffineTransform () { 
-                    Image = ciimage,
-                    Transform = transform
-                };
-                var output = affineTransform.OutputImage;
-                var context = MonoTouch.CoreImage.CIContext.FromOptions (null);
-                var a = context.CreateCGImage (output, output.Extent);
-
-                _imageView.BeginInvokeOnMainThread(() => {
-                    if (img == currentLoad)
-                    {
-                        FillWithLocal(UIImage.FromImage(a));
-                    }
-                });
-
-            });
-        }
+//        UIImage currentLoad;
+//        public void FillWithLocalNotResized(UIImage img)
+//        {
+//            AddSpinner();
+//
+//            currentLoad = img;
+//            var size = new SizeF(148, 222);
+//
+//            ThreadPool.QueueUserWorkItem(delegate {
+//                var ciimage = MonoTouch.CoreImage.CIImage.FromCGImage (img.CGImage);
+//                var transform = MonoTouch.CoreGraphics.CGAffineTransform.MakeScale (size.Width / img.Size.Width * 2, size.Height / img.Size.Height * 2);
+//                var affineTransform = new MonoTouch.CoreImage.CIAffineTransform () { 
+//                    Image = ciimage,
+//                    Transform = transform
+//                };
+//                var output = affineTransform.OutputImage;
+//                var context = MonoTouch.CoreImage.CIContext.FromOptions (null);
+//                var a = context.CreateCGImage (output, output.Extent);
+//
+//                _imageView.BeginInvokeOnMainThread(() => {
+//                    if (img == currentLoad)
+//                    {
+//                        FillWithLocal(UIImage.FromImage(a));
+//                    }
+//                });
+//
+//            });
+//        }
 
         public override void FillViewWithObject (MonoTouch.Foundation.NSObject obj)
         {

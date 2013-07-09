@@ -237,6 +237,7 @@
     <BundleResource Include="Images\Components\title.png" />
     <BundleResource Include="Images\Menu\allalbums.png" />
     <BundleResource Include="Images\Buttons\three_lines.png" />
+    <BundleResource Include="Images\Buttons\three_lines%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Buttons\" />

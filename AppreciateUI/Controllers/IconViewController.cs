@@ -83,11 +83,16 @@ namespace AppreciateUI.Controllers
 
             CollectionView = new CollectionViewBinding.PSCollectionView(this.View.Bounds);
             CollectionView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
-            CollectionView.NumColsLandscape = 4;
-            CollectionView.NumColsPortrait = 4;
+            CollectionView.NumColsLandscape = CollectionView.NumColsPortrait = 4;
             CollectionView.BackgroundColor = UIColor.Clear;
             CollectionView.PSCollectionViewDataSourceDelegate = _collectionDataSource;
             CollectionView.PSCollectionViewDelegate = _cd;
+
+            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+            {
+                CollectionView.NumColsPortrait = CollectionView.NumColsLandscape = 5;
+            }
+
             this.View.AddSubview(CollectionView);
         }
     }

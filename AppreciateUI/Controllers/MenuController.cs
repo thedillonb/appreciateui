@@ -143,7 +143,7 @@ namespace AppreciateUI.Controllers
                 if (original == null)
                     return;
 
-                var atsvc = new AddToAlbumViewController(original, null);
+                var atsvc = new AddToAlbumViewController(original, null, false);
                 atsvc.Success = () => DismissPopupOfModal(ctrl);
                 ctrl.PushViewController(atsvc, true);
             }, () => { 

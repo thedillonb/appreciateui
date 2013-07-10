@@ -1,14 +1,15 @@
 using System;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
+using AppreciateUI.Models;
 
 namespace AppreciateUI.Controllers
 {
 	public abstract class BrowserViewController : PhotoBrowser.MWPhotoBrowser
 	{
-		protected List<PhotoBrowser.MWPhoto> Photos;
+		protected List<Photo> Photos;
 
-	    protected BrowserViewController(List<PhotoBrowser.MWPhoto> photos)
+        protected BrowserViewController(List<Photo> photos)
 	    {
 			Photos = photos;
 			this.PhotoDelegate = new PhotoBrowserDelegate(photos);
@@ -59,8 +60,8 @@ namespace AppreciateUI.Controllers
 
 		public class PhotoBrowserDelegate : PhotoBrowser.MWPhotoBrowserDelegate
 		{
-		    readonly List<PhotoBrowser.MWPhoto> _photos;
-			public PhotoBrowserDelegate(List<PhotoBrowser.MWPhoto> photos)
+		    readonly List<Photo> _photos;
+			public PhotoBrowserDelegate(List<Photo> photos)
 			{
 				_photos = photos;
 			}

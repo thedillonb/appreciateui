@@ -8,7 +8,7 @@ namespace AppreciateUI.Controllers
 	{
 	    readonly List<ProjectImage> _projectImages;
 
-		public LocalBrowserViewController(List<PhotoBrowser.MWPhoto> photos, List<ProjectImage> projectImages)
+		public LocalBrowserViewController(List<Photo> photos, List<ProjectImage> projectImages)
 			: base(photos)
 		{
 			_projectImages = projectImages;

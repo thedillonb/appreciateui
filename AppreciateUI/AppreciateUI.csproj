@@ -141,6 +141,7 @@
     <Compile Include="Cells\IconCell.cs" />
     <Compile Include="Controllers\IconViewController.cs" />
     <Compile Include="Controllers\IconBrowserController.cs" />
+    <Compile Include="Models\Photo.cs" />
   </ItemGroup>
   <Import Project="$(ProgramFiles)\MSBuild\MonoTouch\Novell.MonoTouch.Common.targets" Condition="'$(windir)' != '' " />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

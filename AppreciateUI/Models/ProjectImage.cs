@@ -17,6 +17,8 @@ namespace AppreciateUI.Models
 
         public string Category { get; set; }
 
+        public bool Icon { get; set; }
+
         public int Remove()
         {
             try

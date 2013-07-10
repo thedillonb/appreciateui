@@ -5,6 +5,7 @@ using System.Threading;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using AppreciateUI.Cells;
+using AppreciateUI.Models;
 
 namespace AppreciateUI.Controllers
 {
@@ -45,7 +46,7 @@ namespace AppreciateUI.Controllers
                 view.FillViewWithObject(_icons[index].Url, _icons[index].Ext);
         }
 
-        List<PhotoBrowser.MWPhoto> _loadedImages = new List<PhotoBrowser.MWPhoto>();
+        List<Photo> _loadedImages = new List<Photo>();
 
         public override void ViewDidAppear(bool animated)
         {
@@ -74,9 +75,9 @@ namespace AppreciateUI.Controllers
                 try
                 {
                     _icons = RequestFactory.GetIcons();
-                    _loadedImages = new List<PhotoBrowser.MWPhoto>();
+                    _loadedImages = new List<Photo>();
                     _icons.ForEach(x => {
-                        var photo = new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App };
+                        var photo = new Photo(new NSUrl(x.FullUrl)) { Caption = x.App, Icon = true };
 
                         //if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
                             photo.CornerRadius = 80f;

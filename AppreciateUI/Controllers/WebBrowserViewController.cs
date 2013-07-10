@@ -1,11 +1,12 @@
 using MonoTouch.UIKit;
 using System.Collections.Generic;
+using AppreciateUI.Models;
 
 namespace AppreciateUI.Controllers
 {
 	public class WebBrowserViewController : BrowserViewController
 	{
-		public WebBrowserViewController(List<PhotoBrowser.MWPhoto> photos)
+		public WebBrowserViewController(List<Photo> photos)
 			: base(photos)
 		{
 		}
@@ -17,7 +18,10 @@ namespace AppreciateUI.Controllers
 		
 		private void SaveSelection()
 		{
-			var photo = this.GetCurrentPhoto();
+            if (this.GetCurrentPhoto() == null)
+                return;
+
+            var photo = this.GetCurrentPhoto() as Photo;
 			if (photo == null)
 				return;
 			
@@ -25,7 +29,7 @@ namespace AppreciateUI.Controllers
 			if (img == null)
 				return;
 
-			var ctrl = new AddToAlbumViewController(img, photo.Caption);
+			var ctrl = new AddToAlbumViewController(img, photo.Caption, photo.Icon);
 			ctrl.Success = () => {
 				NavigationController.PopToViewController(this, true);
 				this.ShowProgressHUDWithMessage("Saving...");

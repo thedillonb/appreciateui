@@ -5,6 +5,7 @@ using MonoTouch.UIKit;
 using System.Threading;
 using MonoTouch.Foundation;
 using System.Collections.Generic;
+using AppreciateUI.Models;
 
 namespace AppreciateUI.Controllers
 {
@@ -50,7 +51,7 @@ namespace AppreciateUI.Controllers
                 view.FillViewWithObject(_screenshots[index].Url, _screenshots[index].Ext);
         }
 
-		List<PhotoBrowser.MWPhoto> _loadedImages = new List<PhotoBrowser.MWPhoto>();
+        List<Photo> _loadedImages = new List<Photo>();
 
         public override void ViewDidAppear(bool animated)
         {
@@ -79,9 +80,9 @@ namespace AppreciateUI.Controllers
                 try
                 {
                     _screenshots = _source != null ? RequestFactory.GetScreenshots(_source.Id) : RequestFactory.GetRecentScreenshots();
-                    _loadedImages = new List<PhotoBrowser.MWPhoto>();
+                    _loadedImages = new List<Photo>();
                     _screenshots.ForEach(x => {
-                        _loadedImages.Add(new PhotoBrowser.MWPhoto(new NSUrl(x.FullUrl)) { Caption = x.App });
+                        _loadedImages.Add(new Photo(new NSUrl(x.FullUrl)) { Caption = x.App });
 
                     });
 

@@ -5,6 +5,7 @@ using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System.IO;
+using System.Drawing;
 
 namespace AppreciateUI.Controllers
 {
@@ -12,15 +13,17 @@ namespace AppreciateUI.Controllers
     {
         private readonly UIImage _img;
         private readonly string _category;
+        private readonly bool _icon;
         private static readonly string SavePath = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 
         public Action Success;
 
-        public AddToAlbumViewController(UIImage img, string category)
+        public AddToAlbumViewController(UIImage img, string category, bool icon)
             : base (UITableViewStyle.Plain, null, true)
         {
             _img = img;
             _category = category;
+            _icon = icon;
             Title = "Add To Album";
         }
 
@@ -62,6 +65,22 @@ namespace AppreciateUI.Controllers
 
             var root = new RootElement(Title) { section };
             Root = root;
+        }
+
+        public static UIImage RounderCorners (UIImage image, float width, float radius)
+        {
+            UIGraphics.BeginImageContext (new SizeF (width, width));
+            var c = UIGraphics.GetCurrentContext ();
+
+            //Note: You need to write the Device.IsRetina code yourself 
+            radius = Util.IsRetina ? radius * 2 : radius;
+
+
+
+            image.Draw (new PointF (0, 0));
+            var converted = UIGraphics.GetImageFromCurrentImageContext ();
+            UIGraphics.EndImageContext ();
+            return converted;
         }
 
         private void Save(Project project)
@@ -111,7 +130,7 @@ namespace AppreciateUI.Controllers
             UIGraphics.EndImageContext();
 
 
-            var pi = new ProjectImage { ProjectId = project.Id, Path = path, ThumbPath = thumbPath, Category = _category };
+            var pi = new ProjectImage { ProjectId = project.Id, Path = path, ThumbPath = thumbPath, Category = _category, Icon = _icon };
             Data.Database.Main.Insert(pi);
 
             if (Success != null)

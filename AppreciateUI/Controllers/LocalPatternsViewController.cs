@@ -30,10 +30,12 @@ namespace AppreciateUI.Controllers
 
 		protected override BrowserViewController CreateBrowserViewController()
 		{
-			var photos = new List<PhotoBrowser.MWPhoto>(_images.Count);
+			var photos = new List<Photo>(_images.Count);
 			foreach (var img in _images)
 			{
-				var photo = new PhotoBrowser.MWPhoto(UIImage.FromFile(img.Path));
+                var photo = new Photo(UIImage.FromFile(img.Path)) { Icon = img.Icon };
+                if (img.Icon)
+                    photo.CornerRadius = 80f;
 				if (img.Category != null)
 					photo.Caption = img.Category;
 				photos.Add(photo);

@@ -59,13 +59,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <CodesignKey>iPhone Distribution: Dillon Buchanan</CodesignKey>
+    <CodesignKey>iPhone Developer: Dillon Buchanan (BD3M6C4CAK)</CodesignKey>
     <MtouchArch>ARMv7</MtouchArch>
     <MtouchUseLlvm>True</MtouchUseLlvm>
     <MtouchUseThumb>True</MtouchUseThumb>
     <IpaPackageName />
     <MtouchI18n />
-    <CodesignProvision>32DDC6C0-BB00-476F-B8BA-F69EECF69FEC</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>

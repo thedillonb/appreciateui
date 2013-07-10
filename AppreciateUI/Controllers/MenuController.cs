@@ -87,10 +87,9 @@ namespace AppreciateUI.Controllers
             root.Add(moreSection);
             moreSection.Add(new MenuElement("About", () => NavigationController.PushViewController(new AboutController(), true), Images.Menu.Info));
             moreSection.Add(new MenuElement("Feedback & Support", () => { 
-                var config = UserVoice.UVConfig.Create("http://gistacular.uservoice.com", "lYY6AwnzrNKjHIkiiYbbqA", "9iLse96r8yki4ZKknfHKBlWcbZAH9g8yQWb9fuG4");
+                var config = UserVoice.UVConfig.Create("appreciateui.uservoice.com", "y2jtRDr35UyLi2fjSv16bA", "x9U5XhzGUPdsghNbzNq3UHxtGDeuETsuwT4ufmV2Q");
                 UserVoice.UserVoice.PresentUserVoiceInterface(this, config);
             }, Images.Menu.Feedback));
-
 
             Root = root;
 		}

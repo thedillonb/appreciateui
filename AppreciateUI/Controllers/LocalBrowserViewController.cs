@@ -33,7 +33,7 @@ namespace AppreciateUI.Controllers
 				if (Photos.Count == 0)
 				{
 					//Nothing more to see...
-                    NavigationController.PopToRootViewController(true);
+                    DismissViewController(true, null);
 					return;
 				}
 

@@ -37,6 +37,14 @@ namespace AppreciateUI.Controllers
 		{
 			return new WebBrowserViewController(_loadedImages);
 		}
+
+        protected override float HeightForView(int index)
+        {
+            var width = CollectionView.ColWidth;
+            var scale = 960f / (640f / width);
+            return scale;
+        }
+
        
         protected override int OnGetItemsInCollection ()
         {
@@ -45,10 +53,12 @@ namespace AppreciateUI.Controllers
             return _screenshots.Count;
         }
 
-        protected override void OnAssignObject (PatternCell view, int index)
+        protected override void OnAssignObject (Cell view, int index)
         {
+            //Apply properties to the view to make it like I want
+            view.PrepareForUse(Cell.CellType.Screenshot);
             if (index < _screenshots.Count)
-                view.FillViewWithObject(_screenshots[index].Url, _screenshots[index].Ext);
+                view.FillViewWithObject(Utils.Util.DownloadScreenshotUrl(_screenshots[index].Url, _screenshots[index].Ext));
         }
 
         List<Photo> _loadedImages = new List<Photo>();

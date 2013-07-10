@@ -116,7 +116,6 @@
     <Compile Include="Controllers\ScrapbookCategoryViewController.cs" />
     <Compile Include="Data\SQLite.cs" />
     <Compile Include="Controllers\BaseDialogViewController.cs" />
-    <Compile Include="Cells\PatternCell.cs" />
     <Compile Include="Controllers\PatternViewController.cs" />
     <Compile Include="Controllers\PatternCategoriesViewController.cs" />
     <Compile Include="Controllers\WebPatternsViewController.cs" />
@@ -138,10 +137,9 @@
     <Compile Include="Elements\StyledElement.cs" />
     <Compile Include="Elements\CustomElement.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
-    <Compile Include="Cells\IconCell.cs" />
-    <Compile Include="Controllers\IconViewController.cs" />
     <Compile Include="Controllers\IconBrowserController.cs" />
     <Compile Include="Models\Photo.cs" />
+    <Compile Include="Cells\Cell.cs" />
   </ItemGroup>
   <Import Project="$(ProgramFiles)\MSBuild\MonoTouch\Novell.MonoTouch.Common.targets" Condition="'$(windir)' != '' " />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

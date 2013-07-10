@@ -9,7 +9,7 @@ using AppreciateUI.Models;
 
 namespace AppreciateUI.Controllers
 {
-    public class IconBrowserController : IconViewController
+    public class IconBrowserController : PatternViewController
     {
         State _state = State.Waiting;
         List<Icon> _icons;
@@ -40,10 +40,16 @@ namespace AppreciateUI.Controllers
             return _icons.Count;
         }
 
-        protected override void OnAssignObject (IconCell view, int index)
+        protected override float HeightForView(int index)
         {
+            return CollectionView.ColWidth;
+        }
+
+        protected override void OnAssignObject (Cell view, int index)
+        {
+            view.PrepareForUse(Cell.CellType.Icon);
             if (index < _icons.Count)
-                view.FillViewWithObject(_icons[index].Url, _icons[index].Ext);
+                view.FillViewWithObject(Utils.Util.DownloadIconUrl(_icons[index].Url, _icons[index].Ext));
         }
 
         List<Photo> _loadedImages = new List<Photo>();
@@ -77,13 +83,7 @@ namespace AppreciateUI.Controllers
                     _icons = RequestFactory.GetIcons();
                     _loadedImages = new List<Photo>();
                     _icons.ForEach(x => {
-                        var photo = new Photo(new NSUrl(x.FullUrl)) { Caption = x.App, Icon = true };
-
-                        //if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-                            photo.CornerRadius = 80f;
-                        //else
-                        //    photo.CornerRadius = 16f;
-
+                        var photo = new Photo(new NSUrl(x.FullUrl)) { Caption = x.App, Icon = true, CornerRadius = 512f * (10f / 57f) };
                         _loadedImages.Add(photo);
                     });
 

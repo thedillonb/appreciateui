@@ -17,17 +17,17 @@ namespace AppreciateUI.Controllers
 
         protected abstract int OnGetItemsInCollection();
 
-        protected abstract void OnAssignObject(PatternCell view, int index);
+        protected abstract void OnAssignObject(Cell view, int index);
 
-        protected virtual void OnClickItem(PSCollectionView view, PatternCell cell, int index)
+        protected abstract float HeightForView(int index);
+
+        protected virtual void OnClickItem(PSCollectionView view, Cell cell, int index)
         {
 			var photoBrowser = CreateBrowserViewController();
 			photoBrowser.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
-//			photoBrowser.WantsFullScreenLayout = true;
 			photoBrowser.DisplayActionButton = true;
 			photoBrowser.SetInitialPageIndex(index);
             PresentViewController(new UINavigationController(photoBrowser), true, null);
-//			NavigationController.PushViewController(photoBrowser, true);
         }
         
         protected class CollectionDataSource : CollectionViewBinding.PSCollectionViewDataSource
@@ -39,7 +39,7 @@ namespace AppreciateUI.Controllers
             }
             public override CollectionViewBinding.PSCollectionViewCell ViewAtIndex (CollectionViewBinding.PSCollectionView collectionView, int viewAtIndex)
             {
-                var v = collectionView.DequeueReusableView() as PatternCell ?? new PatternCell();
+                var v = collectionView.DequeueReusableView() as Cell ?? new Cell();
                 _t.OnAssignObject(v, viewAtIndex);
                 return v;
             }
@@ -51,9 +51,7 @@ namespace AppreciateUI.Controllers
             
             public override float HeightForViewAtIndex (int index)
             {
-                var width = _t.CollectionView.ColWidth;
-                var scale = 960f / (640f / width);
-                return scale;
+                return _t.HeightForView(index);
             }
         }
    
@@ -66,7 +64,7 @@ namespace AppreciateUI.Controllers
             }
             public override void OnDidSelectView(PSCollectionView a, PSCollectionViewCell v, int index)
             {
-                var cell = v as PatternCell;
+                var cell = v as Cell;
                 if (cell != null)
                     _t.OnClickItem(a, cell, index);
             }
@@ -91,6 +89,12 @@ namespace AppreciateUI.Controllers
             CollectionView.BackgroundColor = UIColor.Clear;
             CollectionView.PSCollectionViewDataSourceDelegate = _collectionDataSource;
             CollectionView.PSCollectionViewDelegate = _cd;
+
+            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+            {
+                CollectionView.NumColsPortrait = CollectionView.NumColsLandscape = 5;
+            }
+
             this.View.AddSubview(CollectionView);
         }
     }

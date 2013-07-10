@@ -48,11 +48,26 @@ namespace AppreciateUI.Controllers
 		{
 			return _images.Count;
 		}
-		
-		protected override void OnAssignObject (PatternCell view, int index)
+
+        protected override float HeightForView(int index)
+        {
+            if (index < _images.Count && _images[index].Icon)
+                return CollectionView.ColWidth;
+
+            var width = CollectionView.ColWidth;
+            var screenshotHeight = 960f / (640f / width);
+            return screenshotHeight;
+        }
+
+		protected override void OnAssignObject (Cell view, int index)
 		{
 			if (index < _images.Count)
 			{
+                if (_images[index].Icon)
+                    view.PrepareForUse(Cell.CellType.Icon);
+                else
+                    view.PrepareForUse(Cell.CellType.Screenshot);
+
 				if (_thumbs[index] == null)
 				{
 					_thumbs[index] = UIImage.FromFile(_images[index].ThumbPath);

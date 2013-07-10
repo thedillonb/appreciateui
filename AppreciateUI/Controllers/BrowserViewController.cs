@@ -28,6 +28,8 @@ namespace AppreciateUI.Controllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+            //TODO: FIX THIS
             NavigationItem.LeftBarButtonItem = NavigationItem.RightBarButtonItem;
             NavigationItem.RightBarButtonItem = null;
         }

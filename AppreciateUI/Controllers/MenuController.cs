@@ -153,7 +153,7 @@ namespace AppreciateUI.Controllers
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 _pop = new UIPopoverController (ctrl);
                 _pop.PopoverContentSize = new System.Drawing.SizeF(320, 480);
-                _pop.PresentFromRect(TabBarController.TabBar.Frame, TabBarController.View, UIPopoverArrowDirection.Down, false);
+                _pop.PresentFromRect(this.View.Frame, this.View, UIPopoverArrowDirection.Left, false);
             } 
             else {
                 PresentViewController(ctrl, true, null);
@@ -173,6 +173,9 @@ namespace AppreciateUI.Controllers
                     _pop.Dispose();
                     _pop = null;
                 }
+
+                //Create the Menu again cause we made a change...
+                CreateMenu();
             }
             else
             {

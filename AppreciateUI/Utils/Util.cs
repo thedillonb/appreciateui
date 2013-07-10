@@ -61,6 +61,18 @@ namespace AppreciateUI.Utils
             }
         }
 
+        public static string DownloadScreenshotUrl(string id, string ext)
+        {
+            SizeF size = AppreciateUI.Utils.Util.ThumbnailSize;
+            return "http://www.dillonbuchanan.com/appreciateui/downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;
+        }
+
+        public static string DownloadIconUrl(string id, string ext)
+        {
+            SizeF size = AppreciateUI.Utils.Util.IconThumbnailSize;
+            return "http://www.dillonbuchanan.com/appreciateui/icon_downloader.php?id=" + id + "&w=" + size.Width + "&h=" + size.Height + "&ext=" + ext;
+        }
+
         public static void LogException (string text, Exception e)
         {
             using (var s = File.AppendText (BaseDir + "/Documents/crash.log")){

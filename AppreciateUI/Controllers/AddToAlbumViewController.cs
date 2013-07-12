@@ -42,8 +42,8 @@ namespace AppreciateUI.Controllers
 
             //Add a new project
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentModalViewController(new UINavigationController(new NewAlbumViewController((r) => {
-                    DismissModalViewControllerAnimated(true);
+                PresentViewController(new UINavigationController(new NewAlbumViewController((r) => {
+                    DismissViewController(true);
                     if (r)
                         LoadTable();
                 })), true);
@@ -65,22 +65,6 @@ namespace AppreciateUI.Controllers
 
             var root = new RootElement(Title) { section };
             Root = root;
-        }
-
-        public static UIImage RounderCorners (UIImage image, float width, float radius)
-        {
-            UIGraphics.BeginImageContext (new SizeF (width, width));
-            var c = UIGraphics.GetCurrentContext ();
-
-            //Note: You need to write the Device.IsRetina code yourself 
-            radius = Util.IsRetina ? radius * 2 : radius;
-
-
-
-            image.Draw (new PointF (0, 0));
-            var converted = UIGraphics.GetImageFromCurrentImageContext ();
-            UIGraphics.EndImageContext ();
-            return converted;
         }
 
         private void Save(Project project)

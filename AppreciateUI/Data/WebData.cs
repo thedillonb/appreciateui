@@ -13,16 +13,11 @@ namespace AppreciateUI.Data
         public int Id { get; set; }
 		public string Url { get; set; }
         public string FullUrl { get; set; }
-
         public int AppIp { get; set; }
         public string App { get; set; }
-
         public int CatIp { get; set; }
         public string Cat { get; set; }
-
         public string Ext { get; set; }
-
-        public static string Href = "http://www.dillonbuchanan.com/appreciateui/uploads/";
     }
 
 
@@ -33,8 +28,6 @@ namespace AppreciateUI.Data
         public string App { get; set; }
         public string Ext { get; set; }
         public string FullUrl { get; set; }
-
-        public static string Href = "http://www.dillonbuchanan.com/appreciateui/uploads_icons/";
     }
 
     public static class RequestFactory
@@ -42,39 +35,29 @@ namespace AppreciateUI.Data
         public static List<Category> GetCategories()
         {
             var client = new RestSharp.RestClient();
-            var request = new RestSharp.RestRequest("http://www.dillonbuchanan.com/appreciateui/categories.php");
-            var response = client.Execute(request);
-            return new RestSharp.Deserializers.JsonDeserializer().Deserialize<List<Category>>(response);
+			var request = new RestSharp.RestRequest("http://www.appreciateui.com/api/categories.php");
+			return client.Execute<List<Category>>(request).Data;
         }
 
 		public static List<Screenshot> GetRecentScreenshots()
 		{
 			var client = new RestSharp.RestClient();
-			var request = new RestSharp.RestRequest("http://www.dillonbuchanan.com/appreciateui/screenshots.php?recent=true");
-			var response = client.Execute(request);
-			var ret = new RestSharp.Deserializers.JsonDeserializer().Deserialize<List<Screenshot>>(response);
-			ret.ForEach(x => x.FullUrl = Screenshot.Href + x.Url + "." + x.Ext);
-			return ret;
+			var request = new RestSharp.RestRequest("http://www.appreciateui.com/api/screenshots.php?recent=true");
+			return client.Execute<List<Screenshot>>(request).Data;
 		}
 
         public static List<Screenshot> GetScreenshots(int category)
         {
             var client = new RestSharp.RestClient();
-            var request = new RestSharp.RestRequest("http://www.dillonbuchanan.com/appreciateui/screenshots.php?cat=" + category);
-            var response = client.Execute(request);
-            var ret = new RestSharp.Deserializers.JsonDeserializer().Deserialize<List<Screenshot>>(response);
-			ret.ForEach(x => x.FullUrl = Screenshot.Href + x.Url + "." + x.Ext);
-            return ret;
+			var request = new RestSharp.RestRequest("http://www.appreciateui.com/api/screenshots.php?cat=" + category);
+			return client.Execute<List<Screenshot>>(request).Data;
         }
 
         public static List<Icon> GetIcons()
         {
             var client = new RestSharp.RestClient();
-            var request = new RestSharp.RestRequest("http://www.dillonbuchanan.com/appreciateui/icons.php");
-            var response = client.Execute(request);
-            var ret = new RestSharp.Deserializers.JsonDeserializer().Deserialize<List<Icon>>(response);
-            ret.ForEach(x => x.FullUrl = Icon.Href + x.Url + "." + x.Ext);
-            return ret;
+			var request = new RestSharp.RestRequest("http://www.appreciateui.com/api/icons.php");
+			return client.Execute<List<Icon>>(request).Data;
         }
     }
 }

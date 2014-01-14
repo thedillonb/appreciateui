@@ -8,9 +8,9 @@ namespace AppreciateUI.Controllers
 {
     public class NewAlbumViewController : BaseDialogViewController
     {
-        private readonly Func<bool, Void> _action;
+		private readonly Action<bool> _action;
 
-        public NewAlbumViewController(Func<bool, Void> action)
+		public NewAlbumViewController(Action<bool> action)
         {
             _action = action;
             Title = "New Album";

@@ -42,11 +42,11 @@ namespace AppreciateUI.Controllers
 
             //Add a new project
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => {
-                PresentViewController(new UINavigationController(new NewAlbumViewController((r) => {
-                    DismissViewController(true);
+				PresentViewController(new UINavigationController(new NewAlbumViewController((r) => {
+					DismissViewController(true, null);
                     if (r)
                         LoadTable();
-                })), true);
+				})), true, null);
             });
 
             LoadTable();

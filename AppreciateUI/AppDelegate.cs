@@ -76,16 +76,13 @@ namespace AppreciateUI
             {
                 UIImageView killSplash = null;
                 if (IsTall)
-                    killSplash = new UIImageView(UIImageHelper.FromFileAuto("Default-568h", "png"));
-                else
-                    killSplash = new UIImageView(UIImageHelper.FromFileAuto("Default", "jpg"));
+                    killSplash = new UIImageView(UIImageHelper.FromFileAuto("Default-568h"));
+				else
+					killSplash = new UIImageView(UIImageHelper.FromFileAuto("Default"));
                 
                 Window.AddSubview(killSplash);
                 Window.BringSubviewToFront(killSplash);
-                
-                UIView.Animate(0.8, () => { 
-                    killSplash.Alpha = 0.0f; 
-                }, () => killSplash.RemoveFromSuperview());
+				UIView.Animate(0.8, () => killSplash.Alpha = 0.0f, killSplash.RemoveFromSuperview);
             }
 
             return true;
